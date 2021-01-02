@@ -1,7 +1,8 @@
 import 'phaser';
 import tilePng from '../Assets/tile/main.png'
 import tileJson from '../Assets/tile/main.json'
-
+import bgmusic from '../Assets/audio/TownTheme.ogg'
+import player from '../Assets/tank/player.png'
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
     super('Preloader');
@@ -34,6 +35,11 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image('tile', tilePng)
     this.load.tilemapTiledJSON('map', tileJson)
+    this.load.audio('bgMusic', [bgmusic])
+    this.load.spritesheet('player', player, {
+      frameWidth: 256,
+      frameHeight: 256
+    })
   }
  
   create () {

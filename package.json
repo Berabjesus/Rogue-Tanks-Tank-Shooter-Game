@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config production.js --mode=production",
     "dev": "webpack --mode=development",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open --config production.js --mode=production"
   },
   "author": "Bereket A. Beshane",
   "license": "ISC",

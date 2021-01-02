@@ -1,0 +1,11 @@
+{
+  "name": "tank-shooter-game",
+  "version": "1.0.0",
+  "description": "Shooter game made with phaser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bereket A. beshane\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[B",
+  "license": "ISC"
+}

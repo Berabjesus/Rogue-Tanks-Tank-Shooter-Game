@@ -4,8 +4,39 @@
   "description": "Shooter game made with phaser",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config prod.js ",
+    "start": "webpack-dev-server --open"
   },
-  "author": "Bereket A. beshane\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[B",
-  "license": "ISC"
+  "author": "Bereket A. Beshane",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.10.4",
+    "autoprefixer": "^7.2.5",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "css-loader": "^5.0.1",
+    "exports-loader": "^0.6.4",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.0.10",
+    "precss": "^3.0.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^1.2.1",
+    "terser-webpack-plugin": "^2.2.1",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "phaser": "^3.50.0",
+    "bootstrap": "^4.5.3",
+    "jquery": "^3.5.1",
+    "popper.js": "^1.16.1"
+  }
 }

@@ -88,6 +88,6 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.join(__dirname, 'build'),
-    port: 3002,
+    port: 3003,
   },
 };

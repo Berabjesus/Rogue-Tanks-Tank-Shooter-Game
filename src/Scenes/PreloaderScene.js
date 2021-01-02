@@ -1,13 +1,42 @@
 import 'phaser';
+import tilePng from '../Assets/tile/main.png'
+import tileJson from '../Assets/tile/main.json'
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
-    super();
+    super('Preloader');
   }
  
   preload () {
+    this.madeBy = this.add.image(10, 10, 'madeBy').setOrigin(0, 0).setScale(0.3, 0.3);
+    this.phaserLogo = this.add.image(400, 300, 'phaserLogo').setOrigin(0.5, 0.5).setScale(0.8, 0.8);
+    const name = this.make.text({
+      x: 10,
+      y: 150,
+      text: 'Code by Bereket',
+      style: {
+        font: '15px monospace',
+        fill: '#ffffff'
+      }
+    });
+
+    this.time.delayedCall(2000, function () {
+      this.tweens.add({
+        targets: this.phaserLogo,
+        alpha: 0,
+        duration: 300,
+        ease: 'Power2',
+        onComplete:() => {
+          this.gameLogo = this.add.image(450, 300, 'gameLogo').setOrigin(0.5, 0.5).setScale(1, 1);
+        }
+      }, this);
+    }.bind(this))
+
+    this.load.image('tile', tilePng)
+    this.load.tilemapTiledJSON('map', tileJson)
   }
  
   create () {
+    this.scene.start('Game')
   }
 };

@@ -1,16 +1,22 @@
 export default {
   type: Phaser.AUTO,
   width: 800,
-  height: 650,
-  scale: {
-  mode: Phaser.Scale.RESIZE,
-  autoCenter: Phaser.Scale.CENTER_BOTH
-  },
+  height: 600,
+  backgroundColor: "black",
   physics: {
     default: 'arcade',
     arcade: {
+      gravity: { x: 0, y: 0 },
       debug: false
     }
+  },scale: {
+    zoom: 1
   },
+  /* 
+    -> The two rules below pixlate images
+    pixelArt: true,
+    roundPixels: true,
+
+  */ 
   parent: 'main'
 };

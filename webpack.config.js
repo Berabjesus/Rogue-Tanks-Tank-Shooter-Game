@@ -66,7 +66,7 @@ module.exports = {
   stats: {
     colors: true,
   },
-  devtool: 'inline-source-map',
+  devtool: 'false',
   plugins: [
     new CleanWebpackPlugin({ 
       root: path.resolve(__dirname, "../")
@@ -88,6 +88,6 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.join(__dirname, 'build'),
-    port: 3001,
+    port: 3002,
   },
 };

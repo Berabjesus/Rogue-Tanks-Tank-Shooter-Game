@@ -4,7 +4,8 @@
   "description": "Shooter game made with phaser",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config prod.js ",
+    "build": "webpack --config production.js --mode=production",
+    "dev": "webpack --mode=development",
     "start": "webpack-dev-server --open"
   },
   "author": "Bereket A. Beshane",

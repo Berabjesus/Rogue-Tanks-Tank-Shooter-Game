@@ -32,8 +32,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
     this.playerTankBarrel = this.physics.add.sprite(0, 0, 'playerTankBarrel').setScale(0.3,0.3)
-    this.playerTankContainer =  this.add.container(500, 400, [ this.player, this.playerTankBarrel ]);
-
+    this.playerTankContainer =  this.add.container(500, 400, [ this.player, this.playerTankBarrel]);
+    this.playerTankContainer.setSize(64, 64)
     this.physics.world.enable(this.playerTankContainer);
     // this.player.setCollideWorldBounds(true);
     // this.player.angle = -50

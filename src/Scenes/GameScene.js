@@ -93,10 +93,10 @@ export default class GameScene extends Phaser.Scene {
 
     // Move tank barrel
     if (this.keys.a.isDown){
-      this.playerTankBarrel.angle += 1
+      this.playerTankBarrel.body.angularVelocity = -200
     }
     if (this.keys.d.isDown){
-      this.playerTankBarrel.angle += -1
+      this.playerTankBarrel.body.angularVelocity = 200
     }
     if (this.keys.space.isDown) {
       console.log('fire');

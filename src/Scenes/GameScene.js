@@ -30,44 +30,57 @@ export default class GameScene extends Phaser.Scene {
     // this.cameras.main.scrollX = -80;
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
-    this.player = this.physics.add.sprite(500, 400, 'player').setScale(0.3, 0.3)
+    this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
+    this.playerTankBarrel = this.physics.add.sprite(0, 0, 'playerTankBarrel').setScale(0.3,0.3)
+    this.playerTankContainer =  this.add.container(500, 400, [ this.player, this.playerTankBarrel ]);
+
+    this.physics.world.enable(this.playerTankContainer);
     // this.player.setCollideWorldBounds(true);
     // this.player.angle = -50
-    this.physics.add.collider(this.player, this.walls);
+    this.physics.add.collider(this.playerTankContainer, this.walls);
 
     this.camera = this.cameras.main;
-    this.camera.startFollow(this.player);
+    this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+    // setTimeout(() => {
+    //   let r = Phaser.Math.Between(90, 175);
+    //   console.log(r);
+    //   this.tweens.add({
+    //     targets: this.player,
+    //     angle: r,
+    //     ease: 'Power1',
+    //     duration: 1000,
+    //     delay: 1000
+    //   });
+    // }, 2000);
   }
 
   update() {
-    this.player.body.velocity.x = 0;
-    this.player.body.velocity.y = 0;
-    this.player.body.angularVelocity = 0;
-    const vx = Math.cos(this.player.rotation) * 150
-    const vy = Math.sin(this.player.rotation) * 150
+   this.playerTankContainer.body.velocity.x = 0;
+   this.playerTankContainer.body.velocity.y = 0;
+   this.playerTankContainer.body.angularVelocity = 0;
+    const vx = Math.cos(this.playerTankContainer.rotation) * 150
+    const vy = Math.sin(this.playerTankContainer.rotation) * 150
+
+    //this.playerTankContainer.rotation += Phaser.Math.Between(-0.015, 0.015)
 
     if (this.cursors.left.isDown) {
-      this.player.body.angularVelocity = -200;
+     this.playerTankContainer.body.angularVelocity = -200;
     } else if (this.cursors.right.isDown) {
-      this.player.body.angularVelocity = 200;
+     this.playerTankContainer.body.angularVelocity = 200;
     }
   
-    // Vertical movement
     if (this.cursors.up.isDown) {
-      // console.log(this.physics.velocityFromAngle(this.player.angle, 200, this.player.body.velocity));
+      // console.log(this.physics.velocityFromAngle(this.player.angle, 200,this.playerTankContainer.body.velocity));
 
-      this.player.body.velocity.y = -vx
-      this.player.body.velocity.x = vy
+     this.playerTankContainer.body.velocity.y = -vx
+     this.playerTankContainer.body.velocity.x = vy
 
     } else if (this.cursors.down.isDown) {
-      this.player.body.velocity.y = vx
-      this.player.body.velocity.x = -vy
-    }
-  
-    // Normalize and scale the velocity so that this.player can't move faster along a diagonal
-    // this.player.body.velocity.normalize().scale(speed);
+     this.playerTankContainer.body.velocity.y = vx
+     this.playerTankContainer.body.velocity.x = -vy
+    }  
   }
 };

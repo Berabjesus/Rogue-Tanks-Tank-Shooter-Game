@@ -31,19 +31,25 @@ export default class GameScene extends Phaser.Scene {
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
-    this.playerTankBarrel = this.physics.add.sprite(0, 0, 'playerTankBarrel').setScale(0.3,0.3)
+    this.playerTankBarrel = this.physics.add.sprite(0, 0, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
+
     this.playerTankContainer =  this.add.container(500, 400, [ this.player, this.playerTankBarrel]);
     this.playerTankContainer.setSize(64, 64)
     this.physics.world.enable(this.playerTankContainer);
     // this.player.setCollideWorldBounds(true);
     // this.player.angle = -50
     this.physics.add.collider(this.playerTankContainer, this.walls);
-
+    this.physics.add.collider(this.playerTankBarrel, this.walls)
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.arrows = this.input.keyboard.createCursorKeys();
+    this.keys = this.input.keyboard.addKeys({
+      a:  Phaser.Input.Keyboard.KeyCodes.A,
+      d:  Phaser.Input.Keyboard.KeyCodes.D,
+      space:  Phaser.Input.Keyboard.KeyCodes.SPACE,
+    });
     // setTimeout(() => {
     //   let r = Phaser.Math.Between(90, 175);
     //   console.log(r);
@@ -58,29 +64,42 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-   this.playerTankContainer.body.velocity.x = 0;
-   this.playerTankContainer.body.velocity.y = 0;
-   this.playerTankContainer.body.angularVelocity = 0;
+    this.playerTankContainer.body.velocity.x = 0;
+    this.playerTankContainer.body.velocity.y = 0;
+    this.playerTankContainer.body.angularVelocity = 0;
+    this.playerTankBarrel.body.angularVelocity = 0;
+
     const vx = Math.cos(this.playerTankContainer.rotation) * 150
     const vy = Math.sin(this.playerTankContainer.rotation) * 150
 
     //this.playerTankContainer.rotation += Phaser.Math.Between(-0.015, 0.015)
 
-    if (this.cursors.left.isDown) {
+    if (this.arrows.left.isDown) {
      this.playerTankContainer.body.angularVelocity = -200;
-    } else if (this.cursors.right.isDown) {
+    } else if (this.arrows.right.isDown) {
      this.playerTankContainer.body.angularVelocity = 200;
     }
   
-    if (this.cursors.up.isDown) {
+    if (this.arrows.up.isDown) {
       // console.log(this.physics.velocityFromAngle(this.player.angle, 200,this.playerTankContainer.body.velocity));
 
      this.playerTankContainer.body.velocity.y = -vx
      this.playerTankContainer.body.velocity.x = vy
 
-    } else if (this.cursors.down.isDown) {
+    } else if (this.arrows.down.isDown) {
      this.playerTankContainer.body.velocity.y = vx
      this.playerTankContainer.body.velocity.x = -vy
     }  
+
+    // Move tank barrel
+    if (this.keys.a.isDown){
+      this.playerTankBarrel.angle += 1
+    }
+    if (this.keys.d.isDown){
+      this.playerTankBarrel.angle += -1
+    }
+    if (this.keys.space.isDown) {
+      console.log('fire');
+    }
   }
 };

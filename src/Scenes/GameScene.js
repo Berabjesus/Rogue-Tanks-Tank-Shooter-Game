@@ -31,7 +31,7 @@ export default class GameScene extends Phaser.Scene {
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
-    this.bullet = this.physics.add.sprite(500,410, 'bullet').setScale(0.7, 0.7).setOrigin(0.5, 1)
+    // this.bullet = this.physics.add.sprite(500,410, 'bullet').setScale(0.7, 0.7).setOrigin(0.5, 1)
     this.bullets = new Bullets(this)
 
     // this.bullet = this.physics.add.sprite(0, 0, 'bullet').setScale(0.8,0.8).setOrigin(0.5, 0.7)
@@ -86,6 +86,13 @@ export default class GameScene extends Phaser.Scene {
     console.log(this.boostProgressBar);
     this.boostContainer = this.add.container(10, 10, [ this.boostProgressBox, this.boostProgressBar]);
     this.boostContainer.setScrollFactor(0,0);
+  }
+
+  fire() {
+    let x = this.playerTankBarrel.x
+    let y = this.playerTankBarrel.y
+    let cannonball=this.physics.add.sprite(x,y,'bullet').setScale(0.7, 0.7).setOrigin(0.5, 0.5);
+    this.physics.moveTo(cannonball,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
   }
 
   update() {
@@ -146,11 +153,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (this.mouse.isDown) {
-      // this.bullets.fireBullet(this.playerTankBarrel.body.x, this.playerTankBarrel.body.y, this.input.x, this.input.y)
-      let cannonball=this.physics.add.sprite(384,256,'bullet');
-      //move to mouse position 
-      console.log(cannonball.x);
-      this.physics.moveTo(cannonball,this.input.x,this.input.y,500);
+      this.fire()
     }
 
 

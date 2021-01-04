@@ -1,8 +1,10 @@
 import 'phaser';
-import Bullets from '../shared/bullet'
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
+    this.reloaded = true
+    this.boost = 1000
+
   }
  
   preload () {
@@ -32,7 +34,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
     // this.bullet = this.physics.add.sprite(500,410, 'bullet').setScale(0.7, 0.7).setOrigin(0.5, 1)
-    this.bullets = new Bullets(this)
 
     // this.bullet = this.physics.add.sprite(0, 0, 'bullet').setScale(0.8,0.8).setOrigin(0.5, 0.7)
 
@@ -44,7 +45,7 @@ export default class GameScene extends Phaser.Scene {
     // this.player.angle = -50
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
-    this.rotate = 0
+    this.playerTankBarrel.depth = 10 
     // this.input.on('pointermove', function(pointer) {
     // }.bind(this))
     this.input.setPollAlways();
@@ -65,9 +66,8 @@ export default class GameScene extends Phaser.Scene {
       e:  Phaser.Input.Keyboard.KeyCodes.E,
       space:  Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
-    this.mouse = this.input.mousePointer
     this.boostBar()
-    this.boost = 1000
+    this.mouse = this.input.mousePointer
   }
 
   rotarteBarrel() {
@@ -88,11 +88,23 @@ export default class GameScene extends Phaser.Scene {
     this.boostContainer.setScrollFactor(0,0);
   }
 
+  explode(r) {
+    console.log(r);
+  }
+
   fire() {
     let x = this.playerTankBarrel.x
     let y = this.playerTankBarrel.y
-    let cannonball=this.physics.add.sprite(x,y,'bullet').setScale(0.7, 0.7).setOrigin(0.5, 0.5);
-    this.physics.moveTo(cannonball,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
+    let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.5, 0.5).setOrigin(0.55, 0.55).setSize(30, 40).setOffset(50, 30);
+
+    newBullet.rotation += this.playerTankBarrel.rotation
+    newBullet.depth = 1
+
+    this.physics.add.collider(newBullet, this.walls, function() {
+      this.explode('r')
+    }, null, this);
+    
+    this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
   }
 
   update() {
@@ -103,11 +115,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.playerTankBarrel.x =  this.playerTankContainer.x;
     this.playerTankBarrel.y =  this.playerTankContainer.y;
-
-
-    // this.input.activePointer.updateWorldPoint()
-    // this.playerTankBarrel.rotation = Phaser.Math.Angle.Between(this.playerTankBarrel.x, this.playerTankBarrel.y, this.input.activePointer.x, this.input.activePointer.y)
-    //rotation cannon
  
     const speed = 150
     const velocityX = Math.cos(this.playerTankContainer.rotation) * speed
@@ -152,9 +159,14 @@ export default class GameScene extends Phaser.Scene {
       this.playerTankContainer.body.angularVelocity = 200;
     }
 
-    if (this.mouse.isDown) {
+    if (this.mouse.isDown && this.reloaded) {
       this.fire()
+      this.reloaded =false
     }
+
+    this.input.on('pointerup', function() {
+      this.reloaded = true
+    }.bind(this))
 
 
     if (this.keys.space.isDown) {
@@ -167,7 +179,6 @@ export default class GameScene extends Phaser.Scene {
       // console.log('directionX - ' + barrelDirectionX );
       // console.log('directionY - ' + barrelDirectionY );
 
-      this.bullets.fireBullet(this.playerTankBarrel.body.x, this.playerTankBarrel.body.y, barrelDirectionX, barrelDirectionY)
     }
   }
 };

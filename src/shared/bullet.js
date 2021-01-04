@@ -44,7 +44,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
       // this.body.velocity.y = vec.y
       // this.body.velocity.x = vec.x
-      this.scene.physics.moveTo(this.body,directionX,directionY);
+      this.physics.moveTo(this,directionX,directionY,200);
   } 
 
   preUpdate (time, delta){

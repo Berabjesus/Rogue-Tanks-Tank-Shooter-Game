@@ -44,6 +44,10 @@ export default class GameScene extends Phaser.Scene {
     // this.player.angle = -50
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
+    this.rotate = 0
+    // this.input.on('pointermove', function(pointer) {
+    // }.bind(this))
+    this.input.setPollAlways();
 
 
     this.physics.add.collider(this.playerTankContainer, this.walls);
@@ -54,46 +58,34 @@ export default class GameScene extends Phaser.Scene {
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
-      a:  Phaser.Input.Keyboard.KeyCodes.A,
+      w:  Phaser.Input.Keyboard.KeyCodes.W,
       d:  Phaser.Input.Keyboard.KeyCodes.D,
+      a:  Phaser.Input.Keyboard.KeyCodes.A,
+      s:  Phaser.Input.Keyboard.KeyCodes.S,
+      e:  Phaser.Input.Keyboard.KeyCodes.E,
       space:  Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
-    // setTimeout(() => {
-    //   let r = Phaser.Math.Between(90, 175);
-    //   console.log(r);
-    //   this.tweens.add({
-    //     targets: this.player,
-    //     angle: r,
-    //     ease: 'Power1',
-    //     duration: 1000,
-    //     delay: 1000
-    //   });
-    // }, 2000);
-    // setInterval(() => {
-    //   console.log(this.playerTankBarrel.body.rotation);
-    // }, 2000);
-    // this.input.on('pointermove', function(pointer) {
-      // this.target = Phaser.Math.Angle.BetweenPoints(this.playerTankContainer.body, pointer);
-    //   console.log(this.target);
-    // }.bind(this))
+    this.mouse = this.input.mousePointer
+    this.boostBar()
+    this.boost = 1000
+  }
 
-    // setInterval(function() {
-    //   console.log(this.rotate);
-    //   console.log(this.playerTankBarrel.rotation);
-    // }.bind(this), 3000); 
+  rotarteBarrel() {
+    this.rotate =Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY);
+    this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
+  }
 
-    // setInterval(() => {
-    //   // this.playerTankBarrel.angle.x += 1
-    //   // this.playerTankBarrel.angle.y += 1
-    // }, 3000);
+  boostBar() {
+    this.boostProgressBox = this.add.graphics();
+    this.boostProgressBox.fillStyle(0x222222, 0.8);
+    this.boostProgressBox.fillRoundedRect(10, 10, 150, 18, 7);
+    this.boostProgressBar = this.add.graphics();
+    this.boostProgressBar.fillStyle(0xffffff, 1);
+    this.boostProgressBar.fillRoundedRect(10, 10, 10,18, 6);
 
-    this.rotate = 0
-    this.input.on('pointermove', function(pointer) {
-      this.rotate =Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, pointer.worldX,pointer.worldY);
-      console.log(pointer);
-    }.bind(this))
-    this.input.setPollAlways();
-
+    console.log(this.boostProgressBar);
+    this.boostContainer = this.add.container(10, 10, [ this.boostProgressBox, this.boostProgressBar]);
+    this.boostContainer.setScrollFactor(0,0);
   }
 
   update() {
@@ -105,7 +97,6 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankBarrel.x =  this.playerTankContainer.x;
     this.playerTankBarrel.y =  this.playerTankContainer.y;
 
-    this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
 
     // this.input.activePointer.updateWorldPoint()
     // this.playerTankBarrel.rotation = Phaser.Math.Angle.Between(this.playerTankBarrel.x, this.playerTankBarrel.y, this.input.activePointer.x, this.input.activePointer.y)
@@ -118,31 +109,47 @@ export default class GameScene extends Phaser.Scene {
     //this.playerTankContainer.rotation += Phaser.Math.Between(-0.015, 0.015)
 
     if (this.arrows.left.isDown) {
-     this.playerTankContainer.body.angularVelocity = -200;
+      this.playerTankBarrel.angularVelocity = -200
+
     } else if (this.arrows.right.isDown) {
-     this.playerTankContainer.body.angularVelocity = 200;
-
+      this.playerTankBarrel.body.angularVelocity = 200
     }
-  
-    if (this.arrows.up.isDown) {
-      // console.log(this.physics.velocityFromAngle(this.player.angle, 200,this.playerTankContainer.body.velocity));
-     this.playerTankContainer.body.velocity.y = -velocityX
-     this.playerTankContainer.body.velocity.x = velocityY
-
-    } else if (this.arrows.down.isDown) {
-     this.playerTankContainer.body.velocity.y = velocityX
-     this.playerTankContainer.body.velocity.x = -velocityY
-    }  
-
+    
+    this.rotarteBarrel()
+    
     // Move tank barrel
+    if (this.keys.w.isDown){
+      var boost = 1
+      if (this.keys.e.isDown && this.boost > 2){ 
+        boost = 2
+        this.boost -= 2
+      }  
+      this.playerTankContainer.body.velocity.y = -velocityX * boost
+      this.playerTankContainer.body.velocity.x = velocityY * boost
+      this.rotarteBarrel()
+    }
+    if (this.keys.s.isDown){
+      var boost = 1
+      if (this.keys.e.isDown && this.boost > 2){ 
+        boost = 2
+        this.boost -= 2
+      }
+      this.playerTankContainer.body.velocity.y = velocityX * boost
+      this.playerTankContainer.body.velocity.x = -velocityY * boost
+      this.rotarteBarrel()
+    }
     if (this.keys.a.isDown){
-      this.playerTankBarrel.body.angularVelocity = -200
- 
+      this.playerTankContainer.body.angularVelocity = -200;
     }
     if (this.keys.d.isDown){
-      this.playerTankBarrel.body.angularVelocity = 200
- 
+      this.playerTankContainer.body.angularVelocity = 200;
     }
+
+    if (this.mouse.isDown) {
+      console.log('down');
+    }
+
+
     if (this.keys.space.isDown) {
       // console.log('fire');
       const speed = 30

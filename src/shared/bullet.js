@@ -32,8 +32,8 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
       // const velocityX = Math.sin(this.body.rotation) * speed
       // this.body.velocity.y = velocityY
       // this.body.velocity.x = 1
-      this.body.velocity.x = -100
-      this.body.velocity.y = -200
+      // this.body.velocity.x = -100
+      // this.body.velocity.y = -200
       // this.body.velocity.x = 100
       // console.log(this);
 
@@ -44,7 +44,7 @@ class Bullet extends Phaser.Physics.Arcade.Sprite {
 
       // this.body.velocity.y = vec.y
       // this.body.velocity.x = vec.x
-
+      this.scene.physics.moveTo(this.body,directionX,directionY);
   } 
 
   preUpdate (time, delta){

@@ -146,12 +146,17 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (this.mouse.isDown) {
-      console.log('down');
+      // this.bullets.fireBullet(this.playerTankBarrel.body.x, this.playerTankBarrel.body.y, this.input.x, this.input.y)
+      let cannonball=this.physics.add.sprite(384,256,'bullet');
+      //move to mouse position 
+      console.log(cannonball.x);
+      this.physics.moveTo(cannonball,this.input.x,this.input.y,500);
     }
 
 
     if (this.keys.space.isDown) {
       // console.log('fire');
+      this.rotarteBarrel()
       const speed = 30
       const barrelDirectionX = this.playerTankBarrel.body.rotation 
       const barrelDirectionY =this.playerTankBarrel.body.rotation

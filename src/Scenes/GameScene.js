@@ -88,8 +88,21 @@ export default class GameScene extends Phaser.Scene {
     this.boostContainer.setScrollFactor(0,0);
   }
 
-  explode(r) {
-    console.log(r);
+  explode(x,y) {
+    this.anims.create({
+      key: 'boom',
+      frames: this.anims.generateFrameNumbers('explosion', {
+        start: 4,
+        end: 0
+      }),
+      frameRate: 5,
+      repeat: 1
+    });
+    let explosion =  this.add.sprite(x, y - 20, 'explosion')
+    explosion.play('boom')
+    explosion.once('animationcomplete', () => {
+      explosion.destroy()
+    })
   }
 
   fire() {
@@ -101,9 +114,10 @@ export default class GameScene extends Phaser.Scene {
     newBullet.depth = 1
 
     this.physics.add.collider(newBullet, this.walls, function() {
-      this.explode('r')
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
     }, null, this);
-    
+
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
   }
 

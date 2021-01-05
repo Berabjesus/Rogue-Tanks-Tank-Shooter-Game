@@ -4,7 +4,8 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
     this.reloaded = true
     this.boost = 1000
-
+    this.follow = true
+    this.enemyContact = false
   }
  
   preload () {
@@ -72,12 +73,12 @@ export default class GameScene extends Phaser.Scene {
 
 
     var curve =  new Phaser.Curves.Path(50, 50)
-    curve.lineTo(new Phaser.Math.Vector2(50, 500))
+    curve.lineTo(new Phaser.Math.Vector2(50, 550))
     curve.lineTo(new Phaser.Math.Vector2(500, 500));
     curve.lineTo(new Phaser.Math.Vector2(50, 50))
     curve.lineTo(new Phaser.Math.Vector2(500, 500));
 
-
+    this.curve  = curve
     // var curve =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(50, 500));
 
     // var curve2 =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 500), new Phaser.Math.Vector2(500, 500));
@@ -96,10 +97,17 @@ export default class GameScene extends Phaser.Scene {
     //     graphics.fillCircle(points[i].x, points[i].y, 4);
     // }
 
-    this.ball1 = this.add.follower(curve, 50, 50, 'enemy').setScale(0.3, 0.3);
-    this.physics.world.enable(this.ball1);
+    this.enemy1 = this.add.follower(curve, 50, 50, 'enemy').setScale(0.3, 0.3);
+    this.physics.world.enable(this.enemy1);
+    this.enemy1.body.setSize(170, 220)
+    // this.enemy1.setSizeToFrame(10,10)
+    // this.enemy1.setDisplaySize(10,10)
+    this.enemy1.ammo = 20
+
+    this.enemy1TankBarrel = this.physics.add.sprite(0 , 0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
+
     let count =0
-    const pathSetting = {
+    this.pathSetting = {
       duration: 10000,
       yoyo: true,
       repeat: -1,
@@ -109,32 +117,38 @@ export default class GameScene extends Phaser.Scene {
       onComplete:()=>{
         // count++
         // if (count === 1) {
-        //   this.ball1.setPath(curve2)
+        //   this.enemy1.setPath(curve2)
         // } else if(count > 1){
         //   count = 0
         //   pathSetting.yoyo = true
-        //   this.ball1.startFollow(pathSetting)
-        //   this.ball1.setPath(curve)
+        //   this.enemy1.startFollow(pathSetting)
+        //   this.enemy1.setPath(curve)
         // } 
       }
     }
-    this.ball1.startFollow(pathSetting);
+    this.enemy1.startFollow(this.pathSetting);
 
     // setTimeout(() => {
-    //   this.ball1.pauseFollow()
+    //   this.enemy1.pauseFollow()
     //   setTimeout(() => {
-    //     this.ball1.resumeFollow()
+    //     this.enemy1.resumeFollow()
     //   }, 4000);
   
     // }, 8000);
 
-    this.physics.add.collider(this.ball1, this.walls);
+    this.physics.add.collider(this.enemy1, this.walls);
+    this.physics.add.collider(this.enemy1, this.playerTankContainer, this.playerAndEnemyCollide);
 
   }
 
   rotarteBarrel() {
-    this.rotate =Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY);
+    this.rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY);
     this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
+  }
+
+  rotateEnemyBarrel() {
+    this.rotEnemyBarrel = Phaser.Math.Angle.Between(this.enemy1.body.x,this.enemy1.body.y, this.playerTankContainer.x, this.playerTankContainer.y);
+    this.enemy1TankBarrel.rotation = this.rotEnemyBarrel + Math.PI/2
   }
 
   boostBar() {
@@ -167,7 +181,7 @@ export default class GameScene extends Phaser.Scene {
     })
   }
 
-  fire() {
+  fireAtEnemy() {
     let x = this.playerTankBarrel.x
     let y = this.playerTankBarrel.y
     let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
@@ -180,32 +194,88 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
+    this.physics.add.collider(newBullet, this.enemy1, function() {
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
+    }, null, this);
+
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
   }
+
+  fireAtplayer(enemyTank){
+    let x = enemyTank.x
+    let y = enemyTank.y
+    let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
+    newBullet.rotation += this.enemy1TankBarrel.rotation
+
+    this.physics.add.collider(newBullet, this.walls, function() {
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
+    }, null, this);
+
+    this.physics.add.collider(newBullet, this.playerTankContainer, function() {
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
+    }, null, this);
+
+    this.physics.moveTo(newBullet, this.playerTankContainer.x,this.playerTankContainer.y,900);
+  }
+
+  // playerAndEnemyCollide() {
+  //   this.enemy1.stopFollow()
+  //   this.enemyContact = true
+  // }
 
   update() {
     /*
       =========================
      */
-        // console.log(this.ball1.x, this.ball1.y);
+        // console.log(this.enemy1.x, this.enemy1.y);
         // console.log(this.playerTankContainer.x, this.playerTankContainer.y);
-        if (Phaser.Math.Distance.BetweenPoints(this.ball1, this.playerTankContainer) < 400) {
-          // console.log('attttaaaackk!!!!');
-          // this.ball1.pauseFollow()
-          this.ball1.startFollow(this.playerTankContainer)
-          this.ball1.pathRotationOffset = 90
-          var dx =this.playerTankContainer.x - this.ball1.x;
-          var dy =this.playerTankContainer.y - this.ball1.y;
-          var angle = Math.atan2(dy, dx);
-          var speed1 = 100;
-          this.ball1.body.setVelocity(
-            Math.cos(angle) * speed1,
-            Math.sin(angle) * speed1
-          );
-          var ang = Phaser.Math.Angle.Between(this.ball1.x, this.ball1.y, this.playerTankContainer.x, this.playerTankContainer.y);
-          this.ball1.rotation = ang + Math.PI/2
+        var dist = Phaser.Math.Distance.BetweenPoints(this.enemy1, this.playerTankContainer)
+        this.physics.add.collider(this.enemy1, this.walls);
+
+        if (dist < 400) {
+          !this.enemyContact ? this.enemyContact = true : 
+          // this.enemy1.pauseFollow()
+          this.rotateEnemyBarrel()
+          if (this.enemy1.ammo === 0) {
+            this.fireAtplayer(this.enemy1)
+            this.enemy1.ammo = 20
+          } else {
+            this.enemy1.ammo -= 1
+          }
+          if (dist <= 100) {
+            this.follow = false
+            this.enemy1.pauseFollow()
+          }else if (dist > 200) {
+            this.follow = true
+          }
+          
+          if(this.follow) {
+            this.enemy1.startFollow(this.playerTankContainer)
+            this.enemy1.pathRotationOffset = 90
+            var dx =this.playerTankContainer.x - this.enemy1.x;
+            var dy =this.playerTankContainer.y - this.enemy1.y;
+            var angle = Math.atan2(dy, dx);
+            var speed1 = 200;
+            this.enemy1.body.setVelocity(
+              Math.cos(angle) * speed1,
+              Math.sin(angle) * speed1
+            );
+            var ang = Phaser.Math.Angle.Between(this.enemy1.x, this.enemy1.y, this.playerTankContainer.x, this.playerTankContainer.y);
+            this.enemy1.rotation = ang + Math.PI/2
+          }
         }else {
-          this.ball1.resumeFollow()
+          // this.enemy1.resumeFollow()
+          // if(this.follow) {
+          //   this.enemy1.startFollow(this.pathSetting)
+          //   // this.enemy1.setPath(this.curve)
+          //   this.follow =false
+          // }
+          // this.follow = true
+          if(this.follow && this.enemyContact)
+            this.enemy1.stopFollow()
         }
 
 
@@ -220,7 +290,10 @@ export default class GameScene extends Phaser.Scene {
 
     this.playerTankBarrel.x =  this.playerTankContainer.x;
     this.playerTankBarrel.y =  this.playerTankContainer.y;
- 
+
+    this.enemy1TankBarrel.x = this.enemy1.x
+    this.enemy1TankBarrel.y = this.enemy1.y
+
     const speed = 150
     const velocityX = Math.cos(this.playerTankContainer.rotation) * speed
     const velocityY = Math.sin(this.playerTankContainer.rotation) * speed
@@ -263,7 +336,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (this.mouse.isDown && this.reloaded) {
-      this.fire()
+      this.fireAtEnemy()
       this.reloaded =false
     }
 
@@ -273,7 +346,7 @@ export default class GameScene extends Phaser.Scene {
 
 
     if (this.keys.space.isDown) {
-      // console.log('fire');
+      // console.log('fireAtEnemy');
       this.rotarteBarrel()
       const speed = 30
       const barrelDirectionX = this.playerTankBarrel.body.rotation 

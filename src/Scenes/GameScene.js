@@ -33,16 +33,11 @@ export default class GameScene extends Phaser.Scene {
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
-    // this.bullet = this.physics.add.sprite(500,410, 'bullet').setScale(0.7, 0.7).setOrigin(0.5, 1)
-
-    // this.bullet = this.physics.add.sprite(0, 0, 'bullet').setScale(0.8,0.8).setOrigin(0.5, 0.7)
-
     this.playerTankContainer =  this.add.container(500, 400, [ this.player]);
     this.playerTankContainer.setSize(64, 64)
     this.physics.world.enable(this.playerTankContainer);
 
     // this.player.setCollideWorldBounds(true);
-    // this.player.angle = -50
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
     this.playerTankBarrel.depth = 10 
@@ -68,6 +63,63 @@ export default class GameScene extends Phaser.Scene {
     });
     this.boostBar()
     this.mouse = this.input.mousePointer
+
+
+
+    // var points = [ 50, 60, 550, 200, 200, 350, 300, 500, 500, 700, 400 ];
+    var points = [[50, 50], [50, 300], [400, 300]]
+    // var curve = new Phaser.Curves.Spline(points);
+
+    var curve =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(50, 500));
+    
+    var curve2 =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 500), new Phaser.Math.Vector2(500, 500));
+
+    var graphics = this.add.graphics();
+
+    graphics.lineStyle(1, 0xffffff, 1);
+
+    curve.draw(graphics, 64);
+    curve2.draw(graphics, 64)
+
+    graphics.fillStyle(0x00ff00, 1);
+
+    // for (var i = 0; i < points.length; i++)
+    // {
+    //     graphics.fillCircle(points[i].x, points[i].y, 4);
+    // }
+
+    var ball1 = this.add.follower(curve, 50, 50, 'enemy').setScale(0.3, 0.3);
+    this.physics.world.enable(ball1);
+    let count =0
+    const pathSetting = {
+      duration: 2000,
+      // yoyo: true,
+      repeat: 0,
+      rotateToPath: true,
+      rotationOffset: 90,
+      verticalAdjust: false,
+      onComplete:()=>{
+        count++
+        if (count === 1) {
+          ball1.setPath(curve2)
+        } else if(count > 1){
+          count = 0
+          pathSetting.yoyo = true
+          ball1.startFollow(pathSetting)
+          ball1.setPath(curve)
+        } 
+      }
+    }
+    ball1.startFollow(pathSetting);
+
+    // setTimeout(() => {
+    //   ball1.pauseFollow()
+    //   setTimeout(() => {
+    //     ball1.resumeFollow()
+    //   }, 4000);
+  
+    // }, 8000);
+
   }
 
   rotarteBarrel() {
@@ -92,13 +144,13 @@ export default class GameScene extends Phaser.Scene {
     this.anims.create({
       key: 'boom',
       frames: this.anims.generateFrameNumbers('explosion', {
-        start: 4,
-        end: 0
+        start: 0,
+        end: 7
       }),
-      frameRate: 5,
-      repeat: 1
+      frameRate: 10,
+      repeat: 0
     });
-    let explosion =  this.add.sprite(x, y - 20, 'explosion')
+    let explosion =  this.add.sprite(x, y , 'explosion')
     explosion.play('boom')
     explosion.once('animationcomplete', () => {
       explosion.destroy()
@@ -108,7 +160,7 @@ export default class GameScene extends Phaser.Scene {
   fire() {
     let x = this.playerTankBarrel.x
     let y = this.playerTankBarrel.y
-    let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.5, 0.5).setOrigin(0.55, 0.55).setSize(30, 40).setOffset(50, 30);
+    let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
 
     newBullet.rotation += this.playerTankBarrel.rotation
     newBullet.depth = 1

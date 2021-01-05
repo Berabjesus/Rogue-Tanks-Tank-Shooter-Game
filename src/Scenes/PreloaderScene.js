@@ -6,6 +6,7 @@ import player from '../Assets/tank/player.png'
 import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
 import bulletShell from '../Assets/tank/HeavyShell.png'
 import explosion  from '../Assets/tank/explosion.png'
+import enemy from '../Assets/tank/enemy.png'
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
     super('Preloader');
@@ -56,6 +57,11 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.spritesheet('explosion', explosion,  {
       frameWidth: 60,
       frameHeight: 60
+    })
+
+    this.load.spritesheet('enemy', enemy, {
+      frameWidth: 256,
+      frameHeight: 256
     })
   }
  

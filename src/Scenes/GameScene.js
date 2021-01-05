@@ -139,6 +139,8 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.enemy1, this.walls);
     this.physics.add.collider(this.enemy1, this.playerTankContainer, this.playerAndEnemyCollide);
 
+    this.playerTankContainer.health = 100
+    this.enemy1.health = 100
   }
 
   rotarteBarrel() {
@@ -197,9 +199,15 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(newBullet, this.enemy1, function() {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
+      this.enemy1.health -= 10
+      if (this.enemy1.health <= 0) {
+        this.enemy1.destroy(true)
+      }
     }, null, this);
 
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
+
+    // newBullet.
   }
 
   fireAtplayer(enemyTank){
@@ -216,6 +224,10 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(newBullet, this.playerTankContainer, function() {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
+      this.playerTankContainer.health -= 10
+      if (this.playerTankContainer.health <= 0) {
+        this.playerTankContainer.destroy(true)
+      }
     }, null, this);
 
     this.physics.moveTo(newBullet, this.playerTankContainer.x,this.playerTankContainer.y,900);
@@ -227,6 +239,17 @@ export default class GameScene extends Phaser.Scene {
   // }
 
   update() {
+    if (this.playerTankContainer.health <= 0 || this.enemy1.health <= 0) {
+      if (this.playerTankContainer.health<=0) {
+        console.log('u died');
+      }else {
+        console.log('win');
+      }
+      this.registry.destroy();
+      // this.events.off();
+      this.scene.restart();
+      return
+    }
     /*
       =========================
      */

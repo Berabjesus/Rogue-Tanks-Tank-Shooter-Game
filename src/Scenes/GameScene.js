@@ -96,37 +96,39 @@ export default class GameScene extends Phaser.Scene {
     //     graphics.fillCircle(points[i].x, points[i].y, 4);
     // }
 
-    var ball1 = this.add.follower(curve, 50, 50, 'enemy').setScale(0.3, 0.3);
-    this.physics.world.enable(ball1);
+    this.ball1 = this.add.follower(curve, 50, 50, 'enemy').setScale(0.3, 0.3);
+    this.physics.world.enable(this.ball1);
     let count =0
     const pathSetting = {
-      duration: 2000,
-      // yoyo: true,
-      repeat: 0,
+      duration: 10000,
+      yoyo: true,
+      repeat: -1,
       rotateToPath: true,
       rotationOffset: 90,
       verticalAdjust: false,
       onComplete:()=>{
         // count++
         // if (count === 1) {
-        //   ball1.setPath(curve2)
+        //   this.ball1.setPath(curve2)
         // } else if(count > 1){
         //   count = 0
         //   pathSetting.yoyo = true
-        //   ball1.startFollow(pathSetting)
-        //   ball1.setPath(curve)
+        //   this.ball1.startFollow(pathSetting)
+        //   this.ball1.setPath(curve)
         // } 
       }
     }
-    ball1.startFollow(pathSetting);
+    this.ball1.startFollow(pathSetting);
 
     // setTimeout(() => {
-    //   ball1.pauseFollow()
+    //   this.ball1.pauseFollow()
     //   setTimeout(() => {
-    //     ball1.resumeFollow()
+    //     this.ball1.resumeFollow()
     //   }, 4000);
   
     // }, 8000);
+
+    this.physics.add.collider(this.ball1, this.walls);
 
   }
 
@@ -182,10 +184,39 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+    /*
+      =========================
+     */
+        // console.log(this.ball1.x, this.ball1.y);
+        // console.log(this.playerTankContainer.x, this.playerTankContainer.y);
+        if (Phaser.Math.Distance.BetweenPoints(this.ball1, this.playerTankContainer) < 400) {
+          // console.log('attttaaaackk!!!!');
+          // this.ball1.pauseFollow()
+          this.ball1.startFollow(this.playerTankContainer)
+          this.ball1.pathRotationOffset = 90
+          var dx =this.playerTankContainer.x - this.ball1.x;
+          var dy =this.playerTankContainer.y - this.ball1.y;
+          var angle = Math.atan2(dy, dx);
+          var speed1 = 100;
+          this.ball1.body.setVelocity(
+            Math.cos(angle) * speed1,
+            Math.sin(angle) * speed1
+          );
+          var ang = Phaser.Math.Angle.Between(this.ball1.x, this.ball1.y, this.playerTankContainer.x, this.playerTankContainer.y);
+          this.ball1.rotation = ang + Math.PI/2
+        }else {
+          this.ball1.resumeFollow()
+        }
+
+
+      /*
+      =========================
+     */
+
+
     this.playerTankContainer.body.velocity.x = 0;
     this.playerTankContainer.body.velocity.y = 0;
     this.playerTankContainer.body.angularVelocity = 0;
-    this.playerTankBarrel.body.angularVelocity = 0;
 
     this.playerTankBarrel.x =  this.playerTankContainer.x;
     this.playerTankBarrel.y =  this.playerTankContainer.y;
@@ -193,8 +224,6 @@ export default class GameScene extends Phaser.Scene {
     const speed = 150
     const velocityX = Math.cos(this.playerTankContainer.rotation) * speed
     const velocityY = Math.sin(this.playerTankContainer.rotation) * speed
-
-    //this.playerTankContainer.rotation += Phaser.Math.Between(-0.015, 0.015)
 
     if (this.arrows.left.isDown) {
       this.playerTankBarrel.angularVelocity = -200

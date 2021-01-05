@@ -70,16 +70,24 @@ export default class GameScene extends Phaser.Scene {
     var points = [[50, 50], [50, 300], [400, 300]]
     // var curve = new Phaser.Curves.Spline(points);
 
-    var curve =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(50, 500));
-    
-    var curve2 =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 500), new Phaser.Math.Vector2(500, 500));
+
+    var curve =  new Phaser.Curves.Path(50, 50)
+    curve.lineTo(new Phaser.Math.Vector2(50, 500))
+    curve.lineTo(new Phaser.Math.Vector2(500, 500));
+    curve.lineTo(new Phaser.Math.Vector2(50, 50))
+    curve.lineTo(new Phaser.Math.Vector2(500, 500));
+
+
+    // var curve =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(50, 500));
+
+    // var curve2 =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 500), new Phaser.Math.Vector2(500, 500));
 
     var graphics = this.add.graphics();
 
     graphics.lineStyle(1, 0xffffff, 1);
 
     curve.draw(graphics, 64);
-    curve2.draw(graphics, 64)
+    // curve2.draw(graphics, 64)
 
     graphics.fillStyle(0x00ff00, 1);
 
@@ -99,15 +107,15 @@ export default class GameScene extends Phaser.Scene {
       rotationOffset: 90,
       verticalAdjust: false,
       onComplete:()=>{
-        count++
-        if (count === 1) {
-          ball1.setPath(curve2)
-        } else if(count > 1){
-          count = 0
-          pathSetting.yoyo = true
-          ball1.startFollow(pathSetting)
-          ball1.setPath(curve)
-        } 
+        // count++
+        // if (count === 1) {
+        //   ball1.setPath(curve2)
+        // } else if(count > 1){
+        //   count = 0
+        //   pathSetting.yoyo = true
+        //   ball1.startFollow(pathSetting)
+        //   ball1.setPath(curve)
+        // } 
       }
     }
     ball1.startFollow(pathSetting);

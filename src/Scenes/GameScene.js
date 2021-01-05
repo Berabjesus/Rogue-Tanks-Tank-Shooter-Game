@@ -245,8 +245,9 @@ export default class GameScene extends Phaser.Scene {
       }else {
         console.log('win');
       }
+      this.enemyContact = false
       this.registry.destroy();
-      // this.events.off();
+      this.events.off();
       this.scene.restart();
       return
     }

@@ -2,19 +2,18 @@ import 'phaser'
 
 class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y){
-    super(scene, x, y, 'bullet')
+    super(scene, x, y, 'enemy')
   }
 
-  fire (x, y,directionX, directionY){
-
-  } 
-
-  preUpdate (time, delta){
-      super.preUpdate(time, delta);
+  spawn() {
+    this.body.reset(x, y);
+    this.setActive(true);
+    this.setVisible(true);
   }
+
 }
 
-export default class Enemys extends Phaser.Physics.Arcade.Group {
+export default class Enemies extends Phaser.Physics.Arcade.Group {
   constructor(scene){
     super(scene.physics.world, scene);
     this.createMultiple({
@@ -25,10 +24,12 @@ export default class Enemys extends Phaser.Physics.Arcade.Group {
       classType: Enemy
     })
   }
-  fireBullet (x, y, directionX, directionY){
-      let bullet = this.getFirstDead(true);
-      if (bullet){
-          bullet.fire(x, y,directionX, directionY);
-      }
+  create (x, y){
+      // let bullet = this.getFirstDead(true);
+      // if (bullet){
+      //     bullet.fire(x, y,directionX, directionY);
+      // }
+     let enemy = new Enemy()
+     enemy.spawn(x,y)
   }
 }

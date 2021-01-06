@@ -1,4 +1,5 @@
 import 'phaser';
+import Enemies from '../Components/Enemy'
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
@@ -158,6 +159,9 @@ export default class GameScene extends Phaser.Scene {
     this.enemy1.health = 100
     // this.enemy1.destroy()
     // this.enemy1TankBarrel.destroy()
+
+    let en = new Enemies(this)
+    en.create(10,10)
   }
 
   rotarteBarrel() {

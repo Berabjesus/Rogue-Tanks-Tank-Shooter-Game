@@ -1,35 +1,20 @@
 import 'phaser'
 
-class Enemy extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y){
-    super(scene, x, y, 'enemy')
+export default class Enemy extends Phaser.GameObjects.PathFollower {
+  constructor(mainScene,path, x, y){
+    super(mainScene.scene,path, x, y, 'enemy')
+    mainScene.scene.add.existing(this);
+    mainScene.scene.physics.world.enable(this);
+    this.setScale(0.3,0.3)
+    this.body.setSize(170, 220)
   }
-
-  spawn() {
-    this.body.reset(x, y);
-    this.setActive(true);
-    this.setVisible(true);
+  follow(pathSetting) {
+    this.startFollow(pathSetting)
   }
-
 }
 
-export default class Enemies extends Phaser.Physics.Arcade.Group {
-  constructor(scene){
-    super(scene.physics.world, scene);
-    this.createMultiple({
-      frameQuantity: 1,
-      key: 'enemy',
-      active: false,
-      visible: false,
-      classType: Enemy
-    })
-  }
-  create (x, y){
-      // let bullet = this.getFirstDead(true);
-      // if (bullet){
-      //     bullet.fire(x, y,directionX, directionY);
-      // }
-     let enemy = new Enemy()
-     enemy.spawn(x,y)
+class EnemyTankTurret extends Phaser.Physics.Arcade.Sprite {
+  constructor(){
+    super()
   }
 }

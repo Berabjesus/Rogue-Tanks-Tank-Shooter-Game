@@ -12,6 +12,18 @@ export default class GameScene extends Phaser.Scene {
   }
  
   create () {
+    const map = this.make.tilemap({key: 'map1'})
+    this.mapBaseY = map.heightInPixels;
+    const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0)
+    const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0)
+
+    this.ground = map.createLayer('grass', tileset1)
+    this.walls =  map.createLayer('street', tileset)
+    this.misc = map.createLayer('misc', tileset1)
+    this.building = map.createLayer('building', tileset1)
+    this.walls.setCollisionByProperty({ collides: true });
+    this.building.setCollisionByProperty({collides: true})
+    /*
     const map = this.make.tilemap({key: "map"})
     this.mapBaseY = map.heightInPixels;
     const tileset = map.addTilesetImage('tileset', 'tile')
@@ -19,6 +31,8 @@ export default class GameScene extends Phaser.Scene {
     map.createLayer('Ground', tileset)
     this.walls =  map.createLayer('Wall', tileset)
     this.walls.setCollisionByProperty({ collides: true });
+
+    */
 
     /*
     const debugGraphics = this.add.graphics().setAlpha(0.75);
@@ -34,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
-    this.playerTankContainer =  this.add.container(500, 400, [ this.player]);
+    this.playerTankContainer =  this.add.container(600, 400, [ this.player]);
     this.playerTankContainer.setSize(64, 64)
     this.physics.world.enable(this.playerTankContainer);
 
@@ -49,10 +63,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.playerTankContainer, this.walls);
     this.physics.add.collider(this.playerTankBarrel, this.walls)
+    this.physics.add.collider(this.playerTankContainer, this.building)
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
+    this.camera.zoomTo(0.7,1000);
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w:  Phaser.Input.Keyboard.KeyCodes.W,
@@ -72,11 +87,11 @@ export default class GameScene extends Phaser.Scene {
     // var curve = new Phaser.Curves.Spline(points);
 
 
-    var curve =  new Phaser.Curves.Path(50, 50)
-    curve.lineTo(new Phaser.Math.Vector2(50, 550))
-    curve.lineTo(new Phaser.Math.Vector2(500, 500));
-    curve.lineTo(new Phaser.Math.Vector2(50, 50))
-    curve.lineTo(new Phaser.Math.Vector2(500, 500));
+    var curve =  new Phaser.Curves.Path(80, 80)
+    curve.lineTo(new Phaser.Math.Vector2(650, 80))
+    curve.lineTo(new Phaser.Math.Vector2(650, 1000));
+    curve.lineTo(new Phaser.Math.Vector2(80, 1000));
+    curve.lineTo(new Phaser.Math.Vector2(80, 80));
 
     this.curve  = curve
     // var curve =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(50, 500));
@@ -97,7 +112,7 @@ export default class GameScene extends Phaser.Scene {
     //     graphics.fillCircle(points[i].x, points[i].y, 4);
     // }
 
-    this.enemy1 = this.add.follower(curve, 50, 50, 'enemy').setScale(0.3, 0.3);
+    this.enemy1 = this.add.follower(curve, 100, 100, 'enemy').setScale(0.3, 0.3);
     this.physics.world.enable(this.enemy1);
     this.enemy1.body.setSize(170, 220)
     // this.enemy1.setSizeToFrame(10,10)
@@ -108,7 +123,7 @@ export default class GameScene extends Phaser.Scene {
 
     let count =0
     this.pathSetting = {
-      duration: 10000,
+      duration: 35000,
       yoyo: true,
       repeat: -1,
       rotateToPath: true,
@@ -141,6 +156,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.playerTankContainer.health = 100
     this.enemy1.health = 100
+    // this.enemy1.destroy()
+    // this.enemy1TankBarrel.destroy()
   }
 
   rotarteBarrel() {
@@ -239,21 +256,23 @@ export default class GameScene extends Phaser.Scene {
   // }
 
   update() {
-    if (this.playerTankContainer.health <= 0 || this.enemy1.health <= 0) {
-      if (this.playerTankContainer.health<=0) {
-        console.log('u died');
-      }else {
-        console.log('win');
-      }
-      this.enemyContact = false
-      this.registry.destroy();
-      this.events.off();
-      this.scene.restart();
-      return
-    }
+
     /*
       =========================
      */
+
+        if (this.playerTankContainer.health <= 0 || this.enemy1.health <= 0) {
+          if (this.playerTankContainer.health<=0) {
+            console.log('u died');
+          }else {
+            console.log('win');
+          }
+          this.enemyContact = false
+          this.registry.destroy();
+          this.events.off();
+          this.scene.restart();
+          return
+        }
         // console.log(this.enemy1.x, this.enemy1.y);
         // console.log(this.playerTankContainer.x, this.playerTankContainer.y);
         var dist = Phaser.Math.Distance.BetweenPoints(this.enemy1, this.playerTankContainer)

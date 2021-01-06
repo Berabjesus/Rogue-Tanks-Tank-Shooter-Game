@@ -8,6 +8,17 @@ import bulletShell from '../Assets/tank/HeavyShell.png'
 import explosion  from '../Assets/tank/explosion.png'
 import enemy from '../Assets/tank/enemy.png'
 import enemyTankBarrel from '../Assets/tank/enemyTankBarrel.png'
+
+/*
+*/
+
+import citypng from '../Assets/tile/city.png'
+import bpng from '../Assets/tile/_Example.png'
+import cityjson from '../Assets/tile/city.json'
+/*
+*/
+
+
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
     super('Preloader');
@@ -40,6 +51,19 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image('tile', tilePng)
     this.load.tilemapTiledJSON('map', tileJson)
+
+
+    /*
+    */
+
+      this.load.image('tile1', citypng)
+      this.load.image('build', bpng)
+      this.load.tilemapTiledJSON('map1', cityjson)
+
+    /*
+    */
+
+
     this.load.audio('bgMusic', [bgmusic])
     this.load.spritesheet('player', player, {
       frameWidth: 256,

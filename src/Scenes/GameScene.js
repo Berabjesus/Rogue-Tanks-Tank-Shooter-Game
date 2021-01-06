@@ -67,7 +67,7 @@ export default class GameScene extends Phaser.Scene {
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.7,1000);
+    this.camera.zoomTo(0.8,2000);
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w:  Phaser.Input.Keyboard.KeyCodes.W,

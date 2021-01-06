@@ -1,7 +1,7 @@
 export default {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: 1200,
+  height: 650,
   backgroundColor: "black",
   physics: {
     default: 'arcade',

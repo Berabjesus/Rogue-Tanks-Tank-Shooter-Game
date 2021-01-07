@@ -106,9 +106,8 @@ export default class GameScene extends Phaser.Scene {
     // this.enemy1.destroy()
     // this.enemy1TankBarrel.destroy()
 
-    this.en = new Enemy(this.scene,curve2, this.playerTankContainer)
+    this.en = new Enemy(this,this.scene, curve4)
     this.en.follow(path.pathSetting)
-
 
   }
 
@@ -190,14 +189,14 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
-    this.physics.add.collider(newBullet, this.playerTankContainer, function() {
-      this.explode(newBullet.x, newBullet.y)
-      newBullet.destroy(true)
-      this.playerTankContainer.health -= 10
-      if (this.playerTankContainer.health <= 0) {
-        this.playerTankContainer.destroy(true)
-      }
-    }, null, this);
+    // this.physics.add.collider(newBullet, this.playerTankContainer, function() {
+    //   this.explode(newBullet.x, newBullet.y)
+    //   newBullet.destroy(true)
+    //   this.playerTankContainer.health -= 10
+    //   if (this.playerTankContainer.health <= 0) {
+    //     this.playerTankContainer.destroy(true)
+    //   }
+    // }, null, this);
 
     this.physics.moveTo(newBullet, this.playerTankContainer.x,this.playerTankContainer.y,900);
   }
@@ -284,9 +283,10 @@ export default class GameScene extends Phaser.Scene {
     =========================
     */
 
-      this.en.attachTurret()
-      this.en.rotateTurret()
-      // this.en.pauseFollow()
+      // this.en.attachTurret()
+      // this.en.rotateTurret()
+      // this.en.attackPlayer()
+        this.en.update()
     /*
       =========================
      */

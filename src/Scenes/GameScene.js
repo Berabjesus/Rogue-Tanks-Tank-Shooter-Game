@@ -189,14 +189,14 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
-    // this.physics.add.collider(newBullet, this.playerTankContainer, function() {
-    //   this.explode(newBullet.x, newBullet.y)
-    //   newBullet.destroy(true)
-    //   this.playerTankContainer.health -= 10
-    //   if (this.playerTankContainer.health <= 0) {
-    //     this.playerTankContainer.destroy(true)
-    //   }
-    // }, null, this);
+    this.physics.add.collider(newBullet, this.playerTankContainer, function() {
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
+      this.playerTankContainer.health -= 10
+      if (this.playerTankContainer.health <= 0) {
+        this.playerTankContainer.destroy(true)
+      }
+    }, null, this);
 
     this.physics.moveTo(newBullet, this.playerTankContainer.x,this.playerTankContainer.y,900);
   }

@@ -5,7 +5,7 @@ export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
     this.reloaded = true
-    this.boost = 1000
+    this.boost = 1000000
     this.follow = true
     this.enemyContact = false
   }
@@ -22,9 +22,9 @@ export default class GameScene extends Phaser.Scene {
     this.ground = map.createLayer('grass', tileset1)
     this.walls =  map.createLayer('street', tileset)
     this.misc = map.createLayer('misc', tileset1)
-    this.building = map.createLayer('building', tileset1)
+    this.buildings = map.createLayer('building', tileset1)
     this.walls.setCollisionByProperty({ collides: true });
-    this.building.setCollisionByProperty({collides: true})
+    this.buildings.setCollisionByProperty({collides: true})
     /*
     const map = this.make.tilemap({key: "map"})
     this.mapBaseY = map.heightInPixels;
@@ -65,7 +65,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.playerTankContainer, this.walls);
     this.physics.add.collider(this.playerTankBarrel, this.walls)
-    this.physics.add.collider(this.playerTankContainer, this.building)
+    this.physics.add.collider(this.playerTankContainer, this.buildings)
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);

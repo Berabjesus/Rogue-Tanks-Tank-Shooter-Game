@@ -27,6 +27,9 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
 
   follow(pathSetting) {
     this.startFollow(pathSetting)
+    this.world.physics.add.collider(this, this.world.buildings)
+    this.world.physics.add.collider(this, this.playerBody)
+    this.world.physics.add.collider(this.playerBody, this)
   }
 
   _attachTurret(){
@@ -55,7 +58,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     let newBullet = this.world.physics.add.sprite(this.x,this.y, 'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
     
     newBullet.rotation = this.turret.rotation
-    this.world.physics.add.collider(newBullet, this.world.walls, this._explodeBullet.bind(this), null, this)
+    this.world.physics.add.collider(newBullet, this.world.buildings, this._explodeBullet.bind(this), null, this)
 
     this.world.physics.add.collider(newBullet, this.playerBody, function() {
       this._explodeBullet(newBullet)
@@ -87,16 +90,28 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this._attachTurret()
 
     if (this._playerInRange() < 400) {
-      this.chasePlayer = true
+      !this.enemyContact ? this.enemyContact = true :
+
       this._rotateTurret()
-      this._followPlayer()
+
+      if (this._playerInRange() <= 100) {
+        this.stopFollow()
+        this.chasePlayer = false
+      }else if(this._playerInRange() > 200) {
+        this.chasePlayer = true
+      }
+
+      if (this.chasePlayer) {
+        this._followPlayer()
+      }
+
       if (this.ammo === 20) {
         this.attackPlayer()
         this.ammo = 0
       }else{
         this.ammo += 1
       }
-    } else if(this.chasePlayer) {
+    } else if(this.enemyContact) {
       this.stopFollow()
     }
   }

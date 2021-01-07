@@ -34,17 +34,10 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankContainer.setSize(64, 64)
     this.physics.world.enable(this.playerTankContainer);
 
-    // this.player.setCollideWorldBounds(true);
-
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
     this.playerTankBarrel.depth = 10 
-    // this.input.on('pointermove', function(pointer) {
-    // }.bind(this))
-    this.input.setPollAlways();
-
-
+    
     this.physics.add.collider(this.playerTankContainer, this.walls);
-    this.physics.add.collider(this.playerTankBarrel, this.walls)
     this.physics.add.collider(this.playerTankContainer, this.buildings)
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
@@ -61,6 +54,7 @@ export default class GameScene extends Phaser.Scene {
     });
     this.boostBar()
     this.mouse = this.input.mousePointer
+    this.input.setPollAlways();
 
     const path = new Path(this.add.graphics())
     const curve = path.pathOne

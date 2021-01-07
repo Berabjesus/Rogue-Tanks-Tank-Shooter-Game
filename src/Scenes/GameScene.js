@@ -1,5 +1,6 @@
 import 'phaser';
-import Enemy from '../Components/Enemy'
+import Enemy from '../Components/enemy'
+import Path from '../Components/paths'
 export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
@@ -68,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.8,2000);
+    this.camera.zoomTo(0.25,2000);
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w:  Phaser.Input.Keyboard.KeyCodes.W,
@@ -81,38 +82,11 @@ export default class GameScene extends Phaser.Scene {
     this.boostBar()
     this.mouse = this.input.mousePointer
 
-
-
-    // var points = [ 50, 60, 550, 200, 200, 350, 300, 500, 500, 700, 400 ];
-    var points = [[50, 50], [50, 300], [400, 300]]
-    // var curve = new Phaser.Curves.Spline(points);
-
-
-    var curve =  new Phaser.Curves.Path(80, 80)
-    curve.lineTo(new Phaser.Math.Vector2(650, 80))
-    curve.lineTo(new Phaser.Math.Vector2(650, 1000));
-    curve.lineTo(new Phaser.Math.Vector2(80, 1000));
-    curve.lineTo(new Phaser.Math.Vector2(80, 80));
-
-    this.curve  = curve
-    // var curve =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(50, 500));
-
-    // var curve2 =  new Phaser.Curves.Line(new Phaser.Math.Vector2(50, 500), new Phaser.Math.Vector2(500, 500));
-
-    var graphics = this.add.graphics();
-
-    graphics.lineStyle(1, 0xffffff, 1);
-
-    curve.draw(graphics, 64);
-    // curve2.draw(graphics, 64)
-
-    graphics.fillStyle(0x00ff00, 1);
-
-    // for (var i = 0; i < points.length; i++)
-    // {
-    //     graphics.fillCircle(points[i].x, points[i].y, 4);
-    // }
-
+    const path = new Path(this.add.graphics())
+    const curve = path.pathOne
+    const curve2 = path.pathTwo
+    const curve3 = path.pathThree
+    
     this.enemy1 = this.add.follower(curve, 100, 100, 'enemy').setScale(0.3, 0.3);
     this.physics.world.enable(this.enemy1);
     this.enemy1.body.setSize(170, 220)
@@ -160,7 +134,8 @@ export default class GameScene extends Phaser.Scene {
     // this.enemy1.destroy()
     // this.enemy1TankBarrel.destroy()
 
-    let en = new Enemy(this.scene,curve, 100, 100)
+    console.log(curve2.test);
+    let en = new Enemy(this.scene,curve2)
     en.follow(this.pathSetting)
 
   }

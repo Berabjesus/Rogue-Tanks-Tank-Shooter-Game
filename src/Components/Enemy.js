@@ -2,7 +2,7 @@ import 'phaser'
 
 export default class Enemy extends Phaser.GameObjects.PathFollower {
   constructor(mainScene,path, x, y){
-    super(mainScene.scene,path, x, y, 'enemy')
+    super(mainScene.scene,path, path.points.x, path.points.y, 'enemy')
     mainScene.scene.add.existing(this);
     mainScene.scene.physics.world.enable(this);
     this.setScale(0.3,0.3)

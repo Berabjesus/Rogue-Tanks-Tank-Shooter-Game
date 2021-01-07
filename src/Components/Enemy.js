@@ -22,6 +22,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this._ammo = 20
     this._enemyContact = false
     this._chasePlayer = false
+    this.health = 100
   }
 
   follow(pathSetting) {
@@ -86,6 +87,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   update(){
+
     this._attachTurret()
 
     if (this._playerInRange() < 400) {

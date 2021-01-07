@@ -83,6 +83,8 @@ export default class GameScene extends Phaser.Scene {
     this.en = new Enemy(this,this.scene, curve4)
     this.en.follow(path.pathSetting)
 
+    this.enarr = []
+    this.enarr.push(this.en)
   }
 
   rotarteBarrel() {
@@ -145,6 +147,26 @@ export default class GameScene extends Phaser.Scene {
         this.enemy1.destroy(true)
       }
     }, null, this);
+
+    /**/
+      this.enarr.forEach(enemy => {
+        this.physics.add.collider(newBullet, enemy, function() {
+          this.explode(newBullet.x, newBullet.y)
+          newBullet.destroy(true)
+          enemy.health -= 10
+          if (enemy.health <= 0) {
+            // enemy.destroy(true)
+            // delete enemy
+            enemy.setActive(false)
+            enemy.setVisible(false)    
+            enemy._turret.setActive(false)
+            enemy._turret.setVisible(false)    
+          }
+        }, null, this);
+      });
+
+      // for
+    /**/
 
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
 
@@ -257,6 +279,7 @@ export default class GameScene extends Phaser.Scene {
       // this.en.attachTurret()
       // this.en.rotateTurret()
       // this.en.attackPlayer()
+        if(this.en)
         this.en.update()
     /*
       =========================

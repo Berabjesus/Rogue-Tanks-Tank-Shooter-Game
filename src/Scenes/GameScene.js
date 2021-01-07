@@ -101,7 +101,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.enemy1, this.walls);
     this.physics.add.collider(this.enemy1, this.playerTankContainer, this.playerAndEnemyCollide);
 
-    this.playerTankContainer.health = 100
+    this.playerTankContainer.health = 500
     this.enemy1.health = 100
     // this.enemy1.destroy()
     // this.enemy1TankBarrel.destroy()

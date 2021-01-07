@@ -11,7 +11,6 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   constructor(world, mainScene,path){
     super(mainScene.scene,path, path.points.x, path.points.y, 'enemy')
     this.playerBody = world.playerTankContainer
-    this.playerTurret = world.playerTankBarrel
     this.mainScene = mainScene
     this.mainScene.scene.add.existing(this);
     this.mainScene.scene.physics.world.enable(this);
@@ -19,10 +18,11 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.world = world
     this.setScale(0.3,0.3)
     this.body.setSize(170, 220)
-    this.turret = new TankTools(this.mainScene,0,0, 'enemyTankBarrel')
-    this.turret.setScale(0.3,0.3).setOrigin(0.5, 0.7);
+    this.turret = new TankTools(this.mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
     this.bullet = new TankTools(mainScene,0,0, 'bullet')
     this.ammo = 20
+    this.enemyContact = false
+    this.chasePlayer = false
   }
 
   follow(pathSetting) {
@@ -45,7 +45,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   _updatePlayerStatus(){
-    this.playerBody.health -= 1
+    this.playerBody.health -= 10
     if (this.playerBody.health <= 0) {
       this.playerBody.destroy(true)
     }
@@ -65,14 +65,39 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.world.physics.moveTo(newBullet, this.playerBody.x,this.playerBody.y,900);
   }
 
+  _followPlayer() {
+    this.startFollow(this.playerBody)
+    this.pathRotationOffset = 90
+    let dx = this.playerBody.x - this.x
+    let dy = this.playerBody.y - this.y
+    let angle = Math.atan2(dy,dx)
+    let chaseSpeed = 200
+    this.body.setVelocity( Math.cos(angle) * chaseSpeed,
+    Math.sin(angle) * chaseSpeed);
+
+    let rotation = Phaser.Math.Angle.Between(this.x, this.y, this.playerBody.x, this.playerBody.y);
+    this.rotation = rotation + Math.PI/2
+  }
+
+  _playerInRange(){
+    return Phaser.Math.Distance.BetweenPoints(this, this.playerBody)
+  }
+
   update(){
     this._attachTurret()
-    this._rotateTurret()
-    if (this.ammo === 20) {
-      this.attackPlayer()
-      this.ammo = 0
-    }else{
-      this.ammo += 1
+
+    if (this._playerInRange() < 400) {
+      this.chasePlayer = true
+      this._rotateTurret()
+      this._followPlayer()
+      if (this.ammo === 20) {
+        this.attackPlayer()
+        this.ammo = 0
+      }else{
+        this.ammo += 1
+      }
+    } else if(this.chasePlayer) {
+      this.stopFollow()
     }
   }
 }

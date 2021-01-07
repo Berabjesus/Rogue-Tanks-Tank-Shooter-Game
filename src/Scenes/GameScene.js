@@ -24,27 +24,7 @@ export default class GameScene extends Phaser.Scene {
     this.misc = map.createLayer('misc', tileset1)
     this.buildings = map.createLayer('building', tileset1)
     this.walls.setCollisionByProperty({ collides: true });
-    this.buildings.setCollisionByProperty({collides: true})
-    /*
-    const map = this.make.tilemap({key: "map"})
-    this.mapBaseY = map.heightInPixels;
-    const tileset = map.addTilesetImage('tileset', 'tile')
-
-    map.createLayer('Ground', tileset)
-    this.walls =  map.createLayer('Wall', tileset)
-    this.walls.setCollisionByProperty({ collides: true });
-
-    */
-
-    /*
-    const debugGraphics = this.add.graphics().setAlpha(0.75);
-    this.walls.renderDebug(debugGraphics, {
-      tileColor: null, // Color of non-colliding tiles
-      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    });
-
-    */
+    this.buildings.setCollisionByProperty({collides: true});
 
     // this.cameras.main.scrollX = -80;
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);

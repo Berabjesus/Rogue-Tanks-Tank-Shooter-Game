@@ -42,7 +42,7 @@ export default class GameScene extends Phaser.Scene {
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.55,2000);
+    this.camera.zoomTo(0.75,2000);
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w:  Phaser.Input.Keyboard.KeyCodes.W,
@@ -103,7 +103,6 @@ export default class GameScene extends Phaser.Scene {
     this.boostProgressBar.fillStyle(0xffffff, 1);
     this.boostProgressBar.fillRoundedRect(10, 10, 10,18, 6);
 
-    console.log(this.boostProgressBar);
     this.boostContainer = this.add.container(10, 10, [ this.boostProgressBox, this.boostProgressBar]);
     this.boostContainer.setScrollFactor(0,0);
   }
@@ -198,8 +197,6 @@ export default class GameScene extends Phaser.Scene {
           this.scene.restart();
           return
         }
-        // console.log(this.enemy1.x, this.enemy1.y);
-        // console.log(this.playerTankContainer.x, this.playerTankContainer.y);
         var dist = Phaser.Math.Distance.BetweenPoints(this.enemy1, this.playerTankContainer)
         this.physics.add.collider(this.enemy1, this.walls);
 
@@ -319,7 +316,7 @@ export default class GameScene extends Phaser.Scene {
       this.playerTankContainer.body.angularVelocity = 200;
     }
 
-    if (this.mouse.isDown && this.reloaded) {
+    if ((this.mouse.isDown || this.keys.space.isDown) && this.reloaded) {
       this.fireAtEnemy()
       this.reloaded =false
     }
@@ -328,17 +325,8 @@ export default class GameScene extends Phaser.Scene {
       this.reloaded = true
     }.bind(this))
 
-
-    if (this.keys.space.isDown) {
-      // console.log('fireAtEnemy');
-      this.rotarteBarrel()
-      const speed = 30
-      const barrelDirectionX = this.playerTankBarrel.body.rotation 
-      const barrelDirectionY =this.playerTankBarrel.body.rotation
-
-      // console.log('directionX - ' + barrelDirectionX );
-      // console.log('directionY - ' + barrelDirectionY );
-
+    if (Phaser.Input.Keyboard.JustUp(this.keys.space)) {
+      this.reloaded = true
     }
   }
 };

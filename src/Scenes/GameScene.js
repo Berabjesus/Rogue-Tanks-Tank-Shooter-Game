@@ -69,7 +69,7 @@ export default class GameScene extends Phaser.Scene {
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.25,2000);
+    this.camera.zoomTo(0.55,2000);
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w:  Phaser.Input.Keyboard.KeyCodes.W,
@@ -86,7 +86,7 @@ export default class GameScene extends Phaser.Scene {
     const curve = path.pathOne
     const curve2 = path.pathTwo
     const curve3 = path.pathThree
-    
+    const curve4 = path.pathFour
     this.enemy1 = this.add.follower(curve, 100, 100, 'enemy').setScale(0.3, 0.3);
     this.physics.world.enable(this.enemy1);
     this.enemy1.body.setSize(170, 220)
@@ -96,35 +96,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.enemy1TankBarrel = this.physics.add.sprite(0 , 0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
 
-    let count =0
-    this.pathSetting = {
-      duration: 35000,
-      yoyo: true,
-      repeat: -1,
-      rotateToPath: true,
-      rotationOffset: 90,
-      verticalAdjust: false,
-      onComplete:()=>{
-        // count++
-        // if (count === 1) {
-        //   this.enemy1.setPath(curve2)
-        // } else if(count > 1){
-        //   count = 0
-        //   pathSetting.yoyo = true
-        //   this.enemy1.startFollow(pathSetting)
-        //   this.enemy1.setPath(curve)
-        // } 
-      }
-    }
-    this.enemy1.startFollow(this.pathSetting);
-
-    // setTimeout(() => {
-    //   this.enemy1.pauseFollow()
-    //   setTimeout(() => {
-    //     this.enemy1.resumeFollow()
-    //   }, 4000);
-  
-    // }, 8000);
+    this.enemy1.startFollow(path.pathSetting);
 
     this.physics.add.collider(this.enemy1, this.walls);
     this.physics.add.collider(this.enemy1, this.playerTankContainer, this.playerAndEnemyCollide);
@@ -134,9 +106,9 @@ export default class GameScene extends Phaser.Scene {
     // this.enemy1.destroy()
     // this.enemy1TankBarrel.destroy()
 
-    console.log(curve2.test);
-    let en = new Enemy(this.scene,curve2)
-    en.follow(this.pathSetting)
+    this.en = new Enemy(this.scene,curve2, this.playerTankContainer)
+    this.en.follow(path.pathSetting)
+
 
   }
 
@@ -305,6 +277,21 @@ export default class GameScene extends Phaser.Scene {
       /*
       =========================
      */
+
+
+
+        /*
+    =========================
+    */
+
+      this.en.attachTurret()
+      this.en.rotateTurret()
+      // this.en.pauseFollow()
+    /*
+      =========================
+     */
+
+
 
 
     this.playerTankContainer.body.velocity.x = 0;

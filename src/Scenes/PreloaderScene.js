@@ -7,6 +7,7 @@ import blueButton1 from '../Assets/ui/blue_button02.png';
 import blueButton2 from '../Assets/ui/blue_button03.png';
 import grey from '../Assets/ui/grey_box.png'
 import blue from '../Assets/ui/blue_boxCheckmark.png'
+import fullscreenBtn from '../Assets/ui/fs.png'
 
 import player from '../Assets/tank/player.png'
 import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
@@ -122,6 +123,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('blueButton2', blueButton2);
     this.load.image('box', grey);
     this.load.image('checkedBox', blue);
+    this.load.image('fullscreen', fullscreenBtn);
 
     this.load.audio('bgMusic', [bgmusic])
     this.load.spritesheet('player', player, {

@@ -15,7 +15,6 @@ export default class GameScene extends Phaser.Scene {
   }
  
   create () {
-
     const map = this.make.tilemap({key: 'map1'})
     this.mapBaseY = map.heightInPixels;
     const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0)

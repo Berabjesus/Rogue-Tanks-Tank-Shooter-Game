@@ -30,12 +30,12 @@ export default class OptionsScene extends Phaser.Scene {
   create () {
     this.model = this.sys.game.globals.model;
 
-    this.text = this.add.text(300, 100, 'Options', { fontSize: 40 });
-    this.musicButton = this.add.image(200, 200, 'checkedBox');
-    this.musicText = this.add.text(250, 190, 'Music Enabled', { fontSize: 24 });
+    this.text = this.add.text(500, 100, 'Options', { fontSize: 40 });
+    this.musicButton = this.add.image(500, 200, 'checkedBox');
+    this.musicText = this.add.text(550, 190, 'Music Enabled', { fontSize: 24 });
     
-    this.soundButton = this.add.image(200, 300, 'checkedBox');
-    this.soundText = this.add.text(250, 290, 'Sound Enabled', { fontSize: 24 });
+    this.soundButton = this.add.image(500, 300, 'checkedBox');
+    this.soundText = this.add.text(550, 290, 'Sound Enabled', { fontSize: 24 });
     
     this.bgMusic = this.sys.game.globals.bgMusic
 
@@ -55,7 +55,7 @@ export default class OptionsScene extends Phaser.Scene {
       this.updateAudio();
     }.bind(this));
 
-    this.menuButton = this.add.sprite(400, 500, 'blueButton1').setInteractive()
+    this.menuButton = this.add.sprite(100, 500, 'blueButton1').setInteractive()
     this.menuText = this.add.text(0,0, 'Menu', { fontSize: '32px', fill: '#fff' })
     Phaser.Display.Align.In.Center(this.menuText, this.menuButton);
 
@@ -63,7 +63,12 @@ export default class OptionsScene extends Phaser.Scene {
       this.scene.start('Menu')
     }.bind(this))
     
+    const fullscreenButton = this.add.sprite(500, 400, 'fullscreen').setScale(0.15, 0.15).setInteractive()
+    const fsText = this.add.text(550, 390, 'Fullscreen', { fontSize: 24 });
 
+    fullscreenButton.on('pointerdown', function(pointer) {
+      this.scale.startFullscreen();
+    }.bind(this))
     this.updateAudio();
   }
 };

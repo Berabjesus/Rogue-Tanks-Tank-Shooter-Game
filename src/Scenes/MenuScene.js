@@ -39,7 +39,6 @@ export default class MenuScene extends Phaser.Scene {
       gameObjects[0].setTexture('blueButton1');
     });
 
-    // Options
     this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
     this.centerButton(this.optionsButton);
     
@@ -50,7 +49,6 @@ export default class MenuScene extends Phaser.Scene {
       this.scene.start('Options');
     }.bind(this));
     
-    // Credits
     this.creditsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
     this.centerButton(this.creditsButton, -1);
     

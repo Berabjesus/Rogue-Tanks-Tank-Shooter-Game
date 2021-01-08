@@ -11,7 +11,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   constructor(world, mainScene,path){
     super(mainScene.scene,path, path.points.x, path.points.y, 'enemy')
     this._world = world
-    this._playerBody = world.playerTankContainer
+    this._player = world.playerTankContainer
     this._mainScene = mainScene
     this._mainScene.scene.add.existing(this);
     this._mainScene.scene.physics.world.enable(this);
@@ -20,6 +20,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.body.setSize(170, 220)
     this._turret = new TankTools(this._mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
     this._ammo = 20
+    this.depth = 2
     this._enemyContact = false
     this._chasePlayer = false
     this.health = 100
@@ -28,8 +29,8 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   follow(pathSetting) {
     this.startFollow(pathSetting)
     this._world.physics.add.collider(this, this._world.buildings)
-    this._world.physics.add.collider(this, this._playerBody)
-    this._world.physics.add.collider(this._playerBody, this)
+    this._world.physics.add.collider(this, this._player)
+    this._world.physics.add.collider(this._player, this)
   }
 
   _attachTurret(){
@@ -38,7 +39,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   _rotateTurret(){
-    let angel = Phaser.Math.Angle.Between(this.body.x,this.body.y, this._playerBody.x, this._playerBody.y);
+    let angel = Phaser.Math.Angle.Between(this.body.x,this.body.y, this._player.x, this._player.y);
     this._turret.rotation = angel + Math.PI/2
   }
 
@@ -48,9 +49,9 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   _updatePlayerStatus(){
-    this._playerBody.health -= 10
-    if (this._playerBody.health <= 0) {
-      this._playerBody.destroy(true)
+    this._player.health -= 10
+    if (this._player.health <= 0) {
+      this._player.destroy(true)
     }
   }
 
@@ -60,31 +61,31 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     newBullet.rotation = this._turret.rotation
     this._world.physics.add.collider(newBullet, this._world.buildings, this._explodeBullet.bind(this), null, this)
 
-    this._world.physics.add.collider(newBullet, this._playerBody, function() {
+    this._world.physics.add.collider(newBullet, this._player, function() {
       this._explodeBullet(newBullet)
       this._updatePlayerStatus()
     }, null, this);
 
-    this._world.physics.moveTo(newBullet, this._playerBody.x,this._playerBody.y,900);
+    this._world.physics.moveTo(newBullet, this._player.x,this._player.y,900);
     // newBullet.
   }
 
   _followPlayer() {
-    this.startFollow(this._playerBody)
+    this.startFollow(this._player)
     this.pathRotationOffset = 90
-    let dx = this._playerBody.x - this.x
-    let dy = this._playerBody.y - this.y
+    let dx = this._player.x - this.x
+    let dy = this._player.y - this.y
     let angle = Math.atan2(dy,dx)
     let chaseSpeed = 200
     this.body.setVelocity( Math.cos(angle) * chaseSpeed,
     Math.sin(angle) * chaseSpeed);
 
-    let rotation = Phaser.Math.Angle.Between(this.x, this.y, this._playerBody.x, this._playerBody.y);
+    let rotation = Phaser.Math.Angle.Between(this.x, this.y, this._player.x, this._player.y);
     this.rotation = rotation + Math.PI/2
   }
 
   _playerInRange(){
-    return Phaser.Math.Distance.BetweenPoints(this, this._playerBody)
+    return Phaser.Math.Distance.BetweenPoints(this, this._player)
   }
 
   update(){

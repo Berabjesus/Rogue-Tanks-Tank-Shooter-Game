@@ -108,6 +108,7 @@ export default class GameScene extends Phaser.Scene {
   createEnemyTank(path){
     let newEnemy = new Enemy(this,this.scene, path)
     newEnemy.follow(this.path.pathSetting)
+    this.physics.add.collider(this.playerTankContainer, newEnemy);
     this.enemyGroup.push(newEnemy)
   }
 
@@ -125,7 +126,6 @@ export default class GameScene extends Phaser.Scene {
         respawnedEnemy.body.reset(pathOne.points.x, pathOne.points.y);
         respawnedEnemy.setPath(pathOne)
         respawnedEnemy.health = 100
-  
         this.createEnemyTank(pathTwo)
       });
       this.respawnGroup = []

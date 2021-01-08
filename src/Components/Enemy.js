@@ -66,6 +66,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     }, null, this);
 
     this._world.physics.moveTo(newBullet, this._playerBody.x,this._playerBody.y,900);
+    // newBullet.
   }
 
   _followPlayer() {

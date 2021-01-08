@@ -24,11 +24,13 @@ export default class GameScene extends Phaser.Scene {
     const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0)
 
     this.ground = map.createLayer('grass', tileset1)
+    this.boundary = map.createLayer('boundary', tileset)
     this.walls =  map.createLayer('street', tileset)
     this.misc = map.createLayer('misc', tileset1)
     this.buildings = map.createLayer('building', tileset1)
     this.walls.setCollisionByProperty({ collides: true });
     this.buildings.setCollisionByProperty({collides: true});
+    this.boundary.setCollisionByProperty({collides: true})
 
     this.brokenTank = this.add.sprite( 350, 420, 'enemy').setScale(0.3, 0.3).setTint(0x706f6f);
     this.brokenTank
@@ -96,10 +98,10 @@ export default class GameScene extends Phaser.Scene {
     // this.enarr = []
     // this.enarr.push(this.en, this.en1, this.en2, this.en3)
 
-    setInterval(() => {
-      this.respawn()
-      console.log(this.enemyGroup);
-    }, 10000);
+    // setInterval(() => {
+    //   this.respawn()
+    //   console.log(this.enemyGroup);
+    // }, 10000);
   }
 
   respawn(){
@@ -151,6 +153,11 @@ export default class GameScene extends Phaser.Scene {
     newBullet.depth = 1
 
     this.physics.add.collider(newBullet, this.walls, function() {
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
+    }, null, this);
+
+    this.physics.add.collider(newBullet, this.buildings, function() {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
     }, null, this);

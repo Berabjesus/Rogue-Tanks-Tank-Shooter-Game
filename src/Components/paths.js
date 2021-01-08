@@ -10,23 +10,12 @@ export default class Path{
     this._pathThree()
     this._pathFour()
     this.pathSetting = {
-      duration: 35000,
+      duration: 30000,
       yoyo: true,
       repeat: -1,
       rotateToPath: true,
       rotationOffset: 90,
       verticalAdjust: false,
-      onComplete:()=>{
-        // count++
-        // if (count === 1) {
-        //   this.enemy1.setPath(curve2)
-        // } else if(count > 1){
-        //   count = 0
-        //   pathSetting.yoyo = true
-        //   this.enemy1.startFollow(pathSetting)
-        //   this.enemy1.setPath(curve)
-        // } 
-      }
     }
   }
 
@@ -86,26 +75,12 @@ export default class Path{
     this._pathFour.points = {x:1180, y:80}
   }
 
-
-  get pathOne() {
-    return this._pathOne;
-  }
-  get pathTwo(){
-    return this._pathTwo
-  }
-  get pathThree(){
-    return this._pathThree
-  }
-  get pathFour(){
-    return this._pathFour
-  }
-
   getAllPaths(){
     return {
-      path1: this.pathOne,
-      path2: this.pathTwo,
-      path3: this.pathThree,
-      path4: this.pathFour,
+      path1: this._pathOne,
+      path2: this._pathTwo,
+      path3: this._pathThree,
+      path4: this._pathFour,
     } 
   }
 }

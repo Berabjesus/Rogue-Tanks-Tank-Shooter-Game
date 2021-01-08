@@ -6,8 +6,6 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
     this.reloaded = true
     this.boost = 1000000
-    this.follow = true
-    this.enemyContact = false
     this.paths = {}
     this.respawnGroup = []
     this.enemyGroup = []
@@ -70,35 +68,13 @@ export default class GameScene extends Phaser.Scene {
     this.mouse = this.input.mousePointer
     this.input.setPollAlways();
 
-    this.path = new Path(this.add.graphics())
-    this.curve = this.path.pathOne
-    // const curve2 = this.path.pathTwo
-    // const curve3 = this.path.pathThree
-    // const curve4 = this.path.pathFour
-
-    this.paths = this.path.getAllPaths()
+    this.newPathInstance = new Path(this.add.graphics())
+    this.paths = this.newPathInstance.getAllPaths()
   
     for (const key in this.paths) {
       let newPath = this.paths[key]
       this.createEnemyTank(newPath)
     }
-
-    // console.log(this.enemyGroup[0]);
-    // this.en1= new Enemy(this,this.scene, this.curve)
-    // this.en1.follow(this.path.pathSetting)
-
-    // console.log(this.en1);
-    // this.en = new Enemy(this,this.scene, curve4)
-    // this.en.follow(this.path.pathSetting)
-
-    // this.en2 = new Enemy(this,this.scene, curve2)
-    // this.en2.follow(this.path.pathSetting)
-
-    // this.en3 = new Enemy(this,this.scene, curve3)
-    // this.en3.follow(this.path.pathSetting)
-
-    // this.enarr = []
-    // this.enarr.push(this.en, this.en1, this.en2, this.en3)
 
     setInterval(() => {
       this.respawn()
@@ -107,7 +83,7 @@ export default class GameScene extends Phaser.Scene {
 
   createEnemyTank(path){
     let newEnemy = new Enemy(this,this.scene, path)
-    newEnemy.follow(this.path.pathSetting)
+    newEnemy.follow(this.newPathInstance.pathSetting)
     this.physics.add.collider(this.playerTankContainer, newEnemy);
     this.enemyGroup.push(newEnemy)
   }
@@ -143,8 +119,8 @@ export default class GameScene extends Phaser.Scene {
     this.boostProgressBox.fillRoundedRect(10, 10, 150, 18, 7);
     this.boostProgressBar = this.add.graphics();
     this.boostProgressBar.fillStyle(0xffffff, 1);
-    this.boostProgressBar.fillRoundedRect(10, 10, 10,18, 6);
-
+    this.boostProgressBar.fillRoundedRect(10, 10, 129,18, 6);
+    
     this.boostContainer = this.add.container(10, 10, [ this.boostProgressBox, this.boostProgressBar]);
     this.boostContainer.setScrollFactor(0,0);
   }
@@ -199,7 +175,6 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.playerTankContainer.health <= 0) {
         console.log('u died');
-      this.enemyContact = false
       this.registry.destroy();
       this.events.off();
       this.scene.restart();

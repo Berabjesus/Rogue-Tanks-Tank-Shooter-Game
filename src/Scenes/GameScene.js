@@ -33,11 +33,9 @@ export default class GameScene extends Phaser.Scene {
     this.brokenTank = this.add.sprite( 350, 420, 'enemy').setScale(0.3, 0.3).setTint(0x706f6f);
     this.brokenTank
     this.brokenTankTurret = this.add.sprite( 390, 440, 'enemyTankBarrel').setScale(0.3, 0.3).setTint(0x706f6f);
-    // this.cameras.main.scrollX = -80;
-    // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
-    this.playerTankContainer =  this.add.container(600, 400, [ this.player]);
+    this.playerTankContainer =  this.add.container(1700, 2200, [ this.player]);
     this.playerTankContainer.setSize(64, 64)
     this.playerTankContainer.depth = 2 
     this.playerTankContainer.health = 100
@@ -52,7 +50,7 @@ export default class GameScene extends Phaser.Scene {
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.75,2000);
+    this.camera.zoomTo(0.75,1000);
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
@@ -75,13 +73,18 @@ export default class GameScene extends Phaser.Scene {
       this.createEnemyTank(newPath)
     }
 
-    setInterval(() => {
-      this.respawn()
-    }, 5000);
-
     this.createScoreBox()
 
     this.createHealthBox()
+
+    setInterval(() => {
+      this.respawn()
+      if (this.playerTankContainer.health < 100) {
+        this.playerTankContainer.health += 2
+        this.health.setText(`Health: ${this.playerTankContainer.health}`)
+      }
+    }, 5000);
+
   }
 
   createScoreBox(){
@@ -130,8 +133,8 @@ export default class GameScene extends Phaser.Scene {
       for (let index = 0; index < this.toRespawn; index++) {
         this.createEnemyTank(pathOne)
         this.createEnemyTank(pathTwo)
-        this.toRespawn = 0
       }
+      this.toRespawn = 0
     }
   }
 
@@ -177,6 +180,8 @@ export default class GameScene extends Phaser.Scene {
         newBullet.destroy(true)
         enemy.health -= 10
         if (enemy.health <= 0) {
+          this.scoreNumber += 10
+          this.score.setText(`Score: ${this.scoreNumber}`)
           this.toRespawn += 1
           enemy.destroy(true)
           enemy.turret.setActive(false)
@@ -186,6 +191,14 @@ export default class GameScene extends Phaser.Scene {
     });
 
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
+  }
+
+  updatePlayerHealth(){
+    this.playerTankContainer.health -= 4
+    this.health.setText(`Health: ${this.playerTankContainer.health}`)
+    if (this.playerTankContainer.health <= 0) {
+      this.playerTankContainer.destroy(true)
+    }
   }
 
   update() {

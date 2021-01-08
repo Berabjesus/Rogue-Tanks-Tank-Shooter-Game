@@ -50,10 +50,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   _updatePlayerStatus(){
-    this._player.health -= 1
-    if (this._player.health <= 0) {
-      this._player.destroy(true)
-    }
+    this._world.updatePlayerHealth()
   }
 
   _attackPlayer(){

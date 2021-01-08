@@ -1,6 +1,7 @@
 import 'phaser';
-import tilePng from '../Assets/tile/main.png'
-import tileJson from '../Assets/tile/main.json'
+import citypng from '../Assets/tile/city.png'
+import bpng from '../Assets/tile/_Example.png'
+import cityjson from '../Assets/tile/city.json'
 import bgmusic from '../Assets/audio/TownTheme.ogg'
 import player from '../Assets/tank/player.png'
 import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
@@ -9,15 +10,6 @@ import explosion  from '../Assets/tank/explosion.png'
 import enemy from '../Assets/tank/enemy.png'
 import enemyTankBarrel from '../Assets/tank/enemyTankBarrel.png'
 
-/*
-*/
-
-import citypng from '../Assets/tile/city.png'
-import bpng from '../Assets/tile/_Example.png'
-import cityjson from '../Assets/tile/city.json'
-/*
-*/
-
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
@@ -25,8 +17,11 @@ export default class PreloaderScene extends Phaser.Scene {
   }
  
   preload () {
+    var width = this.cameras.main.width;
+    var height = this.cameras.main.height;
+
     this.madeBy = this.add.image(10, 10, 'madeBy').setOrigin(0, 0).setScale(0.3, 0.3);
-    this.phaserLogo = this.add.image(400, 300, 'phaserLogo').setOrigin(0.5, 0.5).setScale(0.8, 0.8);
+    this.phaserLogo = this.add.image(width/1.9, 300, 'phaserLogo').setOrigin(0.5, 0.5).setScale(0.8, 0.8);
     const name = this.make.text({
       x: 10,
       y: 150,
@@ -44,24 +39,79 @@ export default class PreloaderScene extends Phaser.Scene {
         duration: 300,
         ease: 'Power2',
         onComplete:() => {
-          this.gameLogo = this.add.image(450, 300, 'gameLogo').setOrigin(0.5, 0.5).setScale(1, 1);
+          this.gameLogo = this.add.image(width/1.9, 300, 'gameLogo').setOrigin(0.5, 0.5).setScale(1, 1);
         }
       }, this);
     }.bind(this))
 
-    this.load.image('tile', tilePng)
-    this.load.tilemapTiledJSON('map', tileJson)
+    var progressBar = this.add.graphics();
+    var progressBox = this.add.graphics();
+    progressBox.fillStyle(0x222222, 0.8);
+    progressBox.fillRoundedRect(450, 450, 350, 18, 7);
+  
+    console.log(width, height);
+    
+    var loadingText = this.make.text({
+      x: width/1.9,
+      y: 420,
+      text: 'Loading...',
+      style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+      }
+    });
+    loadingText.setOrigin(0.5, 0.5);
 
+    var percentText = this.make.text({
+      x: width/1.9,
+      y: 460,
+      text: '0%',
+      style: {
+        font: '18px monospace',
+        fill: '#ffffff'
+      }
+    });
+    percentText.setOrigin(0.5, 0.5);
 
-    /*
-    */
+    var assetText = this.make.text({
+      x: width/1.9,
+      y: 490,
+      text: '',
+      style: {
+        font: '20px monospace',
+        fill: '#ffffff'
+      }
+    });
+    assetText.setOrigin(0.5, 0.5);
+    
+    this.load.on('progress', function (value) {
+      percentText.setText(parseInt(value * 100) + '%');
+      progressBar.clear();
+      progressBar.fillStyle(0xffffff, 1);
+      progressBar.fillRoundedRect(450, 450, 300 * value,18, 6);
+    });
 
-      this.load.image('tile1', citypng)
-      this.load.image('build', bpng)
-      this.load.tilemapTiledJSON('map1', cityjson)
+    this.load.on('fileprogress', function (file) {
+      assetText.setText('Loading asset: ' + file.key);
+    });
 
-    /*
-    */
+    this.load.on('complete', function () {
+      progressBar.destroy();
+      progressBox.destroy();
+      loadingText.destroy();
+      percentText.destroy();
+      assetText.destroy();
+      this.time.delayedCall(1000, function() {
+        logo.destroy();
+        avatar.destroy()
+        name.destroy()
+        this.startTitleScene()
+      }.bind(this));
+    }.bind(this));
+
+    this.load.image('tile1', citypng)
+    this.load.image('build', bpng)
+    this.load.tilemapTiledJSON('map1', cityjson)
 
 
     this.load.audio('bgMusic', [bgmusic])

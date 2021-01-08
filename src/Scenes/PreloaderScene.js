@@ -3,6 +3,11 @@ import citypng from '../Assets/tile/city.png'
 import bpng from '../Assets/tile/_Example.png'
 import cityjson from '../Assets/tile/city.json'
 import bgmusic from '../Assets/audio/TownTheme.ogg'
+import blueButton1 from '../Assets/ui/blue_button02.png';
+import blueButton2 from '../Assets/ui/blue_button03.png';
+import grey from '../Assets/ui/grey_box.png'
+import blue from '../Assets/ui/blue_boxCheckmark.png'
+
 import player from '../Assets/tank/player.png'
 import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
 import bulletShell from '../Assets/tank/HeavyShell.png'
@@ -20,8 +25,8 @@ export default class PreloaderScene extends Phaser.Scene {
     var width = this.cameras.main.width;
     var height = this.cameras.main.height;
 
-    this.madeBy = this.add.image(10, 10, 'madeBy').setOrigin(0, 0).setScale(0.3, 0.3);
-    this.phaserLogo = this.add.image(width/1.9, 300, 'phaserLogo').setOrigin(0.5, 0.5).setScale(0.8, 0.8);
+    const avatar = this.add.image(10, 10, 'madeBy').setOrigin(0, 0).setScale(0.3, 0.3);
+    // this.phaserLogo = this.add.image(width/1.9, 300, 'phaserLogo').setOrigin(0.5, 0.5).setScale(0.8, 0.8);
     const name = this.make.text({
       x: 10,
       y: 150,
@@ -32,7 +37,7 @@ export default class PreloaderScene extends Phaser.Scene {
       }
     });
 
-    this.time.delayedCall(2000, function () {
+    this.time.delayedCall(10, function () {
       this.tweens.add({
         targets: this.phaserLogo,
         alpha: 0,
@@ -102,7 +107,7 @@ export default class PreloaderScene extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
       this.time.delayedCall(1000, function() {
-        logo.destroy();
+        // logo.destroy();
         avatar.destroy()
         name.destroy()
         this.startTitleScene()
@@ -113,6 +118,10 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('build', bpng)
     this.load.tilemapTiledJSON('map1', cityjson)
 
+    this.load.image('blueButton1', blueButton1);
+    this.load.image('blueButton2', blueButton2);
+    this.load.image('box', grey);
+    this.load.image('checkedBox', blue);
 
     this.load.audio('bgMusic', [bgmusic])
     this.load.spritesheet('player', player, {
@@ -144,7 +153,11 @@ export default class PreloaderScene extends Phaser.Scene {
     })
   }
  
+startTitleScene() {
+  this.scene.start('Menu');
+}
+ 
   create () {
-    this.scene.start('Game')
+    this.sys.game.globals.bgMusic = this.sound.add('bgMusic', { volume: 0.5, loop: true });
   }
 };

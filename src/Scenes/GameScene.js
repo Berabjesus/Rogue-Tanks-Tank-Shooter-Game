@@ -167,7 +167,7 @@ export default class GameScene extends Phaser.Scene {
     newBullet.rotation += this.playerTankBarrel.rotation
     newBullet.depth = 1
 
-    this.physics.add.collider(newBullet, this.walls, function() {
+    this.physics.add.collider(newBullet, this.buildings, function() {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
     }, null, this);

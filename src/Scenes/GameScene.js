@@ -5,7 +5,6 @@ export default class GameScene extends Phaser.Scene {
   constructor () {
     super('Game');
     this.reloaded = true
-    this.boost = 1000000
     this.paths = {}
     this.respawnGroup = []
     this.enemyGroup = []
@@ -64,7 +63,6 @@ export default class GameScene extends Phaser.Scene {
       space:  Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
 
-    this.boostBar()
     this.mouse = this.input.mousePointer
     this.input.setPollAlways();
 
@@ -79,6 +77,16 @@ export default class GameScene extends Phaser.Scene {
     setInterval(() => {
       this.respawn()
     }, 5000);
+
+    this.boostProgressBox = this.add.graphics();
+    this.boostProgressBox.fillStyle(0x222222, 0.8);
+    this.boostProgressBox.fillRoundedRect(1, 1, 150, 18, 7);
+    this.boostProgressBar = this.add.graphics();
+    this.boostProgressBar.fillStyle(0xffffff, 1);
+    this.boostProgressBar.fillRoundedRect(1, 1,150,18, 6);
+    this.boostContainer = this.add.container(-10, -100, [ this.boostProgressBox, this.boostProgressBar]);
+    this.boostContainer.setScrollFactor(0,0);
+    
   }
 
   createEnemyTank(path){
@@ -113,16 +121,12 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
   }
 
-  boostBar() {
-    this.boostProgressBox = this.add.graphics();
-    this.boostProgressBox.fillStyle(0x222222, 0.8);
-    this.boostProgressBox.fillRoundedRect(10, 10, 150, 18, 7);
-    this.boostProgressBar = this.add.graphics();
+  boostBar(value) {
+    console.log('in');
+    this.boost += value
+    this.boostProgressBar.clear();
     this.boostProgressBar.fillStyle(0xffffff, 1);
-    this.boostProgressBar.fillRoundedRect(10, 10, 129,18, 6);
-    
-    this.boostContainer = this.add.container(10, 10, [ this.boostProgressBox, this.boostProgressBar]);
-    this.boostContainer.setScrollFactor(0,0);
+    this.boostProgressBar.fillRoundedRect(1, 1,this.boost / 100,18, 6);
   }
 
   explode(x,y) {
@@ -204,22 +208,17 @@ export default class GameScene extends Phaser.Scene {
     } else if (this.arrows.right.isDown) {
       this.playerTankBarrel.body.angularVelocity = 200
     }
+
+    var boost = 1
+    if (this.keys.e.isDown){ 
+      boost = 1.5
+    }
     
-    if (this.keys.w.isDown){
-      let boost = 1
-      if (this.keys.e.isDown && this.boost > 2){ 
-        boost = 2
-        this.boost -= 2
-      }  
+    if (this.keys.w.isDown){  
       this.playerTankContainer.body.velocity.y = -velocityX * boost
       this.playerTankContainer.body.velocity.x = velocityY * boost
     }
     if (this.keys.s.isDown){
-      let boost = 1
-      if (this.keys.e.isDown && this.boost > 2){ 
-        boost = 2
-        this.boost -= 2
-      }
       this.playerTankContainer.body.velocity.y = velocityX * boost
       this.playerTankContainer.body.velocity.x = -velocityY * boost
     }

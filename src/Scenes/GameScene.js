@@ -6,8 +6,9 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
     this.reloaded = true
     this.paths = {}
-    this.respawnGroup = []
+    this.toRespawn = 0
     this.enemyGroup = []
+    this.scoreNumber = 0
   }
  
   preload () {
@@ -39,7 +40,7 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankContainer =  this.add.container(600, 400, [ this.player]);
     this.playerTankContainer.setSize(64, 64)
     this.playerTankContainer.depth = 2 
-    this.playerTankContainer.health = 15000000
+    this.playerTankContainer.health = 100
     this.physics.world.enable(this.playerTankContainer);
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
@@ -78,15 +79,37 @@ export default class GameScene extends Phaser.Scene {
       this.respawn()
     }, 5000);
 
-    this.boostProgressBox = this.add.graphics();
-    this.boostProgressBox.fillStyle(0x222222, 0.8);
-    this.boostProgressBox.fillRoundedRect(1, 1, 150, 18, 7);
-    this.boostProgressBar = this.add.graphics();
-    this.boostProgressBar.fillStyle(0xffffff, 1);
-    this.boostProgressBar.fillRoundedRect(1, 1,150,18, 6);
-    this.boostContainer = this.add.container(-10, -100, [ this.boostProgressBox, this.boostProgressBar]);
-    this.boostContainer.setScrollFactor(0,0);
-    
+    this.createScoreBox()
+
+    this.createHealthBox()
+  }
+
+  createScoreBox(){
+    this.createBox(-170, -100, 150)
+    this.score = this.createText(-170, -100,`Score: ${this.scoreNumber}`)
+  }
+
+  createHealthBox(){
+    this.createBox(1100, -100, 200)
+    this.health = this.createText(1100, -100, `Health: ${this.playerTankContainer.health}`)
+  }
+
+  createBox(x,y, width){
+    let box = this.add.graphics();
+    box.fillStyle(0x222222, 0.8);
+    box.fillRoundedRect(x, y, width, 50, 7);
+    box.setScrollFactor(0,0);
+    box.depth = 20
+    return box
+  }
+
+  createText(x,y,newtext){
+    let text = this.add.text(x, y, newtext, { font: '40px gothic', fill: '#ffffff' });
+    text.setStroke('#000', 4);
+    text.setShadow(2, 2, "#333333", 2, true, true);
+    text.setScrollFactor(0,0);
+    text.depth = 20
+    return text
   }
 
   createEnemyTank(path){
@@ -97,36 +120,24 @@ export default class GameScene extends Phaser.Scene {
   }
 
   respawn(){
-    if (this.respawnGroup.length > 0) {
+    if (this.toRespawn > 0) {
       var pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length)
       var pathOne = this.paths[`path${pathNumberOne}`];
   
       var pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1    
       var pathTwo = this.paths[`path${pathNumberTwo}`]
   
-      this.respawnGroup.forEach(respawnedEnemy => {
-        respawnedEnemy.setActive(true)
-        respawnedEnemy.setVisible(true)
-        respawnedEnemy.body.reset(pathOne.points.x, pathOne.points.y);
-        respawnedEnemy.setPath(pathOne)
-        respawnedEnemy.health = 100
+      for (let index = 0; index < this.toRespawn; index++) {
+        this.createEnemyTank(pathOne)
         this.createEnemyTank(pathTwo)
-      });
-      this.respawnGroup = []
+        this.toRespawn = 0
+      }
     }
   }
 
   rotarteBarrel() {
     this.rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY);
     this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
-  }
-
-  boostBar(value) {
-    console.log('in');
-    this.boost += value
-    this.boostProgressBar.clear();
-    this.boostProgressBar.fillStyle(0xffffff, 1);
-    this.boostProgressBar.fillRoundedRect(1, 1,this.boost / 100,18, 6);
   }
 
   explode(x,y) {
@@ -159,15 +170,17 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
+    var count = 0
     this.enemyGroup.forEach(enemy => {
       this.physics.add.collider(newBullet, enemy, function() {
         this.explode(newBullet.x, newBullet.y)
         newBullet.destroy(true)
         enemy.health -= 10
         if (enemy.health <= 0) {
-          this.respawnGroup.push(enemy)
-          enemy.setActive(false)
-          enemy.setVisible(false)
+          this.toRespawn += 1
+          enemy.destroy(true)
+          enemy.turret.setActive(false)
+          enemy.turret.setTint(0x706f6f);
         }
       }, null, this);
     });
@@ -186,7 +199,7 @@ export default class GameScene extends Phaser.Scene {
     } 
 
     this.enemyGroup.forEach(enemy => {
-      if(enemy.active)
+      if(enemy && enemy.body)
       enemy.update()
     });
 

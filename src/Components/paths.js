@@ -35,6 +35,7 @@ export default class Path{
     this._pathOne.lineTo(new Phaser.Math.Vector2(80, 80));
     this._draw(this._pathOne)
     this._pathOne.points = {x:80, y:80}
+    this._pathOne.name = 'path One'
   }
 
   _pathTwo() {
@@ -48,6 +49,8 @@ export default class Path{
     this._pathTwo.lineTo(new Phaser.Math.Vector2(80, 80))
     this._draw(this._pathTwo)
     this._pathTwo.points = {x:650, y:80}
+    this._pathTwo.name = 'path two'
+
   }
 
   _pathThree() {
@@ -61,6 +64,7 @@ export default class Path{
     this._pathThree.lineTo(new Phaser.Math.Vector2(650, 2190))
     this._draw(this._pathThree)
     this._pathThree.points = {x:650, y:2190}
+    this._pathThree.name = 'path three'
   }
 
   _pathFour() {
@@ -73,6 +77,7 @@ export default class Path{
     this._pathFour.lineTo(new Phaser.Math.Vector2(1690, 80))
     this._draw(this._pathFour)
     this._pathFour.points = {x:1180, y:80}
+    this._pathFour.name = 'path four'
   }
 
   getAllPaths(){

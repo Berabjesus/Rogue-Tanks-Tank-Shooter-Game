@@ -18,10 +18,10 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
 
     this.setScale(0.3,0.3)
     this.body.setSize(170, 220)
-    this._turret = new TankTools(this._mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
-    this._turret.depth = 10;
+    this.turret = new TankTools(this._mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
+    this.turret.depth = 1.2;
     this._ammo = 20
-    this.depth = 2
+    this.depth = 1
     this._enemyContact = false
     this._chasePlayer = false
     this.health = 100
@@ -35,13 +35,13 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   _attachTurret(){
-    this._turret.x = this.x
-    this._turret.y = this.y
+    this.turret.x = this.x
+    this.turret.y = this.y
   }
 
   _rotateTurret(){
     let angel = Phaser.Math.Angle.Between(this.body.x,this.body.y, this._player.x, this._player.y);
-    this._turret.rotation = angel + Math.PI/2
+    this.turret.rotation = angel + Math.PI/2
   }
 
   _explodeBullet(bullet) {
@@ -50,7 +50,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   }
 
   _updatePlayerStatus(){
-    this._player.health -= 10
+    this._player.health -= 1
     if (this._player.health <= 0) {
       this._player.destroy(true)
     }
@@ -59,7 +59,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
   _attackPlayer(){
     let newBullet = this._world.physics.add.sprite(this.x,this.y, 'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
     
-    newBullet.rotation = this._turret.rotation
+    newBullet.rotation = this.turret.rotation
     this._world.physics.add.collider(newBullet, this._world.buildings, this._explodeBullet.bind(this), null, this)
 
     this._world.physics.add.collider(newBullet, this._player, function() {

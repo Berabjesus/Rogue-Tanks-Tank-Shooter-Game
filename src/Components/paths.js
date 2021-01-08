@@ -99,4 +99,13 @@ export default class Path{
   get pathFour(){
     return this._pathFour
   }
+
+  getAllPaths(){
+    return {
+      path1: this.pathOne,
+      path2: this.pathTwo,
+      path3: this.pathThree,
+      path4: this.pathFour,
+    } 
+  }
 }

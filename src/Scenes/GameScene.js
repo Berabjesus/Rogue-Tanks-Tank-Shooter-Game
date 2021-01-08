@@ -8,6 +8,9 @@ export default class GameScene extends Phaser.Scene {
     this.boost = 1000000
     this.follow = true
     this.enemyContact = false
+    this.paths = {}
+    // this.respawn = []
+    this.enemyGroup = []
   }
  
   preload () {
@@ -27,6 +30,9 @@ export default class GameScene extends Phaser.Scene {
     this.walls.setCollisionByProperty({ collides: true });
     this.buildings.setCollisionByProperty({collides: true});
 
+    this.brokenTank = this.add.sprite( 350, 420, 'enemy').setScale(0.3, 0.3).setTint(0x706f6f);
+    this.brokenTank
+    this.brokenTankTurret = this.add.sprite( 390, 440, 'enemyTankBarrel').setScale(0.3, 0.3).setTint(0x706f6f);
     // this.cameras.main.scrollX = -80;
     // this.cameras.main.scrollY = (this.mapBaseY - this.cameras.main.height);
 
@@ -42,10 +48,12 @@ export default class GameScene extends Phaser.Scene {
     
     this.physics.add.collider(this.playerTankContainer, this.walls);
     this.physics.add.collider(this.playerTankContainer, this.buildings)
+
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.camera.zoomTo(0.75,2000);
+
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w:  Phaser.Input.Keyboard.KeyCodes.W,
@@ -55,19 +63,22 @@ export default class GameScene extends Phaser.Scene {
       e:  Phaser.Input.Keyboard.KeyCodes.E,
       space:  Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
+
     this.boostBar()
     this.mouse = this.input.mousePointer
     this.input.setPollAlways();
 
-    const path = new Path(this.add.graphics())
-    const curve = path.pathOne
-    const curve2 = path.pathTwo
-    const curve3 = path.pathThree
-    const curve4 = path.pathFour
+    this.path = new Path(this.add.graphics())
+    this.curve = this.path.pathOne
+    // const curve2 = path.pathTwo
+    // const curve3 = path.pathThree
+    // const curve4 = path.pathFour
 
-    this.brokenTank = this.add.sprite( 350, 420, 'enemy').setScale(0.3, 0.3).setTint(0x706f6f);
-    this.brokenTank
-    this.brokenTankTurret = this.add.sprite( 390, 440, 'enemyTankBarrel').setScale(0.3, 0.3).setTint(0x706f6f);
+    this.paths = this.path.getAllPaths()
+  
+    for (const key in this.paths) {
+      let newPath = this.paths[key]
+    }
 
     // this.en1= new Enemy(this,this.scene, curve)
     // this.en1.follow(path.pathSetting)
@@ -84,6 +95,17 @@ export default class GameScene extends Phaser.Scene {
 
     // this.enarr = []
     // this.enarr.push(this.en, this.en1, this.en2, this.en3)
+
+    setInterval(() => {
+      this.respawn()
+      console.log(this.enemyGroup);
+    }, 10000);
+  }
+
+  respawn(){
+    this.en1= new Enemy(this,this.scene, this.curve)
+    this.en1.follow(this.path.pathSetting)
+    this.enemyGroup.push(this.en1)
   }
 
   rotarteBarrel() {
@@ -133,7 +155,7 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
-    /**/
+    /*
       this.enarr.forEach(enemy => {
         this.physics.add.collider(newBullet, enemy, function() {
           this.explode(newBullet.x, newBullet.y)
@@ -150,6 +172,8 @@ export default class GameScene extends Phaser.Scene {
           }
         }, null, this);
       });
+
+      */
 
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
   }

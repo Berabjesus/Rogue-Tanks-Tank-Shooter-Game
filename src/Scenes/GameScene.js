@@ -192,32 +192,6 @@ export default class GameScene extends Phaser.Scene {
       }, null, this);
     });
 
-    // console.log(this.enemyGroup);
-
-    // this.enemyGroup = []
-
-    // console.log(this.enemyGroup);
-
-    /*
-      this.enarr.forEach(enemy => {
-        this.physics.add.collider(newBullet, enemy, function() {
-          this.explode(newBullet.x, newBullet.y)
-          newBullet.destroy(true)
-          enemy.health -= 10
-          if (enemy.health <= 0) {
-            // enemy.destroy(true)
-            // delete enemy
-            enemy.setActive(false)
-            enemy.setVisible(false)    
-            enemy._turret.setActive(false)
-            enemy._turret.setVisible(false)
-            console.log(enemy);  
-          }
-        }, null, this);
-      });
-
-      */
-
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
   }
 
@@ -231,6 +205,11 @@ export default class GameScene extends Phaser.Scene {
       this.scene.restart();
       return
     } 
+
+    this.enemyGroup.forEach(enemy => {
+      if(enemy.active)
+      enemy.update()
+    });
     // if(this.en.active)
     // this.en.update()
 

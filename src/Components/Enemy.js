@@ -19,6 +19,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.setScale(0.3,0.3)
     this.body.setSize(170, 220)
     this._turret = new TankTools(this._mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
+    this._turret.depth = 10;
     this._ammo = 20
     this.depth = 2
     this._enemyContact = false

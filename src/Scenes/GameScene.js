@@ -9,7 +9,7 @@ export default class GameScene extends Phaser.Scene {
     this.follow = true
     this.enemyContact = false
     this.paths = {}
-    // this.respawn = []
+    this.respawnGroup = []
     this.enemyGroup = []
   }
  
@@ -72,42 +72,64 @@ export default class GameScene extends Phaser.Scene {
 
     this.path = new Path(this.add.graphics())
     this.curve = this.path.pathOne
-    // const curve2 = path.pathTwo
-    // const curve3 = path.pathThree
-    // const curve4 = path.pathFour
+    // const curve2 = this.path.pathTwo
+    // const curve3 = this.path.pathThree
+    // const curve4 = this.path.pathFour
 
     this.paths = this.path.getAllPaths()
   
     for (const key in this.paths) {
       let newPath = this.paths[key]
+      this.createEnemyTank(newPath)
     }
 
-    // this.en1= new Enemy(this,this.scene, curve)
-    // this.en1.follow(path.pathSetting)
+    // console.log(this.enemyGroup[0]);
+    // this.en1= new Enemy(this,this.scene, this.curve)
+    // this.en1.follow(this.path.pathSetting)
 
     // console.log(this.en1);
     // this.en = new Enemy(this,this.scene, curve4)
-    // this.en.follow(path.pathSetting)
+    // this.en.follow(this.path.pathSetting)
 
     // this.en2 = new Enemy(this,this.scene, curve2)
-    // this.en2.follow(path.pathSetting)
+    // this.en2.follow(this.path.pathSetting)
 
     // this.en3 = new Enemy(this,this.scene, curve3)
-    // this.en3.follow(path.pathSetting)
+    // this.en3.follow(this.path.pathSetting)
 
     // this.enarr = []
     // this.enarr.push(this.en, this.en1, this.en2, this.en3)
 
-    // setInterval(() => {
-    //   this.respawn()
-    //   console.log(this.enemyGroup);
-    // }, 10000);
+    setInterval(() => {
+      this.respawn()
+    }, 5000);
+  }
+
+  createEnemyTank(path){
+    let newEnemy = new Enemy(this,this.scene, path)
+    newEnemy.follow(this.path.pathSetting)
+    this.enemyGroup.push(newEnemy)
   }
 
   respawn(){
-    this.en1= new Enemy(this,this.scene, this.curve)
-    this.en1.follow(this.path.pathSetting)
-    this.enemyGroup.push(this.en1)
+    if (this.respawnGroup.length > 0) {
+      var pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length)
+      var pathOne = this.paths[`path${pathNumberOne}`];
+  
+      var pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1    
+      var pathTwo = this.paths[`path${pathNumberTwo}`]
+  
+      this.respawnGroup.forEach(respawnedEnemy => {
+        respawnedEnemy.setActive(true)
+        respawnedEnemy.setVisible(true)
+        respawnedEnemy.body.reset(pathOne.points.x, pathOne.points.y);
+        respawnedEnemy.setPath(pathOne)
+        respawnedEnemy.health = 100
+  
+        this.createEnemyTank(pathTwo)
+      });
+      this.respawnGroup = []
+    }
   }
 
   rotarteBarrel() {
@@ -157,10 +179,24 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
-    this.physics.add.collider(newBullet, this.buildings, function() {
-      this.explode(newBullet.x, newBullet.y)
-      newBullet.destroy(true)
-    }, null, this);
+    this.enemyGroup.forEach(enemy => {
+      this.physics.add.collider(newBullet, enemy, function() {
+        this.explode(newBullet.x, newBullet.y)
+        newBullet.destroy(true)
+        enemy.health -= 10
+        if (enemy.health <= 0) {
+          this.respawnGroup.push(enemy)
+          enemy.setActive(false)
+          enemy.setVisible(false)
+        }
+      }, null, this);
+    });
+
+    // console.log(this.enemyGroup);
+
+    // this.enemyGroup = []
+
+    // console.log(this.enemyGroup);
 
     /*
       this.enarr.forEach(enemy => {

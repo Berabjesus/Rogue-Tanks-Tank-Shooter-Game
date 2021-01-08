@@ -14,6 +14,7 @@ export default class GameScene extends Phaser.Scene {
   }
  
   create () {
+
     const map = this.make.tilemap({key: 'map1'})
     this.mapBaseY = map.heightInPixels;
     const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0)
@@ -32,10 +33,12 @@ export default class GameScene extends Phaser.Scene {
     this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
     this.playerTankContainer =  this.add.container(600, 400, [ this.player]);
     this.playerTankContainer.setSize(64, 64)
+    this.playerTankContainer.depth = 2 
+    this.playerTankContainer.health = 15000000
     this.physics.world.enable(this.playerTankContainer);
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
-    this.playerTankBarrel.depth = 10 
+    this.playerTankBarrel.depth = 10
     
     this.physics.add.collider(this.playerTankContainer, this.walls);
     this.physics.add.collider(this.playerTankContainer, this.buildings)
@@ -61,40 +64,31 @@ export default class GameScene extends Phaser.Scene {
     const curve2 = path.pathTwo
     const curve3 = path.pathThree
     const curve4 = path.pathFour
-    this.enemy1 = this.add.follower(curve, 100, 100, 'enemy').setScale(0.3, 0.3);
-    this.physics.world.enable(this.enemy1);
-    this.enemy1.body.setSize(170, 220)
-    // this.enemy1.setSizeToFrame(10,10)
-    // this.enemy1.setDisplaySize(10,10)
-    this.enemy1.ammo = 20
 
-    this.enemy1TankBarrel = this.physics.add.sprite(0 , 0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
+    this.brokenTank = this.add.sprite( 350, 420, 'enemy').setScale(0.3, 0.3).setTint(0x706f6f);
+    this.brokenTank
+    this.brokenTankTurret = this.add.sprite( 390, 440, 'enemyTankBarrel').setScale(0.3, 0.3).setTint(0x706f6f);
 
-    this.enemy1.startFollow(path.pathSetting);
+    // this.en1= new Enemy(this,this.scene, curve)
+    // this.en1.follow(path.pathSetting)
 
-    this.physics.add.collider(this.enemy1, this.walls);
-    this.physics.add.collider(this.enemy1, this.playerTankContainer, this.playerAndEnemyCollide);
+    // console.log(this.en1);
+    // this.en = new Enemy(this,this.scene, curve4)
+    // this.en.follow(path.pathSetting)
 
-    this.playerTankContainer.health = 500
-    this.enemy1.health = 100
-    // this.enemy1.destroy()
-    // this.enemy1TankBarrel.destroy()
+    // this.en2 = new Enemy(this,this.scene, curve2)
+    // this.en2.follow(path.pathSetting)
 
-    this.en = new Enemy(this,this.scene, curve4)
-    this.en.follow(path.pathSetting)
+    // this.en3 = new Enemy(this,this.scene, curve3)
+    // this.en3.follow(path.pathSetting)
 
-    this.enarr = []
-    this.enarr.push(this.en)
+    // this.enarr = []
+    // this.enarr.push(this.en, this.en1, this.en2, this.en3)
   }
 
   rotarteBarrel() {
     this.rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY);
     this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
-  }
-
-  rotateEnemyBarrel() {
-    this.rotEnemyBarrel = Phaser.Math.Angle.Between(this.enemy1.body.x,this.enemy1.body.y, this.playerTankContainer.x, this.playerTankContainer.y);
-    this.enemy1TankBarrel.rotation = this.rotEnemyBarrel + Math.PI/2
   }
 
   boostBar() {
@@ -139,15 +133,6 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
-    this.physics.add.collider(newBullet, this.enemy1, function() {
-      this.explode(newBullet.x, newBullet.y)
-      newBullet.destroy(true)
-      this.enemy1.health -= 10
-      if (this.enemy1.health <= 0) {
-        this.enemy1.destroy(true)
-      }
-    }, null, this);
-
     /**/
       this.enarr.forEach(enemy => {
         this.physics.add.collider(newBullet, enemy, function() {
@@ -160,133 +145,36 @@ export default class GameScene extends Phaser.Scene {
             enemy.setActive(false)
             enemy.setVisible(false)    
             enemy._turret.setActive(false)
-            enemy._turret.setVisible(false)    
+            enemy._turret.setVisible(false)
+            console.log(enemy);  
           }
         }, null, this);
       });
 
-      // for
-    /**/
-
     this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
-
-    // newBullet.
   }
-
-  fireAtplayer(enemyTank){
-    let x = enemyTank.x
-    let y = enemyTank.y
-    let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
-    newBullet.rotation += this.enemy1TankBarrel.rotation
-
-    this.physics.add.collider(newBullet, this.walls, function() {
-      this.explode(newBullet.x, newBullet.y)
-      newBullet.destroy(true)
-    }, null, this);
-
-    this.physics.add.collider(newBullet, this.playerTankContainer, function() {
-      this.explode(newBullet.x, newBullet.y)
-      newBullet.destroy(true)
-      this.playerTankContainer.health -= 10
-      if (this.playerTankContainer.health <= 0) {
-        this.playerTankContainer.destroy(true)
-      }
-    }, null, this);
-
-    this.physics.moveTo(newBullet, this.playerTankContainer.x,this.playerTankContainer.y,900);
-  }
-
-  // playerAndEnemyCollide() {
-  //   this.enemy1.stopFollow()
-  //   this.enemyContact = true
-  // }
 
   update() {
 
-    /*
-      =========================
-     */
+    if (this.playerTankContainer.health <= 0) {
+        console.log('u died');
+      this.enemyContact = false
+      this.registry.destroy();
+      this.events.off();
+      this.scene.restart();
+      return
+    } 
+    // if(this.en.active)
+    // this.en.update()
 
-        if (this.playerTankContainer.health <= 0 || this.enemy1.health <= 0) {
-          if (this.playerTankContainer.health<=0) {
-            console.log('u died');
-          }else {
-            console.log('win');
-          }
-          this.enemyContact = false
-          this.registry.destroy();
-          this.events.off();
-          this.scene.restart();
-          return
-        }
-        var dist = Phaser.Math.Distance.BetweenPoints(this.enemy1, this.playerTankContainer)
-        this.physics.add.collider(this.enemy1, this.walls);
+    // if(this.en1.active)
+    // this.en1.update()
 
-        if (dist < 400) {
-          !this.enemyContact ? this.enemyContact = true : 
-          // this.enemy1.pauseFollow()
-          this.rotateEnemyBarrel()
-          if (this.enemy1.ammo === 0) {
-            this.fireAtplayer(this.enemy1)
-            this.enemy1.ammo = 20
-          } else {
-            this.enemy1.ammo -= 1
-          }
-          if (dist <= 100) {
-            this.follow = false
-            this.enemy1.pauseFollow()
-          }else if (dist > 200) {
-            this.follow = true
-          }
-          
-          if(this.follow) {
-            this.enemy1.startFollow(this.playerTankContainer)
-            this.enemy1.pathRotationOffset = 90
-            var dx =this.playerTankContainer.x - this.enemy1.x;
-            var dy =this.playerTankContainer.y - this.enemy1.y;
-            var angle = Math.atan2(dy, dx);
-            var speed1 = 200;
-            this.enemy1.body.setVelocity(
-              Math.cos(angle) * speed1,
-              Math.sin(angle) * speed1
-            );
-            var ang = Phaser.Math.Angle.Between(this.enemy1.x, this.enemy1.y, this.playerTankContainer.x, this.playerTankContainer.y);
-            this.enemy1.rotation = ang + Math.PI/2
-          }
-        }else {
-          // this.enemy1.resumeFollow()
-          // if(this.follow) {
-          //   this.enemy1.startFollow(this.pathSetting)
-          //   // this.enemy1.setPath(this.curve)
-          //   this.follow =false
-          // }
-          // this.follow = true
-          if(this.follow && this.enemyContact)
-            this.enemy1.stopFollow()
-        }
+    // if(this.en2.active)
+    // this.en2.update()
 
-
-      /*
-      =========================
-     */
-
-
-
-        /*
-    =========================
-    */
-
-      // this.en.attachTurret()
-      // this.en.rotateTurret()
-      // this.en.attackPlayer()
-        if(this.en)
-        this.en.update()
-    /*
-      =========================
-     */
-
-
-
+    // if(this.en3.active)
+    // this.en3.update()
 
     this.playerTankContainer.body.velocity.x = 0;
     this.playerTankContainer.body.velocity.y = 0;
@@ -294,9 +182,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.playerTankBarrel.x =  this.playerTankContainer.x;
     this.playerTankBarrel.y =  this.playerTankContainer.y;
-
-    this.enemy1TankBarrel.x = this.enemy1.x
-    this.enemy1TankBarrel.y = this.enemy1.y
+    this.rotarteBarrel()
 
     const speed = 150
     const velocityX = Math.cos(this.playerTankContainer.rotation) * speed
@@ -309,28 +195,23 @@ export default class GameScene extends Phaser.Scene {
       this.playerTankBarrel.body.angularVelocity = 200
     }
     
-    this.rotarteBarrel()
-    
-    // Move tank barrel
     if (this.keys.w.isDown){
-      var boost = 1
+      let boost = 1
       if (this.keys.e.isDown && this.boost > 2){ 
         boost = 2
         this.boost -= 2
       }  
       this.playerTankContainer.body.velocity.y = -velocityX * boost
       this.playerTankContainer.body.velocity.x = velocityY * boost
-      this.rotarteBarrel()
     }
     if (this.keys.s.isDown){
-      var boost = 1
+      let boost = 1
       if (this.keys.e.isDown && this.boost > 2){ 
         boost = 2
         this.boost -= 2
       }
       this.playerTankContainer.body.velocity.y = velocityX * boost
       this.playerTankContainer.body.velocity.x = -velocityY * boost
-      this.rotarteBarrel()
     }
     if (this.keys.a.isDown){
       this.playerTankContainer.body.angularVelocity = -200;

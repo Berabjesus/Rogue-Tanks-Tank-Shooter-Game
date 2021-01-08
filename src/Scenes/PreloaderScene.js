@@ -98,6 +98,3 @@ export default class PreloaderScene extends Phaser.Scene {
     this.scene.start('Game')
   }
 };
-
-
-// 1. bullet set active, 2. diffrenet enemy tanks

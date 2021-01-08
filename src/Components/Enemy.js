@@ -77,7 +77,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     let dx = this._player.x - this.x
     let dy = this._player.y - this.y
     let angle = Math.atan2(dy,dx)
-    let chaseSpeed = 200
+    let chaseSpeed = 300
     this.body.setVelocity( Math.cos(angle) * chaseSpeed,
     Math.sin(angle) * chaseSpeed);
 

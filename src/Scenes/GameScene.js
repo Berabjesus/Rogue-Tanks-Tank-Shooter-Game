@@ -210,17 +210,6 @@ export default class GameScene extends Phaser.Scene {
       if(enemy.active)
       enemy.update()
     });
-    // if(this.en.active)
-    // this.en.update()
-
-    // if(this.en1.active)
-    // this.en1.update()
-
-    // if(this.en2.active)
-    // this.en2.update()
-
-    // if(this.en3.active)
-    // this.en3.update()
 
     this.playerTankContainer.body.velocity.x = 0;
     this.playerTankContainer.body.velocity.y = 0;
@@ -230,7 +219,7 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankBarrel.y =  this.playerTankContainer.y;
     this.rotarteBarrel()
 
-    const speed = 150
+    const speed = 200
     const velocityX = Math.cos(this.playerTankContainer.rotation) * speed
     const velocityY = Math.sin(this.playerTankContainer.rotation) * speed
 

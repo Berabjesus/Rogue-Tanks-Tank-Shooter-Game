@@ -7,16 +7,12 @@ export default {
     default: 'arcade',
     arcade: {
       gravity: { x: 0, y: 0 },
-      debug: true
+      debug: false
     }
   },scale: {
     zoom: 1
-  },
-  /* 
-    -> The two rules below pixlate images
-    pixelArt: true,
-    roundPixels: true,
-
-  */ 
+  },  
+  pixelArt: true,
+  roundPixels: true,
   parent: 'main'
 };

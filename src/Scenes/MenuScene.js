@@ -28,7 +28,7 @@ export default class MenuScene extends Phaser.Scene {
     this.centerButtonText(this.gameText, this.gameButton);
 
     this.gameButton.on('pointerdown', function (pointer) {
-      this.scene.start('GameOver');
+      this.scene.start('Intro');
     }.bind(this));
 
     this.input.on('pointerover', function (event, gameObjects) {

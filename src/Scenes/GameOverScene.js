@@ -26,7 +26,35 @@ export default class GameOverScene extends Phaser.Scene {
     text.setShadow(1, 1, "#333333", 1, true, true);
 
     text.setText([
-      'Here lies our great \nsoldier ' + player + ' who died \nfighting the enemy.\n' + player + '  destroyed ' + score + '\nworth of enemy tanks',
+      'Here lies our great \nsoldier ' + player + ' who died \nfighting the enemy.\n' + player + '  destroyed ' + score + '\npoints worth of enemy \ntanks.',
     ]);
+
+    const backButton = this.add.sprite(380,550, 'normalButton').setScale(0.7, 0.7).setInteractive()
+    this.menuText = this.add.text(0,0, 'Respawn', { fontSize: '32px', fill: '#fff' })
+    Phaser.Display.Align.In.Center(this.menuText, backButton);
+
+    backButton.on('pointerdown', function(pointer) {
+      this.scene.start('Game')
+    }.bind(this))
+    backButton.on('pointerover', function(pointer) {
+      backButton.setTexture('hoverButton');
+    }.bind(this))
+    backButton.on('pointerout', function(pointer) {
+      backButton.setTexture('normalButton');
+    }.bind(this))
+
+    const playButton = this.add.sprite(780,550, 'normalButton').setScale(0.7, 0.7).setInteractive()
+    this.menuText = this.add.text(0,0, 'Rest In Peace', { fontSize: '32px', fill: '#fff' })
+    Phaser.Display.Align.In.Center(this.menuText, playButton);
+
+    playButton.on('pointerdown', function(pointer) {
+      this.scene.start('Menu')
+    }.bind(this))
+    playButton.on('pointerover', function(pointer) {
+      playButton.setTexture('hoverButton');
+    }.bind(this))
+    playButton.on('pointerout', function(pointer) {
+      playButton.setTexture('normalButton');
+    }.bind(this))
   }
 }

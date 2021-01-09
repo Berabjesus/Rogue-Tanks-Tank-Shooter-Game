@@ -20,7 +20,6 @@ import explosion  from '../assets/tank/explosion.png'
 import enemy from '../assets/tank/enemy.png'
 import enemyTankBarrel from '../assets/tank/enemyTankBarrel.png'
 import tombstone from '../assets/misc/tombstone.png'
-import form from '../assets/misc/form.html'
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
@@ -161,7 +160,6 @@ export default class PreloaderScene extends Phaser.Scene {
     })
 
     this.load.image('tombstone', tombstone)
-    this.load.html('form', form)
   }
  
   startTitleScene() {

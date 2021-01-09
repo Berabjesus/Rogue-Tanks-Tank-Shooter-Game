@@ -100,7 +100,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.createHealthBox()
 
-    setInterval(() => {
+    this.respawnInterval =  setInterval(() => {
       this.respawn()
       if (this.playerTankContainer.health < 100) {
         this.playerTankContainer.health += 2
@@ -197,7 +197,7 @@ export default class GameScene extends Phaser.Scene {
 
     newBullet.rotation += this.playerTankBarrel.rotation
     newBullet.depth = 1
-
+    newBullet.mass = 0
     this.physics.add.collider(newBullet, this.buildings, function () {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
@@ -237,7 +237,9 @@ export default class GameScene extends Phaser.Scene {
     if (this.playerTankContainer.health <= 0) {
       this.registry.destroy();
       this.events.off();
-      // this.scene.restart();
+      clearInterval(this.respawnInterval)
+      this.sys.game.globals.score = this.scoreNumber
+      this.scoreNumber = 0
       this.scene.start('GameOver')
       return
     }

@@ -62,6 +62,8 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     newBullet.mass = 0
     this._world.physics.add.collider(newBullet, this._world.buildings, this._explodeBullet.bind(this), null, this)
 
+    this._world.physics.add.collider(newBullet, this._world.boundary, this._explodeBullet.bind(this), null, this)
+
     this._world.physics.add.collider(newBullet, this._player, function() {
       this._explodeBullet(newBullet)
       this._updatePlayerStatus()

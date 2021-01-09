@@ -202,6 +202,10 @@ export default class GameScene extends Phaser.Scene {
       newBullet.destroy(true)
     }, null, this);
 
+    this.physics.add.collider(newBullet, this.boundary, function () {
+      this.explode(newBullet.x, newBullet.y)
+      newBullet.destroy(true)
+    }, null, this);
     var count = 0
     this.enemyGroup.forEach(enemy => {
       this.physics.add.collider(newBullet, enemy, function () {

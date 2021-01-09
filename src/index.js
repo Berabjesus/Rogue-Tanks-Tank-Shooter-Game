@@ -13,17 +13,22 @@ import GameOverScene from './scenes/GameOverScene'
 import AudioModel from './components/audio-status';
 
 class Game extends Phaser.Game {
-  constructor () {
+  constructor() {
     super(config);
     const model = new AudioModel();
-    this.globals = { model, bgMusic: 'null', player: '', score: 0};
+    this.globals = {
+      model,
+      bgMusic: null,
+      player: '',
+      score: 0
+    };
     this.scene.add('Boot', BootScene)
     this.scene.add('Preloader', PreloaderScene)
     this.scene.add('Input', InputScene)
     this.scene.add('Menu', MenuScene)
     this.scene.add('Options', OptionsScene)
-    this.scene.add('Credits',CreditsScene )
-    this.scene.add('Intro',IntroScene )
+    this.scene.add('Credits', CreditsScene)
+    this.scene.add('Intro', IntroScene)
     this.scene.add('Game', GameScene)
     this.scene.add('GameOver', GameOverScene)
     this.scene.start('Boot');

@@ -16,22 +16,21 @@ import enemyFireOgg from '../assets/audio/enemyFire.ogg'
 import player from '../assets/tank/player.png'
 import playerTankBarrel from '../assets/tank/playerTankBarrel.png'
 import bulletShell from '../assets/tank/HeavyShell.png'
-import explosion  from '../assets/tank/explosion.png'
+import explosion from '../assets/tank/explosion.png'
 import enemy from '../assets/tank/enemy.png'
 import enemyTankBarrel from '../assets/tank/enemyTankBarrel.png'
 import tombstone from '../assets/misc/tombstone.png'
 
 export default class PreloaderScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Preloader');
   }
- 
-  preload () {
-    var width = this.cameras.main.width;
-    var height = this.cameras.main.height;
+
+  preload() {
+    const width = this.cameras.main.width;
+    const height = this.cameras.main.height;
 
     const avatar = this.add.image(10, 10, 'madeBy').setOrigin(0, 0).setScale(0.3, 0.3);
-    // this.phaserLogo = this.add.image(width/1.9, 300, 'phaserLogo').setOrigin(0.5, 0.5).setScale(0.8, 0.8);
     const name = this.make.text({
       x: 10,
       y: 150,
@@ -48,21 +47,19 @@ export default class PreloaderScene extends Phaser.Scene {
         alpha: 0,
         duration: 300,
         ease: 'Power2',
-        onComplete:() => {
-          this.gameLogo = this.add.image(width/1.9, 300, 'gameLogo').setOrigin(0.5, 0.5).setScale(1, 1);
+        onComplete: () => {
+          this.gameLogo = this.add.image(width / 1.9, 300, 'gameLogo').setOrigin(0.5, 0.5).setScale(1, 1);
         }
       }, this);
     }.bind(this))
 
-    var progressBar = this.add.graphics();
-    var progressBox = this.add.graphics();
+    const progressBar = this.add.graphics();
+    const progressBox = this.add.graphics();
     progressBox.fillStyle(0x222222, 0.8);
     progressBox.fillRoundedRect(450, 450, 350, 18, 7);
-  
-    console.log(width, height);
-    
-    var loadingText = this.make.text({
-      x: width/1.9,
+
+    const loadingText = this.make.text({
+      x: width / 1.9,
       y: 420,
       text: 'Loading...',
       style: {
@@ -72,8 +69,8 @@ export default class PreloaderScene extends Phaser.Scene {
     });
     loadingText.setOrigin(0.5, 0.5);
 
-    var percentText = this.make.text({
-      x: width/1.9,
+    const percentText = this.make.text({
+      x: width / 1.9,
       y: 460,
       text: '0%',
       style: {
@@ -83,8 +80,8 @@ export default class PreloaderScene extends Phaser.Scene {
     });
     percentText.setOrigin(0.5, 0.5);
 
-    var assetText = this.make.text({
-      x: width/1.9,
+    const assetText = this.make.text({
+      x: width / 1.9,
       y: 490,
       text: '',
       style: {
@@ -93,12 +90,12 @@ export default class PreloaderScene extends Phaser.Scene {
       }
     });
     assetText.setOrigin(0.5, 0.5);
-    
+
     this.load.on('progress', function (value) {
       percentText.setText(parseInt(value * 100) + '%');
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
-      progressBar.fillRoundedRect(450, 450, 300 * value,18, 6);
+      progressBar.fillRoundedRect(450, 450, 300 * value, 18, 6);
     });
 
     this.load.on('fileprogress', function (file) {
@@ -111,7 +108,7 @@ export default class PreloaderScene extends Phaser.Scene {
       loadingText.destroy();
       percentText.destroy();
       assetText.destroy();
-      this.time.delayedCall(1000, function() {
+      this.time.delayedCall(1000, function () {
         // logo.destroy();
         avatar.destroy()
         name.destroy()
@@ -145,7 +142,7 @@ export default class PreloaderScene extends Phaser.Scene {
       frameHeight: 256
     })
 
-    this.load.spritesheet('explosion', explosion,  {
+    this.load.spritesheet('explosion', explosion, {
       frameWidth: 60,
       frameHeight: 60
     })
@@ -161,12 +158,15 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image('tombstone', tombstone)
   }
- 
+
   startTitleScene() {
     this.scene.start('Input');
   }
- 
-  create () {
-    this.sys.game.globals.bgMusic = this.sound.add('bgMusic', { volume: 0.5, loop: true });
+
+  create() {
+    this.sys.game.globals.bgMusic = this.sound.add('bgMusic', {
+      volume: 0.5,
+      loop: true
+    });
   }
 };

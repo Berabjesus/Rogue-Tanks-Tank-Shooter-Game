@@ -1,25 +1,32 @@
 import 'phaser';
- 
+import Button from '../components/button'
+
 export default class CreditsScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Credits');
   }
 
-  create () {
+  create() {
 
-    this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });
-    this.madeByText = this.add.text(0, 0, 'Created By: Bereket A, Beshane \nMade With: Phaser 3.5, Javascript ES6\nGithub: @Berabjesus', { fontSize: '26px', fill: '#fff' });
-    this.zone = this.add.zone(this.cameras.main.width/2, this.cameras.main.height/2, this.cameras.main.width, this.cameras.main.height);
+    this.creditsText = this.add.text(0, 0, 'Credits', {
+      fontSize: '32px',
+      fill: '#fff'
+    });
+    this.madeByText = this.add.text(0, 0, 'Created By: Bereket A, Beshane \nMade With: Phaser 3.5, Javascript ES6\nGithub: @Berabjesus', {
+      fontSize: '26px',
+      fill: '#fff'
+    });
+    this.zone = this.add.zone(this.cameras.main.width / 2, this.cameras.main.height / 2, this.cameras.main.width, this.cameras.main.height);
     Phaser.Display.Align.In.Center(
       this.creditsText,
       this.zone
     );
-    
+
     Phaser.Display.Align.In.Center(
       this.madeByText,
       this.zone
     );
-    
+
     this.madeByText.setY(1000);
 
     this.creditsTween = this.tweens.add({
@@ -32,7 +39,7 @@ export default class CreditsScene extends Phaser.Scene {
         this.destroy;
       }
     });
-    
+
     this.madeByTween = this.tweens.add({
       targets: this.madeByText,
       y: -200,
@@ -45,18 +52,6 @@ export default class CreditsScene extends Phaser.Scene {
       }.bind(this)
     });
 
-    this.menuButton = this.add.sprite(10,510, 'normalButton').setInteractive().setOrigin(0,0)
-    this.menuText = this.add.text(0,0, 'Menu', { fontSize: '32px', fill: '#fff' })
-    Phaser.Display.Align.In.Center(this.menuText, this.menuButton);
-
-    this.menuButton.on('pointerdown', function(pointer) {
-      this.scene.start('Menu')
-    }.bind(this))
-    this.menuButton.on('pointerover', function(pointer) {
-      this.menuButton.setTexture('hoverButton');
-    }.bind(this))
-    this.menuButton.on('pointerout', function(pointer) {
-      this.menuButton.setTexture('normalButton');
-    }.bind(this))
+    this.menuButton = new Button(this,240, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu')
   }
 };

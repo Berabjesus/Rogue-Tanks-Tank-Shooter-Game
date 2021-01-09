@@ -45,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = this.physics.add.sprite(0, 0, 'player')
     .setScale(0.3, 0.3)
+    this.player.setMass(100)
     this.playerTankContainer = this.add.container(1700, 2200, [this.player])
     .setSize(64, 64)
     this.playerTankContainer.depth = 2

@@ -21,6 +21,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.turret = new TankTools(this._mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
     this.turret.depth = 1.2;
     this._ammo = 20
+    this.mass = 100
     this.depth = 1
     this._enemyContact = false
     this._chasePlayer = false
@@ -57,6 +58,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     let newBullet = this._world.physics.add.sprite(this.x,this.y, 'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
     
     newBullet.rotation = this.turret.rotation
+    newBullet.mass = 0
     this._world.physics.add.collider(newBullet, this._world.buildings, this._explodeBullet.bind(this), null, this)
 
     this._world.physics.add.collider(newBullet, this._player, function() {

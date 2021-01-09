@@ -58,7 +58,7 @@ export default class IntroScene extends Phaser.Scene {
     ]);
 
     this.bgMusic = this.sys.game.globals.bgMusic
-    this.bgMusic.volume = 0
+    this.bgMusic.volume = 0.1
     const intro = this.sound.add('introVoice', { volume: 0.5});
     intro.on('complete', function() {
       if(!this.skipped)

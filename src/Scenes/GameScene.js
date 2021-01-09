@@ -14,6 +14,17 @@ export default class GameScene extends Phaser.Scene {
   preload() {}
 
   create() {
+    this.model = this.sys.game.globals.model;
+    this.bgMusic = this.sys.game.globals.bgMusic
+    this.bgMusic.volume = 0.2
+    if (this.model.musicOn && !this.model.bgMusicPlaying) {
+      if(this.model.musicPaused)
+        this.bgMusic.resume();
+      else
+        this.bgMusic.play();
+      this.model.bgMusicPlaying = true
+    }
+
     const map = this.make.tilemap({
       key: 'map1'
     })
@@ -36,6 +47,7 @@ export default class GameScene extends Phaser.Scene {
       collides: true
     })
 
+    this.fire = this.sound.add('fire', { volume: 0.5});
     this.brokenTank = this.add.sprite(350, 420, 'enemy')
     .setScale(0.3, 0.3)
     .setTint(0x706f6f);
@@ -208,6 +220,7 @@ export default class GameScene extends Phaser.Scene {
       }, null, this);
     });
 
+    this.fire.play()
     this.physics.moveTo(newBullet, this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY, 500);
   }
 

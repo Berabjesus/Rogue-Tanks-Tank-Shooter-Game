@@ -20,6 +20,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.body.setSize(170, 220)
     this.turret = new TankTools(this._mainScene,0,0, 'enemyTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7);
     this.turret.depth = 1.2;
+    this.fire = this._world.sound.add('enemyFire', { volume: 0.3});
     this._ammo = 20
     this.mass = 100
     this.depth = 1
@@ -66,6 +67,7 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
       this._updatePlayerStatus()
     }, null, this);
 
+    this.fire.play()
     this._world.physics.moveTo(newBullet, this._player.x,this._player.y,900);
   }
 

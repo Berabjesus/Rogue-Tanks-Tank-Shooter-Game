@@ -9,6 +9,10 @@ import grey from '../Assets/ui/grey_box.png'
 import blue from '../Assets/ui/blue_boxCheckmark.png'
 import introVoiceMp3 from '../Assets/audio/intro.mp3'
 import introVoiceOgg from '../Assets/audio/intro.ogg'
+import fireMp3 from '../Assets/audio/fire.mp3'
+import fireOgg from '../Assets/audio/fire.ogg'
+import enemyFireMp3 from '../Assets/audio/enemyFire.mp3'
+import enemyFireOgg from '../Assets/audio/enemyFire.ogg'
 import player from '../Assets/tank/player.png'
 import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
 import bulletShell from '../Assets/tank/HeavyShell.png'
@@ -125,6 +129,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('checkedBox', blue);
     this.load.audio('bgMusic', [bgmusic])
     this.load.audio('introVoice', [introVoiceMp3, introVoiceOgg])
+    this.load.audio('fire', [fireMp3, fireOgg])
+    this.load.audio('enemyFire', [enemyFireMp3, enemyFireOgg])
     this.load.spritesheet('player', player, {
       frameWidth: 256,
       frameHeight: 256

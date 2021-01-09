@@ -32,11 +32,11 @@ export default class GameScene extends Phaser.Scene {
     const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0)
 
     map.createLayer('grass', tileset1)
+    map.createLayer('misc', tileset1)
+    const walls = map.createLayer('street', tileset)
     this.boundary = map.createLayer('boundary', tileset)
-    this.walls = map.createLayer('street', tileset)
-    this.misc = map.createLayer('misc', tileset1)
     this.buildings = map.createLayer('building', tileset1)
-    this.walls.setCollisionByProperty({
+    walls.setCollisionByProperty({
       collides: true
     });
     this.buildings.setCollisionByProperty({
@@ -47,10 +47,10 @@ export default class GameScene extends Phaser.Scene {
     })
 
     this.fire = this.sound.add('fire', { volume: 0.5});
-    this.brokenTank = this.add.sprite(350, 420, 'enemy')
+    this.add.sprite(350, 420, 'enemy')
     .setScale(0.3, 0.3)
     .setTint(0x706f6f);
-    this.brokenTankTurret = this.add.sprite(390, 440, 'enemyTankBarrel')
+    this.add.sprite(390, 440, 'enemyTankBarrel')
     .setScale(0.3, 0.3)
     .setTint(0x706f6f);
 
@@ -66,13 +66,13 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7)
     this.playerTankBarrel.depth = 10
 
-    this.physics.add.collider(this.playerTankContainer, this.walls);
+    this.physics.add.collider(this.playerTankContainer, walls);
     this.physics.add.collider(this.playerTankContainer, this.buildings)
 
-    this.camera = this.cameras.main;
-    this.camera.startFollow(this.playerTankContainer);
-    this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.75, 1000);
+    const camera = this.cameras.main;
+    camera.startFollow(this.playerTankContainer);
+    camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    camera.zoomTo(0.75, 1000);
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
@@ -149,11 +149,11 @@ export default class GameScene extends Phaser.Scene {
 
   respawn() {
     if (this.toRespawn > 0) {
-      var pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length)
-      var pathOne = this.paths[`path${pathNumberOne}`];
+      const pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length)
+      const pathOne = this.paths[`path${pathNumberOne}`];
 
-      var pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1
-      var pathTwo = this.paths[`path${pathNumberTwo}`]
+      const pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1
+      const pathTwo = this.paths[`path${pathNumberTwo}`]
 
       for (let index = 0; index < this.toRespawn; index++) {
         this.createEnemyTank(pathOne)
@@ -164,8 +164,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   rotarteBarrel() {
-    this.rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x, this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY);
-    this.playerTankBarrel.rotation = this.rotate + Math.PI / 2;
+    const rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x, this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY);
+    this.playerTankBarrel.rotation = rotate + Math.PI / 2;
   }
 
   explode(x, y) {

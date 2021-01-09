@@ -1,6 +1,6 @@
 import 'phaser';
-import Enemy from '../Components/enemy'
-import Path from '../Components/paths'
+import Enemy from '../components/enemy'
+import Path from '../components/paths'
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
@@ -61,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankContainer = this.add.container(1700, 2200, [this.player])
     .setSize(64, 64)
     this.playerTankContainer.depth = 2
-    this.playerTankContainer.health = 100
+    this.playerTankContainer.health = 500
     this.physics.world.enable(this.playerTankContainer);
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7)
@@ -235,10 +235,10 @@ export default class GameScene extends Phaser.Scene {
   update() {
 
     if (this.playerTankContainer.health <= 0) {
-      console.log('u died');
       this.registry.destroy();
       this.events.off();
-      this.scene.restart();
+      // this.scene.restart();
+      this.scene.start('GameOver')
       return
     }
 

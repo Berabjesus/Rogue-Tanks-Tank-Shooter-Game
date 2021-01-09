@@ -1,25 +1,26 @@
 import 'phaser';
-import citypng from '../Assets/tile/city.png'
-import bpng from '../Assets/tile/_Example.png'
-import cityjson from '../Assets/tile/city.json'
-import bgmusic from '../Assets/audio/TownTheme.ogg'
-import normalButton from '../Assets/ui/buttonNormal.png';
-import hoverButton from '../Assets/ui/buttonHighLight.png';
-import grey from '../Assets/ui/grey_box.png'
-import blue from '../Assets/ui/blue_boxCheckmark.png'
-import introVoiceMp3 from '../Assets/audio/intro.mp3'
-import introVoiceOgg from '../Assets/audio/intro.ogg'
-import fireMp3 from '../Assets/audio/fire.mp3'
-import fireOgg from '../Assets/audio/fire.ogg'
-import enemyFireMp3 from '../Assets/audio/enemyFire.mp3'
-import enemyFireOgg from '../Assets/audio/enemyFire.ogg'
-import player from '../Assets/tank/player.png'
-import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
-import bulletShell from '../Assets/tank/HeavyShell.png'
-import explosion  from '../Assets/tank/explosion.png'
-import enemy from '../Assets/tank/enemy.png'
-import enemyTankBarrel from '../Assets/tank/enemyTankBarrel.png'
-
+import citypng from '../assets/tile/city.png'
+import bpng from '../assets/tile/_Example.png'
+import cityjson from '../assets/tile/city.json'
+import bgmusic from '../assets/audio/TownTheme.ogg'
+import normalButton from '../assets/ui/buttonNormal.png';
+import hoverButton from '../assets/ui/buttonHighLight.png';
+import grey from '../assets/ui/grey_box.png'
+import blue from '../assets/ui/blue_boxCheckmark.png'
+import introVoiceMp3 from '../assets/audio/intro.mp3'
+import introVoiceOgg from '../assets/audio/intro.ogg'
+import fireMp3 from '../assets/audio/fire.mp3'
+import fireOgg from '../assets/audio/fire.ogg'
+import enemyFireMp3 from '../assets/audio/enemyFire.mp3'
+import enemyFireOgg from '../assets/audio/enemyFire.ogg'
+import player from '../assets/tank/player.png'
+import playerTankBarrel from '../assets/tank/playerTankBarrel.png'
+import bulletShell from '../assets/tank/HeavyShell.png'
+import explosion  from '../assets/tank/explosion.png'
+import enemy from '../assets/tank/enemy.png'
+import enemyTankBarrel from '../assets/tank/enemyTankBarrel.png'
+import tombstone from '../assets/misc/tombstone.png'
+import form from '../assets/misc/form.html'
 
 export default class PreloaderScene extends Phaser.Scene {
   constructor () {
@@ -158,11 +159,14 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 256,
       frameHeight: 256
     })
+
+    this.load.image('tombstone', tombstone)
+    this.load.html('form', form)
   }
  
-startTitleScene() {
-  this.scene.start('Menu');
-}
+  startTitleScene() {
+    this.scene.start('Input');
+  }
  
   create () {
     this.sys.game.globals.bgMusic = this.sound.add('bgMusic', { volume: 0.5, loop: true });

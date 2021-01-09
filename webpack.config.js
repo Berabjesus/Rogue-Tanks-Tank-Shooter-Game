@@ -41,8 +41,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif|mp3|ogg|woff|woff2|eot|ttf|otf|xml)$/,
+        test: /\.(png|svg|jpg|gif|mp3|ogg|woff|woff2|eot|ttf|otf)$/,
         use: ['file-loader'],
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
       },
       {
         test: /\.m?js$/,

@@ -2,7 +2,7 @@ import 'phaser';
 import Enemy from '../Components/enemy'
 import Path from '../Components/paths'
 export default class GameScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Game');
     this.reloaded = true
     this.paths = {}
@@ -10,55 +10,66 @@ export default class GameScene extends Phaser.Scene {
     this.enemyGroup = []
     this.scoreNumber = 0
   }
- 
-  preload () {
-  }
- 
-  create () {
-    const map = this.make.tilemap({key: 'map1'})
+
+  preload() {}
+
+  create() {
+    const map = this.make.tilemap({
+      key: 'map1'
+    })
     this.mapBaseY = map.heightInPixels;
     const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0)
     const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0)
 
     this.ground = map.createLayer('grass', tileset1)
     this.boundary = map.createLayer('boundary', tileset)
-    this.walls =  map.createLayer('street', tileset)
+    this.walls = map.createLayer('street', tileset)
     this.misc = map.createLayer('misc', tileset1)
     this.buildings = map.createLayer('building', tileset1)
-    this.walls.setCollisionByProperty({ collides: true });
-    this.buildings.setCollisionByProperty({collides: true});
-    this.boundary.setCollisionByProperty({collides: true})
+    this.walls.setCollisionByProperty({
+      collides: true
+    });
+    this.buildings.setCollisionByProperty({
+      collides: true
+    });
+    this.boundary.setCollisionByProperty({
+      collides: true
+    })
 
-    this.brokenTank = this.add.sprite( 350, 420, 'enemy').setScale(0.3, 0.3).setTint(0x706f6f);
-    this.brokenTank
-    this.brokenTankTurret = this.add.sprite( 390, 440, 'enemyTankBarrel').setScale(0.3, 0.3).setTint(0x706f6f);
+    this.brokenTank = this.add.sprite(350, 420, 'enemy')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
+    this.brokenTankTurret = this.add.sprite(390, 440, 'enemyTankBarrel')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
 
-    this.player = this.physics.add.sprite(0, 0, 'player').setScale(0.3, 0.3)
-    this.playerTankContainer =  this.add.container(1700, 2200, [ this.player]);
-    this.playerTankContainer.setSize(64, 64)
-    this.playerTankContainer.depth = 2 
+    this.player = this.physics.add.sprite(0, 0, 'player')
+    .setScale(0.3, 0.3)
+    this.playerTankContainer = this.add.container(1700, 2200, [this.player])
+    .setSize(64, 64)
+    this.playerTankContainer.depth = 2
     this.playerTankContainer.health = 100
     this.physics.world.enable(this.playerTankContainer);
 
-    this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3,0.3).setOrigin(0.5, 0.7)
+    this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7)
     this.playerTankBarrel.depth = 10
-    
+
     this.physics.add.collider(this.playerTankContainer, this.walls);
     this.physics.add.collider(this.playerTankContainer, this.buildings)
 
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer);
     this.camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.camera.zoomTo(0.75,1000);
+    this.camera.zoomTo(0.75, 1000);
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
-      w:  Phaser.Input.Keyboard.KeyCodes.W,
-      d:  Phaser.Input.Keyboard.KeyCodes.D,
-      a:  Phaser.Input.Keyboard.KeyCodes.A,
-      s:  Phaser.Input.Keyboard.KeyCodes.S,
-      e:  Phaser.Input.Keyboard.KeyCodes.E,
-      space:  Phaser.Input.Keyboard.KeyCodes.SPACE,
+      w: Phaser.Input.Keyboard.KeyCodes.W,
+      d: Phaser.Input.Keyboard.KeyCodes.D,
+      a: Phaser.Input.Keyboard.KeyCodes.A,
+      s: Phaser.Input.Keyboard.KeyCodes.S,
+      e: Phaser.Input.Keyboard.KeyCodes.E,
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
 
     this.mouse = this.input.mousePointer
@@ -66,7 +77,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.newPathInstance = new Path(this.add.graphics())
     this.paths = this.newPathInstance.getAllPaths()
-  
+
     for (const key in this.paths) {
       let newPath = this.paths[key]
       this.createEnemyTank(newPath)
@@ -86,49 +97,52 @@ export default class GameScene extends Phaser.Scene {
 
   }
 
-  createScoreBox(){
+  createScoreBox() {
     this.createBox(-170, -100, 150)
-    this.score = this.createText(-170, -100,`Score: ${this.scoreNumber}`)
+    this.score = this.createText(-170, -100, `Score: ${this.scoreNumber}`)
   }
 
-  createHealthBox(){
+  createHealthBox() {
     this.createBox(1100, -100, 200)
     this.health = this.createText(1100, -100, `Health: ${this.playerTankContainer.health}`)
   }
 
-  createBox(x,y, width){
+  createBox(x, y, width) {
     let box = this.add.graphics();
     box.fillStyle(0x222222, 0.8);
     box.fillRoundedRect(x, y, width, 50, 7);
-    box.setScrollFactor(0,0);
+    box.setScrollFactor(0, 0);
     box.depth = 20
     return box
   }
 
-  createText(x,y,newtext){
-    let text = this.add.text(x, y, newtext, { font: '40px gothic', fill: '#ffffff' });
+  createText(x, y, newtext) {
+    let text = this.add.text(x, y, newtext, {
+      font: '40px gothic',
+      fill: '#ffffff'
+    });
     text.setStroke('#000', 4);
     text.setShadow(2, 2, "#333333", 2, true, true);
-    text.setScrollFactor(0,0);
+    text.setScrollFactor(0, 0);
     text.depth = 20
     return text
   }
 
-  createEnemyTank(path){
-    let newEnemy = new Enemy(this,this.scene, path)
+  createEnemyTank(path) {
+    let newEnemy = new Enemy(this, this.scene, path)
     newEnemy.follow(this.newPathInstance.pathSetting)
     this.physics.add.collider(this.playerTankContainer, newEnemy);
     this.enemyGroup.push(newEnemy)
   }
 
-  respawn(){
+  respawn() {
     if (this.toRespawn > 0) {
       var pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length)
       var pathOne = this.paths[`path${pathNumberOne}`];
-  
-      var pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1    
+
+      var pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1
       var pathTwo = this.paths[`path${pathNumberTwo}`]
-  
+
       for (let index = 0; index < this.toRespawn; index++) {
         this.createEnemyTank(pathOne)
         this.createEnemyTank(pathTwo)
@@ -138,11 +152,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   rotarteBarrel() {
-    this.rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x,this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY);
-    this.playerTankBarrel.rotation = this.rotate+Math.PI/2;
+    this.rotate = Phaser.Math.Angle.Between(this.playerTankBarrel.body.x, this.playerTankBarrel.body.y, this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY);
+    this.playerTankBarrel.rotation = this.rotate + Math.PI / 2;
   }
 
-  explode(x,y) {
+  explode(x, y) {
     this.anims.create({
       key: 'boom',
       frames: this.anims.generateFrameNumbers('explosion', {
@@ -152,7 +166,7 @@ export default class GameScene extends Phaser.Scene {
       frameRate: 10,
       repeat: 0
     });
-    let explosion =  this.add.sprite(x, y , 'explosion')
+    let explosion = this.add.sprite(x, y, 'explosion')
     explosion.play('boom')
     explosion.once('animationcomplete', () => {
       explosion.destroy()
@@ -162,19 +176,23 @@ export default class GameScene extends Phaser.Scene {
   fireAtEnemy() {
     let x = this.playerTankBarrel.x
     let y = this.playerTankBarrel.y
-    let newBullet=this.physics.add.sprite(x,y,'bullet').setScale(0.45, 0.45).setOrigin(0.5, 0.5).setSize(1, 30).setOffset(65, 50);
+    let newBullet = this.physics.add.sprite(x, y, 'bullet')
+    .setScale(0.45, 0.45)
+    .setOrigin(0.5, 0.5)
+    .setSize(1, 30)
+    .setOffset(65, 50);
 
     newBullet.rotation += this.playerTankBarrel.rotation
     newBullet.depth = 1
 
-    this.physics.add.collider(newBullet, this.buildings, function() {
+    this.physics.add.collider(newBullet, this.buildings, function () {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
     }, null, this);
 
     var count = 0
     this.enemyGroup.forEach(enemy => {
-      this.physics.add.collider(newBullet, enemy, function() {
+      this.physics.add.collider(newBullet, enemy, function () {
         this.explode(newBullet.x, newBullet.y)
         newBullet.destroy(true)
         enemy.health -= 10
@@ -189,10 +207,10 @@ export default class GameScene extends Phaser.Scene {
       }, null, this);
     });
 
-    this.physics.moveTo(newBullet,this.game.input.mousePointer.worldX,this.game.input.mousePointer.worldY,500);
+    this.physics.moveTo(newBullet, this.game.input.mousePointer.worldX, this.game.input.mousePointer.worldY, 500);
   }
 
-  updatePlayerHealth(){
+  updatePlayerHealth() {
     this.playerTankContainer.health -= 4
     this.health.setText(`Health: ${this.playerTankContainer.health}`)
     if (this.playerTankContainer.health <= 0) {
@@ -203,29 +221,29 @@ export default class GameScene extends Phaser.Scene {
   update() {
 
     if (this.playerTankContainer.health <= 0) {
-        console.log('u died');
+      console.log('u died');
       this.registry.destroy();
       this.events.off();
       this.scene.restart();
       return
-    } 
+    }
 
     this.enemyGroup.forEach(enemy => {
-      if(enemy && enemy.body)
-        if(this.scoreNumber >= 50)
+      if (enemy && enemy.body)
+        if (this.scoreNumber >= 50)
           enemy.update(600)
-        else if(this.scoreNumber >= 100)
-          enemy.update(e800)
-        else
-          enemy.update(400)
+      else if (this.scoreNumber >= 100)
+        enemy.update(e800)
+      else
+        enemy.update(400)
     });
 
     this.playerTankContainer.body.velocity.x = 0;
     this.playerTankContainer.body.velocity.y = 0;
     this.playerTankContainer.body.angularVelocity = 0;
 
-    this.playerTankBarrel.x =  this.playerTankContainer.x;
-    this.playerTankBarrel.y =  this.playerTankContainer.y;
+    this.playerTankBarrel.x = this.playerTankContainer.x;
+    this.playerTankBarrel.y = this.playerTankContainer.y;
     this.rotarteBarrel()
 
     const speed = 200
@@ -240,31 +258,31 @@ export default class GameScene extends Phaser.Scene {
     }
 
     var boost = 1
-    if (this.keys.e.isDown){ 
+    if (this.keys.e.isDown) {
       boost = 1.5
     }
-    
-    if (this.keys.w.isDown){  
+
+    if (this.keys.w.isDown) {
       this.playerTankContainer.body.velocity.y = -velocityX * boost
       this.playerTankContainer.body.velocity.x = velocityY * boost
     }
-    if (this.keys.s.isDown){
+    if (this.keys.s.isDown) {
       this.playerTankContainer.body.velocity.y = velocityX * boost
       this.playerTankContainer.body.velocity.x = -velocityY * boost
     }
-    if (this.keys.a.isDown){
+    if (this.keys.a.isDown) {
       this.playerTankContainer.body.angularVelocity = -200;
     }
-    if (this.keys.d.isDown){
+    if (this.keys.d.isDown) {
       this.playerTankContainer.body.angularVelocity = 200;
     }
 
     if ((this.mouse.isDown || this.keys.space.isDown) && this.reloaded) {
       this.fireAtEnemy()
-      this.reloaded =false
+      this.reloaded = false
     }
 
-    this.input.on('pointerup', function() {
+    this.input.on('pointerup', function () {
       this.reloaded = true
     }.bind(this))
 

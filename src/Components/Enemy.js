@@ -86,11 +86,11 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     return Phaser.Math.Distance.BetweenPoints(this, this._player)
   }
 
-  update(){
+  update(radius){
 
     this._attachTurret()
 
-    if (this._playerInRange() < 400) {
+    if (this._playerInRange() < radius) {
       !this._enemyContact ? this._enemyContact = true :
 
       this._rotateTurret()

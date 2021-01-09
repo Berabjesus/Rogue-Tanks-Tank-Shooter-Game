@@ -212,7 +212,12 @@ export default class GameScene extends Phaser.Scene {
 
     this.enemyGroup.forEach(enemy => {
       if(enemy && enemy.body)
-      enemy.update()
+        if(this.scoreNumber >= 50)
+          enemy.update(600)
+        else if(this.scoreNumber >= 100)
+          enemy.update(800)
+        else
+          enemy.update(400)
     });
 
     this.playerTankContainer.body.velocity.x = 0;

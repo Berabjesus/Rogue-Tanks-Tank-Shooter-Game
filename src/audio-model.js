@@ -1,4 +1,4 @@
-export default class Model {
+export default class AudioModel {
   constructor() {
     this._soundOn = true;
     this._musicOn = true;

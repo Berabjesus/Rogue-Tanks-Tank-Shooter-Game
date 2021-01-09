@@ -8,12 +8,12 @@ import OptionsScene from './Scenes/OptionsScene'
 import CreditsScene from './Scenes/CreditsScene'
 import IntroScene from './Scenes/IntroScene'
 import GameScene from './Scenes/GameScene';
-import Model from './Model';
+import AudioModel from './audio-model';
 
 class Game extends Phaser.Game {
   constructor () {
     super(config);
-    const model = new Model();
+    const model = new AudioModel();
     this.globals = { model, bgMusic: 'null'};
     this.scene.add('Boot', BootScene)
     this.scene.add('Preloader', PreloaderScene)

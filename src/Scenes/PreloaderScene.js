@@ -7,8 +7,8 @@ import normalButton from '../Assets/ui/buttonNormal.png';
 import hoverButton from '../Assets/ui/buttonHighLight.png';
 import grey from '../Assets/ui/grey_box.png'
 import blue from '../Assets/ui/blue_boxCheckmark.png'
-import fullscreenBtn from '../Assets/ui/fs.png'
-
+import introVoiceMp3 from '../Assets/audio/intro.mp3'
+import introVoiceOgg from '../Assets/audio/intro.ogg'
 import player from '../Assets/tank/player.png'
 import playerTankBarrel from '../Assets/tank/playerTankBarrel.png'
 import bulletShell from '../Assets/tank/HeavyShell.png'
@@ -123,9 +123,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('hoverButton', hoverButton);
     this.load.image('box', grey);
     this.load.image('checkedBox', blue);
-    this.load.image('fullscreen', fullscreenBtn);
-
     this.load.audio('bgMusic', [bgmusic])
+    this.load.audio('introVoice', [introVoiceMp3, introVoiceOgg])
     this.load.spritesheet('player', player, {
       frameWidth: 256,
       frameHeight: 256

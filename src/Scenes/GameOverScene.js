@@ -30,7 +30,7 @@ export default class GameOverScene extends Phaser.Scene {
     ]);
 
     const backButton = this.add.sprite(380,550, 'normalButton').setScale(0.7, 0.7).setInteractive()
-    this.menuText = this.add.text(0,0, 'Respawn', { fontSize: '32px', fill: '#fff' })
+    this.menuText = this.add.text(0,0, 'Restart', { fontSize: '32px', fill: '#fff' })
     Phaser.Display.Align.In.Center(this.menuText, backButton);
 
     backButton.on('pointerdown', function(pointer) {

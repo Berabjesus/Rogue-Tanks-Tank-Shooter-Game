@@ -3,7 +3,7 @@ import 'phaser'
 export default class Path{
   constructor(graphics){
     this._graphics = graphics
-    this._graphics.lineStyle(5, 0x000000, 5);
+    this._graphics.lineStyle(0, 0x000000, 0);
     this._graphics.fillStyle(0x00ff00, 1);
     this._pathOne()
     this._pathTwo()
@@ -20,7 +20,7 @@ export default class Path{
   }
 
   _draw(path) {
-    path.draw(this._graphics, 64)
+    path.draw(this._graphics, 0)
   }
 
   _pathOne(){

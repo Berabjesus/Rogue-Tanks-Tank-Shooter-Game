@@ -45,12 +45,18 @@ export default class CreditsScene extends Phaser.Scene {
       }.bind(this)
     });
 
-    this.menuButton = this.add.sprite(10,510, 'blueButton1').setInteractive().setOrigin(0,0)
+    this.menuButton = this.add.sprite(10,510, 'normalButton').setInteractive().setOrigin(0,0)
     this.menuText = this.add.text(0,0, 'Menu', { fontSize: '32px', fill: '#fff' })
     Phaser.Display.Align.In.Center(this.menuText, this.menuButton);
 
     this.menuButton.on('pointerdown', function(pointer) {
       this.scene.start('Menu')
+    }.bind(this))
+    this.menuButton.on('pointerover', function(pointer) {
+      this.menuButton.setTexture('hoverButton');
+    }.bind(this))
+    this.menuButton.on('pointerout', function(pointer) {
+      this.menuButton.setTexture('normalButton');
     }.bind(this))
   }
 };

@@ -45,14 +45,6 @@ export default class OptionsScene extends Phaser.Scene {
     this.bgMusic = this.sys.game.globals.bgMusic
     this.model = this.sys.game.globals.model;
 
-    this.input.on('pointerover', function (event, gameObjects) {
-      gameObjects[0].setTexture('hoverButton');
-    });
-
-    this.input.on('pointerout', function (event, gameObjects) {
-      gameObjects[0].setTexture('normalButton');
-    });
-
     this.musicButton.on('pointerdown', function () {
       this.model.musicOn = !this.model.musicOn;
       this.updateAudio();
@@ -70,7 +62,12 @@ export default class OptionsScene extends Phaser.Scene {
     this.menuButton.on('pointerdown', function(pointer) {
       this.scene.start('Menu')
     }.bind(this))
-    
+    this.menuButton.on('pointerover', function(pointer) {
+      this.menuButton.setTexture('hoverButton');
+    }.bind(this))
+    this.menuButton.on('pointerout', function(pointer) {
+      this.menuButton.setTexture('normalButton');
+    }.bind(this))
 
     this.updateAudio();
   }

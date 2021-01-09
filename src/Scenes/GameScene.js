@@ -215,7 +215,7 @@ export default class GameScene extends Phaser.Scene {
         if(this.scoreNumber >= 50)
           enemy.update(600)
         else if(this.scoreNumber >= 100)
-          enemy.update(800)
+          enemy.update(e800)
         else
           enemy.update(400)
     });

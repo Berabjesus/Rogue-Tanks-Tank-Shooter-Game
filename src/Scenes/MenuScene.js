@@ -21,7 +21,7 @@ export default class MenuScene extends Phaser.Scene {
  
   create () {
 
-    this.gameButton = this.add.sprite(100, 200, 'blueButton1').setInteractive();
+    this.gameButton = this.add.sprite(100, 200, 'normalButton').setInteractive();
     this.centerButton(this.gameButton, 1);
 
     this.gameText = this.add.text(0, 0, 'Play', { fontSize: '32px', fill: '#fff' });
@@ -32,14 +32,14 @@ export default class MenuScene extends Phaser.Scene {
     }.bind(this));
 
     this.input.on('pointerover', function (event, gameObjects) {
-      gameObjects[0].setTexture('blueButton2');
+      gameObjects[0].setTexture('hoverButton');
     });
 
     this.input.on('pointerout', function (event, gameObjects) {
-      gameObjects[0].setTexture('blueButton1');
+      gameObjects[0].setTexture('normalButton');
     });
 
-    this.optionsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
+    this.optionsButton = this.add.sprite(300, 200, 'normalButton').setInteractive();
     this.centerButton(this.optionsButton);
     
     this.optionsText = this.add.text(0, 0, 'Options', { fontSize: '32px', fill: '#fff' });
@@ -49,7 +49,7 @@ export default class MenuScene extends Phaser.Scene {
       this.scene.start('Options');
     }.bind(this));
     
-    this.creditsButton = this.add.sprite(300, 200, 'blueButton1').setInteractive();
+    this.creditsButton = this.add.sprite(300, 200, 'normalButton').setInteractive();
     this.centerButton(this.creditsButton, -1);
     
     this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });

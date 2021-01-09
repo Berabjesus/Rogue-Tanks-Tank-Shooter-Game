@@ -45,6 +45,14 @@ export default class OptionsScene extends Phaser.Scene {
     this.bgMusic = this.sys.game.globals.bgMusic
     this.model = this.sys.game.globals.model;
 
+    this.input.on('pointerover', function (event, gameObjects) {
+      gameObjects[0].setTexture('hoverButton');
+    });
+
+    this.input.on('pointerout', function (event, gameObjects) {
+      gameObjects[0].setTexture('normalButton');
+    });
+
     this.musicButton.on('pointerdown', function () {
       this.model.musicOn = !this.model.musicOn;
       this.updateAudio();
@@ -55,7 +63,7 @@ export default class OptionsScene extends Phaser.Scene {
       this.updateAudio();
     }.bind(this));
 
-    this.menuButton = this.add.sprite(100, 500, 'blueButton1').setInteractive()
+    this.menuButton = this.add.sprite(10,510, 'normalButton').setInteractive().setOrigin(0,0)
     this.menuText = this.add.text(0,0, 'Menu', { fontSize: '32px', fill: '#fff' })
     Phaser.Display.Align.In.Center(this.menuText, this.menuButton);
 
@@ -63,12 +71,7 @@ export default class OptionsScene extends Phaser.Scene {
       this.scene.start('Menu')
     }.bind(this))
     
-    const fullscreenButton = this.add.sprite(500, 400, 'fullscreen').setScale(0.15, 0.15).setInteractive()
-    const fsText = this.add.text(550, 390, 'Fullscreen', { fontSize: 24 });
 
-    fullscreenButton.on('pointerdown', function(pointer) {
-      this.scale.startFullscreen();
-    }.bind(this))
     this.updateAudio();
   }
 };

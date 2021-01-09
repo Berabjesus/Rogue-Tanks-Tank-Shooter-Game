@@ -3,8 +3,8 @@ import citypng from '../Assets/tile/city.png'
 import bpng from '../Assets/tile/_Example.png'
 import cityjson from '../Assets/tile/city.json'
 import bgmusic from '../Assets/audio/TownTheme.ogg'
-import blueButton1 from '../Assets/ui/blue_button02.png';
-import blueButton2 from '../Assets/ui/blue_button03.png';
+import normalButton from '../Assets/ui/buttonNormal.png';
+import hoverButton from '../Assets/ui/buttonHighLight.png';
 import grey from '../Assets/ui/grey_box.png'
 import blue from '../Assets/ui/blue_boxCheckmark.png'
 import fullscreenBtn from '../Assets/ui/fs.png'
@@ -119,8 +119,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('build', bpng)
     this.load.tilemapTiledJSON('map1', cityjson)
 
-    this.load.image('blueButton1', blueButton1);
-    this.load.image('blueButton2', blueButton2);
+    this.load.image('normalButton', normalButton);
+    this.load.image('hoverButton', hoverButton);
     this.load.image('box', grey);
     this.load.image('checkedBox', blue);
     this.load.image('fullscreen', fullscreenBtn);

@@ -14,25 +14,24 @@ export default class GameScene extends Phaser.Scene {
   preload() {}
 
   create() {
-    this.model = this.sys.game.globals.model;
-    this.bgMusic = this.sys.game.globals.bgMusic
-    this.bgMusic.volume = 0.2
-    if (this.model.musicOn && !this.model.bgMusicPlaying) {
-      if(this.model.musicPaused)
-        this.bgMusic.resume();
+    const model = this.sys.game.globals.model;
+    const bgMusic = this.sys.game.globals.bgMusic
+    bgMusic.volume = 0.2
+    if (model.musicOn && !model.bgMusicPlaying) {
+      if(model.musicPaused)
+        bgMusic.resume();
       else
-        this.bgMusic.play();
-      this.model.bgMusicPlaying = true
+        bgMusic.play();
+      model.bgMusicPlaying = true
     }
 
     const map = this.make.tilemap({
       key: 'map1'
     })
-    this.mapBaseY = map.heightInPixels;
     const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0)
     const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0)
 
-    this.ground = map.createLayer('grass', tileset1)
+    map.createLayer('grass', tileset1)
     this.boundary = map.createLayer('boundary', tileset)
     this.walls = map.createLayer('street', tileset)
     this.misc = map.createLayer('misc', tileset1)

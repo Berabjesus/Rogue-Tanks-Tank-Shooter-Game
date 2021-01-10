@@ -32,5 +32,14 @@ export default class MenuScene extends Phaser.Scene {
 
     this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Top 10 Players', 'Leaderboard');
     this.centerButton(this.leaderboardButton, -2);
+
+    const info = this.add.text(750, 30, '', {
+      font: '16px',
+      fill: '#ffffff',
+    });
+
+    info.setText([
+      `Info: If you experience lag,\nPlease enable hardware acceleration on\nyour Browser. On Chrome For Example:\nChrome Menu > Settings > Advanced. \nUnder System, enable 'Use hardware\nacceleration when available'`,
+    ]);
   }
 }

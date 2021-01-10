@@ -71,7 +71,7 @@ export default class GameScene extends Phaser.Scene {
     const camera = this.cameras.main;
     camera.startFollow(this.playerTankContainer);
     camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    camera.zoomTo(0.75, 1000);
+    camera.zoomTo(0.8, 1000);
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
@@ -116,13 +116,13 @@ export default class GameScene extends Phaser.Scene {
   }
 
   createScoreBox() {
-    this.createBox(-170, -100, 150);
-    this.score = this.createText(-170, -100, `Score: ${this.scoreNumber}`);
+    this.createBox(-130, -60, 150);
+    this.score = this.createText(-130, -60, `Score: ${this.scoreNumber}`);
   }
 
   createHealthBox() {
-    this.createBox(1100, -100, 200);
-    this.health = this.createText(1100, -100, `Health: ${this.playerTankContainer.health}`);
+    this.createBox(1150, -60, 200);
+    this.health = this.createText(1150, -60, `Health: ${this.playerTankContainer.health}`);
   }
 
   createBox(x, y, width) {

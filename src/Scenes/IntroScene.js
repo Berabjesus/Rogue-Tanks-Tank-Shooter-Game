@@ -8,9 +8,15 @@ export default class IntroScene extends Phaser.Scene {
   }
 
   setPlayButtonActive() {
-    new Button(this, 580, 550, 'normalButton', 'hoverButton', 'Chicken Out', 'Menu', {x : 0.7, y :0.7 })
+    new Button(this, 580, 550, 'normalButton', 'hoverButton', 'Chicken Out', 'Menu', {
+      x: 0.7,
+      y: 0.7
+    })
 
-    new Button(this, 980, 550, 'normalButton', 'hoverButton', 'Lets Go!', 'Game', {x : 0.7, y :0.7 })
+    new Button(this, 980, 550, 'normalButton', 'hoverButton', 'Lets Go!', 'Game', {
+      x: 0.7,
+      y: 0.7
+    })
   }
 
   create() {

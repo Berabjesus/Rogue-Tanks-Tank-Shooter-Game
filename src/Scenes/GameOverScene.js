@@ -10,7 +10,9 @@ export default class GameOverScene extends Phaser.Scene {
   create() {
     const tombstone = this.add.image(350, 60, 'tombstone').setOrigin(0, 0);
     const score = this.sys.game.globals.score + 10;
-    const { player } = this.sys.game.globals;
+    const {
+      player
+    } = this.sys.game.globals;
 
     const ripText = this.add.text(570, 140, '', {
       font: '36px',

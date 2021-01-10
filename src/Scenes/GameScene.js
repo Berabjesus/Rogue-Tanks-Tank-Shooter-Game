@@ -6,6 +6,7 @@ export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
     this.reloaded = true
+    this.round = 4
     this.paths = {}
     this.toRespawn = 0
     this.enemyGroup = []
@@ -104,8 +105,8 @@ export default class GameScene extends Phaser.Scene {
 
     this.respawnInterval = setInterval(() => {
       this.respawn()
-      if (this.playerTankContainer.health < 100) {
-        this.playerTankContainer.health += 2
+      if (this.playerTankContainer.health < 500) {
+        this.playerTankContainer.health += 5
         this.health.setText(`Health: ${this.playerTankContainer.health}`)
       }
     }, 5000);
@@ -209,12 +210,12 @@ export default class GameScene extends Phaser.Scene {
       this.explode(newBullet.x, newBullet.y)
       newBullet.destroy(true)
     }, null, this);
-    var count = 0
+
     this.enemyGroup.forEach(enemy => {
       this.physics.add.collider(newBullet, enemy, function () {
         this.explode(newBullet.x, newBullet.y)
         newBullet.destroy(true)
-        enemy.health -= 15
+        enemy.health -= 20
         if (enemy.health <= 0) {
           this.scoreNumber += 10
           this.score.setText(`Score: ${this.scoreNumber}`)

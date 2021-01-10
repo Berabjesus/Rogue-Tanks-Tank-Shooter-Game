@@ -11,7 +11,7 @@ import LeaderboardScene from './scenes/Leaderboard';
 import IntroScene from './scenes/IntroScene';
 import GameScene from './scenes/GameScene';
 import GameOverScene from './scenes/GameOverScene';
-import AudioModel from './components/audio-status';
+import AudioModel from './utils/audio-status';
 
 class Game extends Phaser.Game {
   constructor() {

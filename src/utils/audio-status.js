@@ -1,6 +1,5 @@
 export default class AudioModel {
   constructor() {
-    this._soundOn = true;
     this._musicOn = true;
     this._bgMusicPlaying = false;
     this._musicPaused = false;
@@ -20,14 +19,6 @@ export default class AudioModel {
 
   get musicPaused() {
     return this._musicPaused;
-  }
-
-  set soundOn(value) {
-    this._soundOn = value;
-  }
-
-  get soundOn() {
-    return this._soundOn;
   }
 
   set bgMusicPlaying(value) {

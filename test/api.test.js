@@ -1,4 +1,4 @@
-import Api from '../src/components/api'
+import Api from '../src/utils/api'
 
 beforeEach(() => {
   fetch.resetMocks();

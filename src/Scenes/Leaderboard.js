@@ -1,5 +1,5 @@
 import 'phaser';
-import Api from '../components/api';
+import Api from '../utils/api';
 import Button from '../components/button';
 
 export default class LeaderboardScene extends Phaser.Scene {

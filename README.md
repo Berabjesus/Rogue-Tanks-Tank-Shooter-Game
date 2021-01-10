@@ -164,7 +164,7 @@ Give a ⭐️ if you like this project!
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
 * [Microverse](Microverse.org)
-* Phaser.io
+* [Phaser.io](https://phaser.io/)
 * [Tiled Map Editor](https://www.mapeditor.org/)
 
 [contributors-shield]: https://img.shields.io/github/contributors/Berabjesus/Tank-Shooter-Game.svg?style=for-the-badge

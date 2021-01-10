@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+
 import 'phaser';
 import Button from '../components/button';
 import Api from '../utils/api';
@@ -8,7 +10,7 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   create() {
-    const tombstone = this.add.image(350, 60, 'tombstone').setOrigin(0, 0);
+    this.add.image(350, 60, 'tombstone').setOrigin(0, 0);
     const score = this.sys.game.globals.score + 10;
     const {
       player,

@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+
 import 'phaser';
 import Button from '../components/button';
 
@@ -59,15 +61,15 @@ export default class IntroScene extends Phaser.Scene {
       });
       Phaser.Display.Align.In.Center(this.menuText, skipButton);
 
-      skipButton.on('pointerdown', (pointer) => {
+      skipButton.on('pointerdown', () => {
         intro.stop();
         this.setPlayButtonActive();
         this.skipped = true;
       });
-      skipButton.on('pointerover', (pointer) => {
+      skipButton.on('pointerover', () => {
         skipButton.setTexture('hoverButton');
       });
-      skipButton.on('pointerout', (pointer) => {
+      skipButton.on('pointerout', () => {
         skipButton.setTexture('normalButton');
       });
     }, 1000);

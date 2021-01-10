@@ -1,3 +1,8 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-new */
+/* eslint-disable func-names */
+
 import 'phaser';
 import Button from '../components/button';
 
@@ -35,9 +40,6 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 3000,
       delay: 1000,
-      onComplete() {
-        this.destroy;
-      },
     });
 
     this.tweens.add({
@@ -47,7 +49,6 @@ export default class CreditsScene extends Phaser.Scene {
       duration: 15000,
       delay: 1000,
       onComplete: function () {
-        this.destroy;
         this.scene.start('Menu');
       }.bind(this),
     });

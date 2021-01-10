@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+
 import 'phaser';
 import Button from '../components/button';
 

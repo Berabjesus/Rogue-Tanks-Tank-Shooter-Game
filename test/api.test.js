@@ -14,7 +14,7 @@ describe('Get', () => {
         }],
     }));
     Api.get()
-      .then(response => {
+      .then(() => {
         expect(global.fetch).toHaveBeenCalledWith(
           'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/nLw10P9I0j6eCcGMXLVN/scores/', {
             method: 'GET',
@@ -24,14 +24,14 @@ describe('Get', () => {
           },
         );
       })
-      .catch(err => {});
+      .catch(() => {});
   });
   it('should get name and score using the get base url and return an ok response', () => {
     Api.get()
       .then(response => {
         expect(response.name).toBe('test user');
       })
-      .catch(err => {});
+      .catch(() => {});
   });
 });
 
@@ -42,7 +42,7 @@ describe('Post', () => {
 
   it('should upload name and score using the post base url and return an ok response', () => {
     Api.post()
-      .then(response => {
+      .then(() => {
         expect(global.fetch).toHaveBeenCalledWith(
           'https://cors-anywhere.herokuapp.com/https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/nLw10P9I0j6eCcGMXLVN/scores/', {
             mode: 'cors',
@@ -55,7 +55,7 @@ describe('Post', () => {
           },
         );
       })
-      .catch(err => {});
+      .catch(() => {});
   });
   it('should post name and score using the get base url', () => {
     Api.post('test', 12)

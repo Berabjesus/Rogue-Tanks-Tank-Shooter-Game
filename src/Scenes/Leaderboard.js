@@ -1,3 +1,5 @@
+/* eslint-disable no-new */
+
 import 'phaser';
 import Api from '../utils/api';
 import Button from '../components/button';
@@ -22,7 +24,7 @@ export default class LeaderboardScene extends Phaser.Scene {
         const arrayOfusers = result.result;
         const sorted = arrayOfusers.sort((a, b) => b.score - a.score);
 
-        for (let i = 0; i < sorted.length; i++) {
+        for (let i = 0; i < sorted.length; i += 1) {
           if (i >= 10) {
             break;
           }
@@ -38,7 +40,7 @@ export default class LeaderboardScene extends Phaser.Scene {
       .catch(error => {
         dom.innerText = error;
       });
-    const element = this.add.dom(600, 100, dom);
+    this.add.dom(600, 100, dom);
 
     new Button(this, 180, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu', {
       x: 0.7,

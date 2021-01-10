@@ -28,7 +28,6 @@ export default class PreloaderScene extends Phaser.Scene {
 
   preload() {
     const { width } = this.cameras.main;
-    const { height } = this.cameras.main;
 
     const avatar = this.add.image(10, 10, 'madeBy').setOrigin(0, 0).setScale(0.3, 0.3);
     const name = this.make.text({
@@ -92,7 +91,7 @@ export default class PreloaderScene extends Phaser.Scene {
     assetText.setOrigin(0.5, 0.5);
 
     this.load.on('progress', (value) => {
-      percentText.setText(`${parseInt(value * 100)}%`);
+      percentText.setText(`${parseInt(value * 100, 10)}%`);
       progressBar.clear();
       progressBar.fillStyle(0xffffff, 1);
       progressBar.fillRoundedRect(450, 450, 300 * value, 18, 6);

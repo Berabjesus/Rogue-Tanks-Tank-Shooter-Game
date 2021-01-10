@@ -1,5 +1,9 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable max-len */
+/* eslint-disable func-names */
+
 import 'phaser';
-import Enemy from '../components/enemy';
+import Enemy from '../components/Enemy';
 import Path from '../components/paths';
 
 export default class GameScene extends Phaser.Scene {
@@ -90,8 +94,9 @@ export default class GameScene extends Phaser.Scene {
     this.paths = this.newPathInstance.getAllPaths();
 
     for (const key in this.paths) {
-      const newPath = this.paths[key];
-      this.createEnemyTank(newPath);
+      if (this.paths[key]) {
+        this.createEnemyTank(this.paths[key]);
+      }
     }
 
     this.createScoreBox();
@@ -107,7 +112,7 @@ export default class GameScene extends Phaser.Scene {
     }, 5000);
 
 
-    this.input.on('pointerdown', (pointer) => {
+    this.input.on('pointerdown', () => {
       this.fireAtEnemy();
     });
     this.input.keyboard.on('keydown-SPACE', () => {
@@ -161,7 +166,7 @@ export default class GameScene extends Phaser.Scene {
       const pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1;
       const pathTwo = this.paths[`path${pathNumberTwo}`];
 
-      for (let index = 0; index < this.toRespawn; index++) {
+      for (let index = 0; index < this.toRespawn; index += 1) {
         this.createEnemyTank(pathOne);
         this.createEnemyTank(pathTwo);
       }

@@ -1,6 +1,6 @@
 import 'phaser';
-import madeBy from '../Assets/misc/me-min.png';
-import gameLogo from '../Assets/misc/taklogo.png';
+import madeBy from '../assets/misc/me-min.png';
+import gameLogo from '../assets/misc/taklogo.png';
 
 export default class BootScene extends Phaser.Scene {
   constructor() {

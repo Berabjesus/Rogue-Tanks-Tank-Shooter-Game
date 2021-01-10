@@ -1,4 +1,6 @@
-import AudioModel from '../src/components/audio-status';
+/* eslint-disable no-unused-expressions */
+
+import AudioModel from '../src/utils/audio-status';
 
 describe('Audio', () => {
   const testAudio = new AudioModel();

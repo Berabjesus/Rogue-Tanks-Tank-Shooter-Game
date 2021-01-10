@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
+/* eslint-disable func-names */
+
 import 'phaser';
-import TankTools from './TankTools'
+import TankTools from './TankTools';
 
 export default class Enemy extends Phaser.GameObjects.PathFollower {
   constructor(world, mainScene, path) {
@@ -92,9 +95,9 @@ export default class Enemy extends Phaser.GameObjects.PathFollower {
     this.attachTurret();
 
     if (this.playerInRange() < radius) {
-      !this.enemyContact ? this.enemyContact = true
+      if (!this.enemyContact) this.enemyContact = true;
 
-        : this.rotateTurret();
+      this.rotateTurret();
 
       if (this.playerInRange() <= 100) {
         this.stopFollow();

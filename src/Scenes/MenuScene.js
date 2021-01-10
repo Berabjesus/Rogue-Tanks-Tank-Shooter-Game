@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+
 import 'phaser';
 import Button from '../components/button';
 

@@ -1,4 +1,4 @@
-import 'phaser'
+import 'phaser';
 
 export default class TankTools extends Phaser.Physics.Arcade.Sprite {
   constructor(mainScene, x, y, texture) {

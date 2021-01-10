@@ -1,6 +1,7 @@
 import 'phaser';
 import Enemy from '../components/enemy'
 import Path from '../components/paths'
+
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
@@ -18,7 +19,7 @@ export default class GameScene extends Phaser.Scene {
     const bgMusic = this.sys.game.globals.bgMusic
     bgMusic.volume = 0.2
     if (model.musicOn && !model.bgMusicPlaying) {
-      if(model.musicPaused)
+      if (model.musicPaused)
         bgMusic.resume();
       else
         bgMusic.play();
@@ -46,19 +47,21 @@ export default class GameScene extends Phaser.Scene {
       collides: true
     })
 
-    this.fire = this.sound.add('fire', { volume: 0.5});
+    this.fire = this.sound.add('fire', {
+      volume: 0.5
+    });
     this.add.sprite(350, 420, 'enemy')
-    .setScale(0.3, 0.3)
-    .setTint(0x706f6f);
+      .setScale(0.3, 0.3)
+      .setTint(0x706f6f);
     this.add.sprite(390, 440, 'enemyTankBarrel')
-    .setScale(0.3, 0.3)
-    .setTint(0x706f6f);
+      .setScale(0.3, 0.3)
+      .setTint(0x706f6f);
 
     this.player = this.physics.add.sprite(0, 0, 'player')
-    .setScale(0.3, 0.3)
+      .setScale(0.3, 0.3)
     this.player.setMass(100)
     this.playerTankContainer = this.add.container(1700, 2200, [this.player])
-    .setSize(64, 64)
+      .setSize(64, 64)
     this.playerTankContainer.depth = 2
     this.playerTankContainer.health = 500
     this.physics.world.enable(this.playerTankContainer);
@@ -99,7 +102,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.createHealthBox()
 
-    this.respawnInterval =  setInterval(() => {
+    this.respawnInterval = setInterval(() => {
       this.respawn()
       if (this.playerTankContainer.health < 100) {
         this.playerTankContainer.health += 2
@@ -189,10 +192,10 @@ export default class GameScene extends Phaser.Scene {
     let x = this.playerTankBarrel.x
     let y = this.playerTankBarrel.y
     let newBullet = this.physics.add.sprite(x, y, 'bullet')
-    .setScale(0.45, 0.45)
-    .setOrigin(0.5, 0.5)
-    .setSize(1, 30)
-    .setOffset(65, 50);
+      .setScale(0.45, 0.45)
+      .setOrigin(0.5, 0.5)
+      .setSize(1, 30)
+      .setOffset(65, 50);
 
     newBullet.rotation += this.playerTankBarrel.rotation
     newBullet.depth = 1

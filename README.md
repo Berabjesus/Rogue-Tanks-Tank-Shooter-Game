@@ -33,9 +33,9 @@
 
 
 <!-- TABLE OF CONTENTS -->
-<details open="open">
  # Table of Contents 
 
+<details open="open">
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -69,7 +69,7 @@
 
 <img src="./public/sshot.gif" width="auto" height="auto" />
 
-This tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create browser games that look like classic retro games by applying fundamental game development guidelines and designs as well as structured and readable code.
+This tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create a browser game that look like a classic retro game by applying fundamental game development guidelines and designs as well as structured and readable code.
 
 
 
@@ -131,6 +131,7 @@ Note: Some browsers may have their GPU hardware acceleration turned off. You hav
 ### other information
 - I have used underscore score to identify private properties and methods in some classes. As you can see in this [eslint documentation](https://eslint.org/docs/rules/no-underscore-dangle) it's purely a preference. and I have disabled the respective eslint rules off.
 
+- I have commented out `  pixelArt: true, roundPixels: true,` rules but feel free to uncomment them, remove the `/*` and `*/`, before and after them to enable the retro look.
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -175,7 +176,7 @@ Give a ⭐️ if you like this project!
 [issues-shield]: https://img.shields.io/github/issues/Berabjesus/Tank-Shooter-Game.svg?style=for-the-badge
 [issues-url]: https://github.com/Berabjesus/Tank-Shooter-Game/issues
 [license-shield]: https://img.shields.io/github/license/Berabjesus/Tank-Shooter-Game.svg?style=for-the-badge
-[license-url]: https://github.com/Berabjesus/Tank-Shooter-Game/blob/master/LICENSE.txt
+[license-url]: https://github.com/Berabjesus/Tank-Shooter-Game/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/bereketbeshane/
 [product-screenshot]: public/logo1.png

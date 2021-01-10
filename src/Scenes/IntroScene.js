@@ -8,12 +8,12 @@ export default class IntroScene extends Phaser.Scene {
   }
 
   setPlayButtonActive() {
-    new Button(this, 580, 550, 'normalButton', 'hoverButton', 'Chicken Out', 'Menu', {
+    new Button(this, 580, 580, 'normalButton', 'hoverButton', 'Chicken Out', 'Menu', {
       x: 0.7,
       y: 0.7,
     });
 
-    new Button(this, 980, 550, 'normalButton', 'hoverButton', 'Lets Go!', 'Game', {
+    new Button(this, 980, 580, 'normalButton', 'hoverButton', 'Lets Go!', 'Game', {
       x: 0.7,
       y: 0.7,
     });
@@ -30,10 +30,11 @@ export default class IntroScene extends Phaser.Scene {
       '1. Kill As many enemies as you can',
       '2. Keep your distance from the enemy',
       '\nControls\n',
+      '- Use the mouse pointer to point to an enemy tank',
+      '- Use left click or Space button to fire',
       '- Use W, S, A and D buttons to move around',
       '- Use E to boost speed',
-      '- Move the tank turret around with the mouse',
-      '- Use left click or Space button to fire',
+      '- Rotate the tank turret around with the mouse',
       '\nTips\n',
       '- Your health will fill back up every five seconds',
       '- The enemy tanks will detect you faster \nas your score increases',

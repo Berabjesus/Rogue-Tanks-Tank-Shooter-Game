@@ -109,7 +109,6 @@ export default class PreloaderScene extends Phaser.Scene {
       percentText.destroy();
       assetText.destroy();
       this.time.delayedCall(1000, () => {
-        // logo.destroy();
         avatar.destroy();
         name.destroy();
         this.startTitleScene();

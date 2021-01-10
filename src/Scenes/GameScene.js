@@ -12,7 +12,7 @@ export default class GameScene extends Phaser.Scene {
     this.enemyGroup = [];
     this.scoreNumber = 0;
   }
-  
+
   create() {
     const { model } = this.sys.game.globals;
     const { bgMusic } = this.sys.game.globals;
@@ -105,6 +105,14 @@ export default class GameScene extends Phaser.Scene {
         this.health.setText(`Health: ${this.playerTankContainer.health}`);
       }
     }, 5000);
+
+
+    this.input.on('pointerdown', (pointer) => {
+      this.fireAtEnemy();
+    });
+    this.input.keyboard.on('keydown-SPACE', function () {
+      this.fireAtEnemy();
+    }.bind(this));
   }
 
   createScoreBox() {
@@ -286,19 +294,6 @@ export default class GameScene extends Phaser.Scene {
     }
     if (this.keys.d.isDown) {
       this.playerTankContainer.body.angularVelocity = 200;
-    }
-
-    if ((this.mouse.isDown || this.keys.space.isDown) && this.reloaded) {
-      this.fireAtEnemy();
-      this.reloaded = false;
-    }
-
-    this.input.on('pointerup', () => {
-      this.reloaded = true;
-    });
-
-    if (Phaser.Input.Keyboard.JustUp(this.keys.space)) {
-      this.reloaded = true;
     }
   }
 }

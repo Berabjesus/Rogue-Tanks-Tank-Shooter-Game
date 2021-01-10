@@ -1,4 +1,4 @@
-import Api from '../src/utils/api'
+import Api from '../src/utils/api';
 
 beforeEach(() => {
   fetch.resetMocks();
@@ -19,19 +19,19 @@ describe('Get', () => {
           'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/nLw10P9I0j6eCcGMXLVN/scores/', {
             method: 'GET',
             headers: {
-              'Content-type': 'application/json;charset=UTF-8'
-            }
-          }
-        )
+              'Content-type': 'application/json;charset=UTF-8',
+            },
+          },
+        );
       })
-      .catch(err => {})
+      .catch(err => {});
   });
   it('should get name and score using the get base url and return an ok response', () => {
     Api.get()
       .then(response => {
-        expect(response.name).toBe('test user')
+        expect(response.name).toBe('test user');
       })
-      .catch(err => {})
+      .catch(err => {});
   });
 });
 
@@ -53,18 +53,17 @@ describe('Post', () => {
               'Content-type': 'application/json; charset=UTF-8',
             },
           },
-        )
+        );
       })
-      .catch(err => {})
+      .catch(err => {});
   });
   it('should post name and score using the get base url', () => {
     Api.post('test', 12)
-    .then(onResponse)
-    .catch(onError)
-    .finally(() => {
-      expect(onResponse).toHaveBeenCalled();
-      expect(onError).not.toHaveBeenCalled();
-    });
+      .then(onResponse)
+      .catch(onError)
+      .finally(() => {
+        expect(onResponse).toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
+      });
   });
 });
-

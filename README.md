@@ -11,7 +11,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Berabjesus/Tank-Shooter-Game">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="public/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Rogue Tanks: Shooter Game</h3>
@@ -66,7 +66,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="./public/sshot.gif" width="auto" height="auto" />
 
 This tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create browser games that look like classic retro games by applying fundamental game development guidelines and designs as well as structured and readable code.
 

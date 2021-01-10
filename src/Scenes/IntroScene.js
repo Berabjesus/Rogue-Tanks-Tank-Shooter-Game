@@ -32,6 +32,7 @@ export default class IntroScene extends Phaser.Scene {
       '\nControls\n',
       '- Use W, S, A and D buttons to move around',
       '- Use E to boost speed',
+      '- Move the tank turret around with the mouse',
       '- Use left click or Space button to fire',
       '\nTips\n',
       '- Your health will fill back up every five seconds',

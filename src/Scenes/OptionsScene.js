@@ -60,7 +60,10 @@ export default class OptionsScene extends Phaser.Scene {
       this.updateAudio();
     }.bind(this));
 
-    new Button(this, 240, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu')
+    new Button(this, 180, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu', {
+      x: 0.7,
+      y: 0.7
+    })
 
     this.updateAudio();
   }

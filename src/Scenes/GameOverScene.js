@@ -27,7 +27,7 @@ export default class GameOverScene extends Phaser.Scene {
     text.setShadow(1, 1, "#333333", 1, true, true);
 
     text.setText([
-      'Here lies our great \nsoldier ' + player + ' who died \nfighting the enemy.\n' + player + '  Got ' + score + '\npoints, including 10 \nbonus points for playing.',
+      'Here lies our great \nsoldier ' + player + ' who died \nfighting the enemy.\n' + player + '  Got ' + score + ' points\n, including 10 bonus \npoints for playing.',
     ]);
 
     new Button(this, 300, 510, 'normalButton', 'hoverButton', 'Restart', 'Game')

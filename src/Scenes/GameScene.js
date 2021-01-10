@@ -214,7 +214,7 @@ export default class GameScene extends Phaser.Scene {
       this.physics.add.collider(newBullet, enemy, function () {
         this.explode(newBullet.x, newBullet.y)
         newBullet.destroy(true)
-        enemy.health -= 10
+        enemy.health -= 15
         if (enemy.health <= 0) {
           this.scoreNumber += 10
           this.score.setText(`Score: ${this.scoreNumber}`)

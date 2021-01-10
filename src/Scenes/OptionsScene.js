@@ -1,12 +1,11 @@
 import 'phaser';
- 
+import Button from '../components/button'
+
 export default class OptionsScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Options');
   }
- 
-  preload () {
-  }
+
   updateAudio() {
     if (this.model.musicOn === false) {
       this.musicButton.setTexture('box');
@@ -19,24 +18,30 @@ export default class OptionsScene extends Phaser.Scene {
         this.bgMusic.resume()
       }
     }
-   
+
     if (this.model.soundOn === false) {
       this.soundButton.setTexture('box');
     } else {
       this.soundButton.setTexture('checkedBox');
     }
   }
- 
-  create () {
+
+  create() {
     this.model = this.sys.game.globals.model;
 
-    this.text = this.add.text(500, 100, 'Options', { fontSize: 40 });
+    this.add.text(500, 100, 'Options', {
+      fontSize: 40
+    });
     this.musicButton = this.add.image(500, 200, 'checkedBox');
-    this.musicText = this.add.text(550, 190, 'Music Enabled', { fontSize: 24 });
-    
+    this.musicText = this.add.text(550, 190, 'Music Enabled', {
+      fontSize: 24
+    });
+
     this.soundButton = this.add.image(500, 300, 'checkedBox');
-    this.soundText = this.add.text(550, 290, 'Sound Enabled', { fontSize: 24 });
-    
+    this.soundText = this.add.text(550, 290, 'Sound Enabled', {
+      fontSize: 24
+    });
+
     this.bgMusic = this.sys.game.globals.bgMusic
 
     this.musicButton.setInteractive();
@@ -49,25 +54,13 @@ export default class OptionsScene extends Phaser.Scene {
       this.model.musicOn = !this.model.musicOn;
       this.updateAudio();
     }.bind(this));
-    
+
     this.soundButton.on('pointerdown', function () {
       this.model.soundOn = !this.model.soundOn;
       this.updateAudio();
     }.bind(this));
 
-    this.menuButton = this.add.sprite(10,510, 'normalButton').setInteractive().setOrigin(0,0)
-    this.menuText = this.add.text(0,0, 'Menu', { fontSize: '32px', fill: '#fff' })
-    Phaser.Display.Align.In.Center(this.menuText, this.menuButton);
-
-    this.menuButton.on('pointerdown', function(pointer) {
-      this.scene.start('Menu')
-    }.bind(this))
-    this.menuButton.on('pointerover', function(pointer) {
-      this.menuButton.setTexture('hoverButton');
-    }.bind(this))
-    this.menuButton.on('pointerout', function(pointer) {
-      this.menuButton.setTexture('normalButton');
-    }.bind(this))
+    new Button(this, 240, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu')
 
     this.updateAudio();
   }

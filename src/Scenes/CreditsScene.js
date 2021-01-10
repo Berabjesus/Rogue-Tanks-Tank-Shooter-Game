@@ -16,6 +16,7 @@ export default class CreditsScene extends Phaser.Scene {
       fontSize: '26px',
       fill: '#fff'
     });
+
     const zone = this.add.zone(this.cameras.main.width / 2, this.cameras.main.height / 2, this.cameras.main.width, this.cameras.main.height);
     Phaser.Display.Align.In.Center(
       creditsText,
@@ -52,6 +53,6 @@ export default class CreditsScene extends Phaser.Scene {
       }.bind(this)
     });
 
-    this.menuButton = new Button(this,240, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu')
+    new Button(this, 240, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu')
   }
 };

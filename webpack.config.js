@@ -1,7 +1,7 @@
-const webpack = require("webpack");
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -72,23 +72,23 @@ module.exports = {
   },
   devtool: 'false',
   plugins: [
-    new CleanWebpackPlugin({ 
-      root: path.resolve(__dirname, "../")
+    new CleanWebpackPlugin({
+      root: path.resolve(__dirname, '../'),
     }),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
     }),
-    new CopyPlugin ([
+    new CopyPlugin([
       {
-        from: path.resolve(__dirname, 'assets', '**','*'),
-        to: path.resolve(__dirname, 'build')
-      }
+        from: path.resolve(__dirname, 'assets', '**', '*'),
+        to: path.resolve(__dirname, 'build'),
+      },
     ]),
     new webpack.DefinePlugin({
       'typeof CANVAS_RENDERER': JSON.stringify(true),
-      'typeof WEBGL_RENDERER':JSON.stringify(true)
-    })
+      'typeof WEBGL_RENDERER': JSON.stringify(true),
+    }),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'build'),

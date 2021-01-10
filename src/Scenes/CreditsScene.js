@@ -1,5 +1,5 @@
 import 'phaser';
-import Button from '../components/button'
+import Button from '../components/button';
 
 export default class CreditsScene extends Phaser.Scene {
   constructor() {
@@ -7,25 +7,24 @@ export default class CreditsScene extends Phaser.Scene {
   }
 
   create() {
-
     const creditsText = this.add.text(0, 0, 'Credits', {
       fontSize: '32px',
-      fill: '#fff'
+      fill: '#fff',
     });
     const madeByText = this.add.text(0, 0, 'Created By: Bereket A, Beshane \nMade With: Phaser 3.5, Javascript ES6\nGithub: @Berabjesus', {
       fontSize: '26px',
-      fill: '#fff'
+      fill: '#fff',
     });
 
     const zone = this.add.zone(this.cameras.main.width / 2, this.cameras.main.height / 2, this.cameras.main.width, this.cameras.main.height);
     Phaser.Display.Align.In.Center(
       creditsText,
-      zone
+      zone,
     );
 
     Phaser.Display.Align.In.Center(
       madeByText,
-      zone
+      zone,
     );
 
     madeByText.setY(1000);
@@ -36,9 +35,9 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 3000,
       delay: 1000,
-      onComplete: function () {
+      onComplete() {
         this.destroy;
-      }
+      },
     });
 
     this.tweens.add({
@@ -50,12 +49,12 @@ export default class CreditsScene extends Phaser.Scene {
       onComplete: function () {
         this.destroy;
         this.scene.start('Menu');
-      }.bind(this)
+      }.bind(this),
     });
 
     new Button(this, 180, 510, 'normalButton', 'hoverButton', 'Menu', 'Menu', {
       x: 0.7,
-      y: 0.7
-    })
+      y: 0.7,
+    });
   }
-};
+}

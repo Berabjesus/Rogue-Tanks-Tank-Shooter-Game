@@ -52,7 +52,7 @@ export default class IntroScene extends Phaser.Scene {
 
     setTimeout(() => {
       intro.play();
-      const skipButton = this.add.sprite(980, 550, 'normalButton').setScale(0.7, 0.7).setInteractive();
+      const skipButton = this.add.sprite(980, 580, 'normalButton').setScale(0.7, 0.7).setInteractive();
       this.menuText = this.add.text(0, 0, 'Skip >>>', {
         fontSize: '32px',
         fill: '#fff',

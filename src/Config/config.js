@@ -13,8 +13,10 @@ export default {
   scale: {
     zoom: 1,
   },
-  // pixelArt: true,
-  // roundPixels: true,
+  /*
+  pixelArt: true,
+  roundPixels: true,
+  */
   parent: 'main',
   dom: {
     createContainer: true,

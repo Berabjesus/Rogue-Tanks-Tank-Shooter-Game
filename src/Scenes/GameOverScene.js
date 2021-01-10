@@ -1,6 +1,6 @@
 import 'phaser'
 import Button from '../components/button'
-
+import Api from '../components/api'
 export default class GameOverScene extends Phaser.Scene {
   constructor() {
     super('GameOver')
@@ -8,7 +8,7 @@ export default class GameOverScene extends Phaser.Scene {
 
   create() {
     const tombstone = this.add.image(350, 60, 'tombstone').setOrigin(0, 0)
-    const score = this.sys.game.globals.score
+    const score = this.sys.game.globals.score + 10
     const player = this.sys.game.globals.player
 
     const ripText = this.add.text(570, 140, '', {
@@ -27,12 +27,25 @@ export default class GameOverScene extends Phaser.Scene {
     text.setShadow(1, 1, "#333333", 1, true, true);
 
     text.setText([
-      'Here lies our great \nsoldier ' + player + ' who died \nfighting the enemy.\n' + player + '  destroyed ' + score + '\npoints worth of enemy \ntanks.',
+      'Here lies our great \nsoldier ' + player + ' who died \nfighting the enemy.\n' + player + '  Got ' + score + '\npoints, including 10 \nbonus points for playing.',
     ]);
 
     new Button(this, 300, 510, 'normalButton', 'hoverButton', 'Restart', 'Game')
 
     new Button(this, 900, 510, 'normalButton', 'hoverButton', 'Rest In Peace', 'Menu')
 
+    Api.post(player, parseInt(score, 10))
+    .then(result => {
+      this.add.text(20, 20, result.statusText + '- Status: ' + result.status, {
+        font: '24px',
+        fill: '#ffffff'
+      });
+    })
+    .catch(error=> {
+      this.add.text(20, 20, 'Score not uploaded, ' + error, {
+        font: '24px',
+        fill: '#ffffff'
+      });
+    })
   }
 }

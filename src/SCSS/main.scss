@@ -15,3 +15,17 @@ body{
 input {
   font-size: 32px;
 }
+
+table {
+  width: 75%;
+  color: white;
+  border: 1px dashed white;
+  font-size: 32px;
+  tr{
+    display: flex;
+    justify-content: space-around;  
+    border: 1px dashed white;
+  }
+  th,td{
+  }
+}

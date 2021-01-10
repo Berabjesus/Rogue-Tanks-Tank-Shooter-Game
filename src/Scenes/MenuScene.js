@@ -15,15 +15,6 @@ export default class MenuScene extends Phaser.Scene {
 
   create() {
 
-    this.gameButton = new Button(this, 100, 200, 'normalButton', 'hoverButton', 'Play', 'Intro')
-    this.centerButton(this.gameButton, 1);
-
-    this.optionsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Options', 'Options')
-    this.centerButton(this.optionsButton);
-
-    this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits')
-    this.centerButton(this.creditsButton, -1);
-
     this.model = this.sys.game.globals.model;
     this.bgMusic = this.sys.game.globals.bgMusic
     if (this.model.musicOn === true && !this.model.bgMusicPlaying) {
@@ -33,5 +24,18 @@ export default class MenuScene extends Phaser.Scene {
         this.bgMusic.play();
       this.model.bgMusicPlaying = true
     }
+
+    this.gameButton = new Button(this, 100, 200, 'normalButton', 'hoverButton', 'Play', 'Intro')
+    this.centerButton(this.gameButton, 1);
+
+    this.optionsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Options', 'Options')
+    this.centerButton(this.optionsButton);
+
+    this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits')
+    this.centerButton(this.creditsButton, -1);
+
+    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Leaderboard', 'Leaderboard')
+    this.centerButton(this.leaderboardButton, -2);
+
   }
 };

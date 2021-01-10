@@ -252,10 +252,10 @@ export default class GameScene extends Phaser.Scene {
 
     this.enemyGroup.forEach(enemy => {
       if (enemy && enemy.body)
-        if (this.scoreNumber >= 50)
+        if (this.scoreNumber >= 70)
           enemy.update(600)
-      else if (this.scoreNumber >= 100)
-        enemy.update(e800)
+      else if (this.scoreNumber >= 120)
+        enemy.update(800)
       else
         enemy.update(400)
     });

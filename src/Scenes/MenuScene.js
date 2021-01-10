@@ -39,7 +39,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     info.setText([
-      `Info: If you experience lag,\nPlease enable hardware acceleration on\nyour Browser. On Chrome For Example:\nChrome Menu > Settings > Advanced. \nUnder System, enable 'Use hardware\nacceleration when available'`,
+      'Info: If you experience lag,\nPlease enable hardware acceleration on\nyour Browser. On Chrome For Example:\nChrome Menu > Settings > Advanced. \nUnder System, enable \'Use hardware\nacceleration when available\'',
     ]);
   }
 }

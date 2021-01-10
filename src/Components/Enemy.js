@@ -1,11 +1,5 @@
 import 'phaser';
-
-class TankTools extends Phaser.Physics.Arcade.Sprite {
-  constructor(mainScene, x, y, texture) {
-    super(mainScene.scene, x, y, texture);
-    mainScene.scene.add.existing(this);
-  }
-}
+import TankTools from './TankTools'
 
 export default class Enemy extends Phaser.GameObjects.PathFollower {
   constructor(world, mainScene, path) {

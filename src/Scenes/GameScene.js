@@ -110,9 +110,9 @@ export default class GameScene extends Phaser.Scene {
     this.input.on('pointerdown', (pointer) => {
       this.fireAtEnemy();
     });
-    this.input.keyboard.on('keydown-SPACE', function () {
+    this.input.keyboard.on('keydown-SPACE', () => {
       this.fireAtEnemy();
-    }.bind(this));
+    });
   }
 
   createScoreBox() {

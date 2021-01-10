@@ -11,7 +11,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Berabjesus/Tank-Shooter-Game">
-    <img src="public/logo.png" alt="Logo" width="80" height="80">
+    <img src="public/logo1.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Rogue Tanks: Shooter Game</h3>
@@ -34,7 +34,8 @@
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
-  <summary>Table of Contents</summary>
+ # Table of Contents 
+
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
@@ -148,12 +149,12 @@ Contributions are what make the open source community such an amazing place to b
 
 - Github: [@Berabjesus](https://github.com/Berabjesus)
 - Twitter: [@bereket_ababu_b](https://twitter.com/bereket_ababu_b)
-- Linkedin: Linkedin: [linkedin](https://www.linkedin.com/in/bereket-beshane-a1b75a1a9/) 
+- Linkedin: Linkedin: [linkedin](https://www.linkedin.com/in/bereketbeshane/) 
 
 <!-- LICENSE -->
 ## License
 
-This project is [MIT](lic.url) licensed.
+This project is [MIT]('./LICENSE.txt') licensed.
 
 ## Show your support
 
@@ -177,4 +178,4 @@ Give a ⭐️ if you like this project!
 [license-url]: https://github.com/Berabjesus/Tank-Shooter-Game/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/bereketbeshane/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: public/logo1.png

@@ -17,15 +17,20 @@ input {
 }
 
 table {
-  width: 75%;
+  width: 100%;
+  padding-left: 30%;
   color: white;
   border: 1px dashed white;
   font-size: 32px;
   tr{
-    display: flex;
-    justify-content: space-around;  
-    border: 1px dashed white;
+    padding-left: 40px;
+  }
+  tr:nth-child(even) {
+    background-color: #575555;
   }
   th,td{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 3px 8px;
   }
 }

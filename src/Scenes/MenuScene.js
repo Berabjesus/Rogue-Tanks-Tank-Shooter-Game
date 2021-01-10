@@ -34,7 +34,7 @@ export default class MenuScene extends Phaser.Scene {
     this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits')
     this.centerButton(this.creditsButton, -1);
 
-    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Leaderboard', 'Leaderboard')
+    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Top 10 Players', 'Leaderboard')
     this.centerButton(this.leaderboardButton, -2);
 
   }

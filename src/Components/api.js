@@ -34,7 +34,7 @@ export default class Api {
 
   static async get(){
     try {
-      const response = await fetch(Api.baseGetUrl,{
+      const response = await fetch(Api.baseGetUrl(),{
         method: "GET",
         headers: {"Content-type": "application/json;charset=UTF-8"}
       })

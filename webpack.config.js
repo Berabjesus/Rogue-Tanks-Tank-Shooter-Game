@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -89,6 +90,7 @@ module.exports = {
       'typeof CANVAS_RENDERER': JSON.stringify(true),
       'typeof WEBGL_RENDERER': JSON.stringify(true),
     }),
+    new CaseSensitivePathsPlugin(),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'build'),

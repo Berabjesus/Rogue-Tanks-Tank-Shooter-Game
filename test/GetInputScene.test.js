@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import InputScene from '../src/Scenes/GetInputScene';
 
 test('InputScene is a subclass of Phaser.Scene', () => {

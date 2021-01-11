@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-import 'phaser';
+import Phaser from 'phaser';
 import Button from '../Components/button.js';
 
 export default class MenuScene extends Phaser.Scene {
@@ -23,25 +23,25 @@ export default class MenuScene extends Phaser.Scene {
       this.model.bgMusicPlaying = true;
     }
 
-    this.gameButton = new Button(this, 100, 200, 'normalButton', 'hoverButton', 'Play', 'Intro',{
+    this.gameButton = new Button(this, 100, 200, 'normalButton', 'hoverButton', 'Play', 'Intro', {
       x: 0.7,
       y: 0.7,
     });
     this.centerButton(this.gameButton, 1.2);
 
-    this.optionsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Options', 'Options',{
+    this.optionsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Options', 'Options', {
       x: 0.7,
       y: 0.7,
     });
     this.centerButton(this.optionsButton);
 
-    this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits',{
+    this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits', {
       x: 0.7,
       y: 0.7,
     });
     this.centerButton(this.creditsButton, -1.2);
 
-    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Top 10 Players', 'Leaderboard',{
+    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Top 10 Players', 'Leaderboard', {
       x: 0.7,
       y: 0.7,
     });

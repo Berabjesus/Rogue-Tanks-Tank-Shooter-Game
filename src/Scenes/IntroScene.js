@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 
-import 'phaser';
+import Phaser from 'phaser';
 import Button from '../Components/button.js';
 
 export default class IntroScene extends Phaser.Scene {
@@ -65,9 +65,9 @@ export default class IntroScene extends Phaser.Scene {
         intro.stop();
         this.setPlayButtonActive();
         this.skipped = true;
-        skipButton.destroy()
-        skipButton.setActive(false)
-        skipButton.setVisible(false)
+        skipButton.destroy();
+        skipButton.setActive(false);
+        skipButton.setVisible(false);
       });
       skipButton.on('pointerover', () => {
         skipButton.setTexture('hoverButton');

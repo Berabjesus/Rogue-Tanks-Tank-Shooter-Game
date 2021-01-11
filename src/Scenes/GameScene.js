@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 /* eslint-disable func-names */
 
-import 'phaser';
+import Phaser from 'phaser';
 import Enemy from '../Components/Enemy.js';
 import Path from '../Components/paths.js';
 

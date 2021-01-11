@@ -1,4 +1,6 @@
-import 'phaser';
+/* eslint-disable no-underscore-dangle */
+
+import Phaser from 'phaser';
 
 export default class Path {
   constructor(graphics) {

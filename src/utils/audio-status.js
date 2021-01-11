@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 export default class AudioModel {
   constructor() {
     this._musicOn = true;

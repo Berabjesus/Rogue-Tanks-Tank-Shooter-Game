@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable func-names */
 
-import 'phaser';
+import Phaser from 'phaser';
 import TankTools from './TankTools.js';
 
 export default class Enemy extends Phaser.GameObjects.PathFollower {

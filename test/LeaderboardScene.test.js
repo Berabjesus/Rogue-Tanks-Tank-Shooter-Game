@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import LeaderboardScene from '../src/Scenes/Leaderboard.js';
 
 test('LeaderboardScene is a subclass of Phaser.Scene', () => {

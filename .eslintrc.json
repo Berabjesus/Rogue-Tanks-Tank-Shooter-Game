@@ -14,11 +14,7 @@
     "no-shadow": "off",
     "no-param-reassign": "off",
     "eol-last": "off",
-    "arrow-parens": "off",
-    "no-underscore-dangle": "off",
-    "no-undef": "off",
-    "import/no-unresolved": "off",
-    "import/extensions": "off"
+    "arrow-parens": "off"
   },
   "ignorePatterns": [
     "dist/",

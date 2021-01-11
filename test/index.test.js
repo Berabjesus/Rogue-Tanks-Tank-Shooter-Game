@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 import Game from '../src/index.js';
 
 test('Game is a subclass of Phaser.Game', () => {

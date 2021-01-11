@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 
-import 'phaser';
+import Phaser from 'phaser';
 import Api from '../utils/api.js';
 import Button from '../Components/button.js';
 

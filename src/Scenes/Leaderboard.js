@@ -19,8 +19,15 @@ export default class LeaderboardScene extends Phaser.Scene {
     headercontainer.append(header1, header2);
 
     dom.append(headercontainer);
+
+    const loading = this.add.text(400, 180, 'loading . . . ', {
+      font: '36px',
+      fill: '#ffffff',
+    });
+
     Api.get()
       .then(result => {
+        loading.setText('');
         const arrayOfusers = result.result;
         const sorted = arrayOfusers.sort((a, b) => b.score - a.score);
 
@@ -38,6 +45,7 @@ export default class LeaderboardScene extends Phaser.Scene {
         }
       })
       .catch(error => {
+        loading.setText('');
         dom.innerText = error;
       });
     this.add.dom(600, 100, dom);

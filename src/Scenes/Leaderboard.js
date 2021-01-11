@@ -2,7 +2,7 @@
 
 import 'phaser';
 import Api from '../utils/api';
-import Button from '../components/button';
+import Button from '../Components/button';
 
 export default class LeaderboardScene extends Phaser.Scene {
   constructor() {

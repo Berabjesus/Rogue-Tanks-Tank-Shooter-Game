@@ -3,8 +3,8 @@
 /* eslint-disable func-names */
 
 import 'phaser';
-import Enemy from '../components/Enemy';
-import Path from '../components/paths';
+import Enemy from '../Components/Enemy';
+import Path from '../Components/paths';
 
 export default class GameScene extends Phaser.Scene {
   constructor() {

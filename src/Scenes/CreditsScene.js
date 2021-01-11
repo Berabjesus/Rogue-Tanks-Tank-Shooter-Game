@@ -4,7 +4,7 @@
 /* eslint-disable func-names */
 
 import 'phaser';
-import Button from '../components/button';
+import Button from '../Components/button';
 
 export default class CreditsScene extends Phaser.Scene {
   constructor() {

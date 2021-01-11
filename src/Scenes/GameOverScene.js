@@ -1,8 +1,8 @@
 /* eslint-disable no-new */
 
 import Phaser from 'phaser';
-import Button from '../Components/button.js';
-import Api from '../utils/api.js';
+import Button from '../Components/button';
+import Api from '../utils/api';
 
 export default class GameOverScene extends Phaser.Scene {
   constructor() {

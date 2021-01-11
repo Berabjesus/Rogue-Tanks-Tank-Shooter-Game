@@ -1,8 +1,8 @@
 /* eslint-disable no-new */
 
 import Phaser from 'phaser';
-import Api from '../utils/api.js';
-import Button from '../Components/button.js';
+import Api from '../utils/api';
+import Button from '../Components/button';
 
 export default class LeaderboardScene extends Phaser.Scene {
   constructor() {

@@ -1,4 +1,5 @@
 /* eslint-disable no-new */
+/* eslint-disable import/no-unresolved */
 
 import Phaser from 'phaser';
 import Button from '../Components/button';

@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 /* eslint-disable func-names */
+/* eslint-disable import/no-unresolved */
 
 import Phaser from 'phaser';
 import Enemy from '../Components/Enemy';

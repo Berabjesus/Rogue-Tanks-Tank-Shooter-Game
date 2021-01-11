@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import 'regenerator-runtime/runtime';
 
 export default class Api {

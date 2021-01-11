@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable func-names */
+/* eslint-disable import/no-unresolved */
 
 import Phaser from 'phaser';
 import TankTools from './TankTools';

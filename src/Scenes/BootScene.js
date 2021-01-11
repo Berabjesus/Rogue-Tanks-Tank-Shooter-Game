@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import Phaser from 'phaser';
 import madeBy from '../Assets/misc/me-min.png';
 import gameLogo from '../Assets/misc/taklogo.png';

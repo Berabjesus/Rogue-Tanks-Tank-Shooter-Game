@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import Phaser from 'phaser';
 
 export default class InputScene extends Phaser.Scene {

@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable import/no-unresolved */
 
 export default class AudioModel {
   constructor() {

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 import Phaser from 'phaser';
 import citypng from '../Assets/tile/city.png';
 import bpng from '../Assets/tile/_Example.png';

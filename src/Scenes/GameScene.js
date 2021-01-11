@@ -64,7 +64,7 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankContainer = this.add.container(1700, 2200, [this.player])
       .setSize(64, 64);
     this.playerTankContainer.depth = 2;
-    this.playerTankContainer.health = 500;
+    this.playerTankContainer.health = 10500;
     this.physics.world.enable(this.playerTankContainer);
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7);
@@ -117,6 +117,16 @@ export default class GameScene extends Phaser.Scene {
     });
     this.input.keyboard.on('keydown-SPACE', () => {
       this.fireAtEnemy();
+    });
+
+    this.anims.create({
+      key: 'boom',
+      frames: this.anims.generateFrameNumbers('explosion', {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: 0,
     });
   }
 
@@ -180,19 +190,11 @@ export default class GameScene extends Phaser.Scene {
   }
 
   explode(x, y) {
-    this.anims.create({
-      key: 'boom',
-      frames: this.anims.generateFrameNumbers('explosion', {
-        start: 0,
-        end: 7,
-      }),
-      frameRate: 10,
-      repeat: 0,
-    });
     const explosion = this.add.sprite(x, y, 'explosion');
     explosion.play('boom');
     explosion.once('animationcomplete', () => {
       explosion.destroy();
+      explosion.removeAllListeners()
     });
   }
 
@@ -228,6 +230,7 @@ export default class GameScene extends Phaser.Scene {
           this.score.setText(`Score: ${this.scoreNumber}`);
           this.toRespawn += 1;
           enemy.destroy(true);
+          enemy.removeAllListeners()
           enemy.turret.setActive(false);
           enemy.turret.setTint(0x706f6f);
         }

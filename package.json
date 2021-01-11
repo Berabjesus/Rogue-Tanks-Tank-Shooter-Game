@@ -9,10 +9,6 @@
     "start": "webpack-dev-server --open ",
     "test": "jest"
   },
-  "jest": {
-    "automock": false,
-    "setupFiles": ["./setupJest.js"]
-  },
   "author": "Bereket A. Beshane",
   "license": "ISC",
   "devDependencies": {

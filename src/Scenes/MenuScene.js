@@ -23,17 +23,29 @@ export default class MenuScene extends Phaser.Scene {
       this.model.bgMusicPlaying = true;
     }
 
-    this.gameButton = new Button(this, 100, 200, 'normalButton', 'hoverButton', 'Play', 'Intro');
-    this.centerButton(this.gameButton, 1);
+    this.gameButton = new Button(this, 100, 200, 'normalButton', 'hoverButton', 'Play', 'Intro',{
+      x: 0.7,
+      y: 0.7,
+    });
+    this.centerButton(this.gameButton, 1.2);
 
-    this.optionsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Options', 'Options');
+    this.optionsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Options', 'Options',{
+      x: 0.7,
+      y: 0.7,
+    });
     this.centerButton(this.optionsButton);
 
-    this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits');
-    this.centerButton(this.creditsButton, -1);
+    this.creditsButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Credits', 'Credits',{
+      x: 0.7,
+      y: 0.7,
+    });
+    this.centerButton(this.creditsButton, -1.2);
 
-    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Top 10 Players', 'Leaderboard');
-    this.centerButton(this.leaderboardButton, -2);
+    this.leaderboardButton = new Button(this, 300, 200, 'normalButton', 'hoverButton', 'Top 10 Players', 'Leaderboard',{
+      x: 0.7,
+      y: 0.7,
+    });
+    this.centerButton(this.leaderboardButton, -2.4);
 
     const info = this.add.text(750, 30, '', {
       font: '16px',

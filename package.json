@@ -38,6 +38,7 @@
     "precss": "^3.0.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^1.2.1",
+    "stylelint-config-standard": "^20.0.0",
     "stylelint-csstree-validator": "^1.9.0",
     "stylelint-scss": "^3.18.0",
     "terser-webpack-plugin": "^2.2.1",

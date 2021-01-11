@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
@@ -94,6 +96,6 @@ module.exports = {
   ],
   devServer: {
     contentBase: path.join(__dirname, 'build'),
-    port: 3004,
+    port: 3003,
   },
 };

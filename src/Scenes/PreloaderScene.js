@@ -2,7 +2,7 @@ import 'phaser';
 import citypng from '../Assets/tile/city.png';
 import bpng from '../Assets/tile/_Example.png';
 import cityjson from '../Assets/tile/city.json';
-import bgmusic from '../Assets/audio/TownTheme.ogg';
+import bgmusic from '../Assets/audio/bgmusic.ogg';
 import normalButton from '../Assets/ui/buttonNormal.png';
 import hoverButton from '../Assets/ui/buttonHighLight.png';
 import grey from '../Assets/ui/grey_box.png';

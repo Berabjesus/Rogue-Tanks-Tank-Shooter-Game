@@ -194,7 +194,7 @@ export default class GameScene extends Phaser.Scene {
     explosion.play('boom');
     explosion.once('animationcomplete', () => {
       explosion.destroy();
-      explosion.removeAllListeners()
+      explosion.removeAllListeners();
     });
   }
 
@@ -230,7 +230,7 @@ export default class GameScene extends Phaser.Scene {
           this.score.setText(`Score: ${this.scoreNumber}`);
           this.toRespawn += 1;
           enemy.destroy(true);
-          enemy.removeAllListeners()
+          enemy.removeAllListeners();
           enemy.turret.setActive(false);
           enemy.turret.setTint(0x706f6f);
         }

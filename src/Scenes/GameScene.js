@@ -64,7 +64,7 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankContainer = this.add.container(1700, 2200, [this.player])
       .setSize(64, 64);
     this.playerTankContainer.depth = 2;
-    this.playerTankContainer.health = 10500;
+    this.playerTankContainer.health = 500;
     this.physics.world.enable(this.playerTankContainer);
 
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7);

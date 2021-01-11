@@ -111,7 +111,6 @@ export default class GameScene extends Phaser.Scene {
       }
     }, 5000);
 
-
     this.input.on('pointerdown', () => {
       this.fireAtEnemy();
     });

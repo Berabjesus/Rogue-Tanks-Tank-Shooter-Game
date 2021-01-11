@@ -13,7 +13,7 @@ import GameScene from './Scenes/GameScene';
 import GameOverScene from './Scenes/GameOverScene';
 import AudioModel from './utils/audio-status';
 
-class Game extends Phaser.Game {
+export default class Game extends Phaser.Game {
   constructor() {
     super(config);
     const model = new AudioModel();

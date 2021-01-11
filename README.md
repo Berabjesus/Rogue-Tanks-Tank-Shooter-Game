@@ -22,7 +22,7 @@
     <a href="https://github.com/Berabjesus/Tank-Shooter-Game"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://rawcdn.githack.com/Berabjesus/Tank-Shooter-Game/27750d7ed4d861f37bf315dd12ac4349286bcb0a/build/index.html">Play the game online</a>
+    <a href="https://rawcdn.githack.com/Berabjesus/Tank-Shooter-Game/ae444e708221aa4b6a12093b27f679ee6a8c13fa/build/index.html">Play the game online</a>
     ·
     <a href="https://github.com/Berabjesus/Tank-Shooter-Game/issues">Report Bug</a>
     ·
@@ -87,7 +87,7 @@ You will start this game by having control of a tank to move around and destroy 
 - On the menu screen, you can navigate to the options screen to turn audio on/off. The credits screen will show information regarding the developer, and the leaderboard screen will fetch scores.
 
 ### Live Demo
-[Play the game live](https://rawcdn.githack.com/Berabjesus/Tank-Shooter-Game/27750d7ed4d861f37bf315dd12ac4349286bcb0a/build/index.html)
+[Play the game live](https://rawcdn.githack.com/Berabjesus/Tank-Shooter-Game/ae444e708221aa4b6a12093b27f679ee6a8c13fa/build/index.html)
 
 ### Built With
 

@@ -67,7 +67,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="https://drive.google.com/file/d/1VpNziFPGMLew-nS25NYJ0ltYzW1eGHGl" width="auto" height="auto" />
+<img src="https://drive.google.com/uc?export=view&id=1VpNziFPGMLew-nS25NYJ0ltYzW1eGHGl" width="auto" height="auto" />
 
 This tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create a browser game that look like a classic retro game by applying fundamental game development guidelines and designs as well as structured and readable code.
 

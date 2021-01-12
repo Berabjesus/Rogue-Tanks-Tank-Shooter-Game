@@ -123,7 +123,7 @@ Note: Some browsers may have their GPU hardware acceleration turned off. You hav
   - Run `npm run build` to pack the files in the src folder
   - Go to the build folder and open index.html
 - Else
-  - Run `npm run start` to open it on a live server. NB The port is set to 3003. 
+  - Run `npm run start` to open it on a live server. NB The port is set to 3000. 
 
 ### Testing
 - Navigate to the root folder of your local copy and type `npm run test` to run jest.

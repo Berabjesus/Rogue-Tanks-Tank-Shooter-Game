@@ -13,6 +13,11 @@
   <a href="https://github.com/Berabjesus/Tank-Shooter-Game">
     <img src="public/logo1.png" alt="Logo" width="80" height="80">
   </a>
+  
+  <p align="center">
+  <img src="https://www.vectorlogo.zone/logos/phaserio/phaserio-icon.svg" alt="phaser" width="40" height="40"/>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="" width="40" height="40"/>
+  </p>
 
   <h3 align="center">Rogue Tanks: Shooter Game</h3>
 

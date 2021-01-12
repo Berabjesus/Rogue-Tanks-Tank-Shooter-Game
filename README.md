@@ -69,7 +69,7 @@
 
 <img src="./public/sshot.gif" width="auto" height="auto" />
 
-This tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create a browser game that look like a classic retro game by applying fundamental game development guidelines and designs as well as structured and readable code.
+This tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create a browser game that looks like a classic retro game by applying fundamental game development guidelines and designs as well as structured and readable code.
 
 
 
@@ -117,7 +117,7 @@ To set this project upon a local environment clone, or download this repo and fo
 **Very Important Note: Some browsers may have their GPU hardware acceleration turned off. You have to turn this feature or for a smooth gaming experience. For example, use [this](https://www.lifewire.com/hardware-acceleration-in-chrome-4125122) instruction to turn chromes GPU feature on if you experience a lag**
 
 ### Installation
-1. Navigate to the root folder of your local copy and, using any CLI tool, type `npm i`, and press Enter. This will install the dependencies.
+1. Navigate to the root folder of your local copy and, using any CLI tool, type `npm i`, and press Enter. These will install the dependencies.
 2. After that is completed, 
 - If you want to repack the file
   - Run `npm run build` to pack the files in the src folder
@@ -129,15 +129,15 @@ To set this project upon a local environment clone, or download this repo and fo
 - Navigate to the root folder of your local copy and type `npm run test` to run jest.
 - You can add more tests in the `./test` directory.
 ### other information
-- I have used underscore score to identify private properties and methods in some classes. As you can see in this [eslint documentation](https://eslint.org/docs/rules/no-underscore-dangle) it's purely a preference. and I have disabled the respective eslint rules off.
+- I have used underscore score to identify private properties and methods in some classes. As you can see in this [eslint documentation](https://eslint.org/docs/rules/no-underscore-dangle) it's purely a preference, and I have disabled the respective eslint rules off.
 -`pixelArt: true, roundPixels: true,` rules can be used to enable the retro look. Just append them inside the config file.
-- if your run into `npm ERR! Unexpected end of JSON input while parsing near...` run the following in the their respective order. `npm config set fetch-retry-maxtimeout 60000` 
+- if you run into `npm ERR! Unexpected end of JSON input while parsing near...` run the following in their respective order. `npm config set fetch-retry-maxtimeout 60000` 
   `npm cache clean --force` `npm i`
   
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)

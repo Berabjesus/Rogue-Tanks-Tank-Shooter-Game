@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 10px 0 0 0;
+  width: 100%;
+  height: auto;
+  background-color: #000;
+}
+
+#main {
+  margin: 0 auto;
+  padding: 0;
+  height: 650px;
+  width: 1200px;
+}
+
+input {
+  font-size: 32px;
+}
+
+table {
+  width: 100%;
+  padding-left: 30%;
+  color: white;
+  font-size: 32px;
+
+  tr {
+    padding-left: 40px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #575555;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    text-align: left;
+    padding: 3px 8px;
+  }
+}

@@ -87,7 +87,7 @@ You will start this game by having control of a tank to move around and destroy 
 - On the menu screen, you can navigate to the options screen to turn audio on/off. The credits screen will show information regarding the developer, and the leaderboard screen will fetch scores.
 
 ### Live Demo
-[Play the game live](https://rogue-tanks.netlify.app/)
+[Play the game online on Netlify](https://rogue-tanks.netlify.app/)
 
 ### Built With
 

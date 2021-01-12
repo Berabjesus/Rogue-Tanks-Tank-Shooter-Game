@@ -131,7 +131,7 @@ Note: Some browsers may have their GPU hardware acceleration turned off. You hav
 ### other information
 - I have used underscore score to identify private properties and methods in some classes. As you can see in this [eslint documentation](https://eslint.org/docs/rules/no-underscore-dangle) it's purely a preference. and I have disabled the respective eslint rules off.
 
-- I have commented out `  pixelArt: true, roundPixels: true,` rules but feel free to uncomment them, remove the `/*` and `*/`, before and after them to enable the retro look.
+-`pixelArt: true, roundPixels: true,` rules can be used to enable the retro look. Just append them inside the config file.
 
 <!-- CONTRIBUTING -->
 ## Contributing

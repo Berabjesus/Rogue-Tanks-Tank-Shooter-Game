@@ -114,8 +114,7 @@ To set this project upon a local environment clone, or download this repo and fo
 - npm
   `npm install npm@latest -g`
   
-*- Very Important Note: Some browsers may have their GPU hardware acceleration turned off. You have to turn this feature or for a smooth gaming experience. For example, use [this](https://www.lifewire.com/hardware-acceleration-in-chrome-4125122) instruction to turn chromes GPU feature on if you experience a lag
-*
+**Very Important Note: Some browsers may have their GPU hardware acceleration turned off. You have to turn this feature or for a smooth gaming experience. For example, use [this](https://www.lifewire.com/hardware-acceleration-in-chrome-4125122) instruction to turn chromes GPU feature on if you experience a lag**
 
 ### Installation
 1. Navigate to the root folder of your local copy and, using any CLI tool, type `npm i`, and press Enter. This will install the dependencies.
@@ -131,9 +130,10 @@ To set this project upon a local environment clone, or download this repo and fo
 - You can add more tests in the `./test` directory.
 ### other information
 - I have used underscore score to identify private properties and methods in some classes. As you can see in this [eslint documentation](https://eslint.org/docs/rules/no-underscore-dangle) it's purely a preference. and I have disabled the respective eslint rules off.
-
 -`pixelArt: true, roundPixels: true,` rules can be used to enable the retro look. Just append them inside the config file.
-
+- if your run into `npm ERR! Unexpected end of JSON input while parsing near...` run the following in the their respective order. `npm config set fetch-retry-maxtimeout 60000` 
+  `npm cache clean --force` `npm i`
+  
 <!-- CONTRIBUTING -->
 ## Contributing
 

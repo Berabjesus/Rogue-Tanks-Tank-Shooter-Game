@@ -39,7 +39,7 @@ export default class IntroScene extends Phaser.Scene {
       '- Use E to boost speed',
       '- Rotate the tank turret around with the mouse',
       '\nTips\n',
-      '- Your health will fill back up every five seconds',
+      '- Your health will fill back up every two seconds',
       '- The enemy tanks will detect you faster \nas your score increases',
       '\n\nGood Luck!',
     ]);

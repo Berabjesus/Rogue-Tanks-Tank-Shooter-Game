@@ -37,33 +37,21 @@ export default class GameScene extends Phaser.Scene {
 
     this.addPlayerTank()
 
-    this.arrows = this.input.keyboard.createCursorKeys();
-    this.keys = this.input.keyboard.addKeys({
-      w: Phaser.Input.Keyboard.KeyCodes.W,
-      d: Phaser.Input.Keyboard.KeyCodes.D,
-      a: Phaser.Input.Keyboard.KeyCodes.A,
-      s: Phaser.Input.Keyboard.KeyCodes.S,
-      e: Phaser.Input.Keyboard.KeyCodes.E,
-      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
-    });
+    this.addAnimation()
+
+    this.setControllers()
 
     this.setCamera()
-
-    this.mouse = this.input.mousePointer;
-    this.input.setPollAlways();
-
-    this.newPathInstance = new Path(this.add.graphics());
-    this.paths = this.newPathInstance.getAllPaths();
-
-    for (const key in this.paths) {
-      if (this.paths[key]) {
-        this.createEnemyTank(this.paths[key]);
-      }
-    }
 
     this.createScoreBox();
 
     this.createHealthBox();
+
+    this.addPaths()
+
+    this.addEnemies()
+
+
 
     this.respawnInterval = setInterval(() => {
       this.respawn();
@@ -80,15 +68,7 @@ export default class GameScene extends Phaser.Scene {
       this.fireAtEnemy();
     });
 
-    this.anims.create({
-      key: 'boom',
-      frames: this.anims.generateFrameNumbers('explosion', {
-        start: 0,
-        end: 7,
-      }),
-      frameRate: 10,
-      repeat: 0,
-    });
+
 
     this.setColliders()
   }
@@ -134,8 +114,31 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.playerTankContainer, this.buildings);
   }
 
-  addInputs() {
-    
+  addPaths() {
+    this.newPathInstance = new Path(this.add.graphics());
+    this.paths = this.newPathInstance.getAllPaths();
+  }
+
+  addEnemies() {
+    for (const key in this.paths) {
+      if (this.paths[key]) {
+        this.createEnemyTank(this.paths[key]);
+      }
+    }
+  }
+
+  setControllers() {
+    this.arrows = this.input.keyboard.createCursorKeys();
+    this.keys = this.input.keyboard.addKeys({
+      w: Phaser.Input.Keyboard.KeyCodes.W,
+      d: Phaser.Input.Keyboard.KeyCodes.D,
+      a: Phaser.Input.Keyboard.KeyCodes.A,
+      s: Phaser.Input.Keyboard.KeyCodes.S,
+      e: Phaser.Input.Keyboard.KeyCodes.E,
+      space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+    });
+    this.mouse = this.input.mousePointer;
+    this.input.setPollAlways();
   }
 
   setColliders() {
@@ -151,6 +154,18 @@ export default class GameScene extends Phaser.Scene {
     this.camera.startFollow(this.playerTankContainer)
     .setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
     .zoomTo(0.8, 1000);
+  }
+
+  addAnimation() {
+    this.anims.create({
+      key: 'boom',
+      frames: this.anims.generateFrameNumbers('explosion', {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: 0,
+    });
   }
 
   createScoreBox() {

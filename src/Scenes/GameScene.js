@@ -36,7 +36,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.loadTileSet()
 
-    this.cameraController()
 
 
  
@@ -65,6 +64,8 @@ export default class GameScene extends Phaser.Scene {
       e: Phaser.Input.Keyboard.KeyCodes.E,
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
+
+    this.cameraController()
 
     this.mouse = this.input.mousePointer;
     this.input.setPollAlways();

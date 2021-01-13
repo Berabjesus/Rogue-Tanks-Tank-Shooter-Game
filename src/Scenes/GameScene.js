@@ -33,8 +33,8 @@ export default class GameScene extends Phaser.Scene {
     
     this.respawnInterval = setInterval(() => {
       this.respawn();
-    }, 7000);
-    
+    }, 8000);
+
     this.regenerateHealth = setInterval(() => {
       if (this.playerTankContainer.health < 500) {
         this.playerTankContainer.health += 5;

@@ -19,51 +19,31 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-
-    this.add.sprite(350, 420, 'enemy')
-    .setScale(0.3, 0.3)
-    .setTint(0x706f6f);
-    this.add.sprite(390, 440, 'enemyTankBarrel')
-    .setScale(0.3, 0.3)
-    .setTint(0x706f6f);
-    this.fire = this.sound.add('fire', {
-      volume: 0.5,
-    });
-
-    this.addMusic()
-
-    this.addTileSet()
-
-    this.addPlayerTank()
-
-    this.addAnimation()
-
-    this.setControllers()
-
-    this.setCamera()
-
-    this.createScoreBox();
-
-    this.createHealthBox();
-
+    this.addSound()
+    this.addMap()
     this.addPaths()
-
+    this.addPlayerTank()
     this.addEnemies()
-
-
-
+    this.addAnimation()
+    this.setControllers()
+    this.setCamera()
+    this.setColliders()
+    this.createScoreBox();
+    this.createHealthBox();
+    
     this.respawnInterval = setInterval(() => {
       this.respawn();
+    }, 7000);
+    
+    this.regenerateHealth = setInterval(() => {
       if (this.playerTankContainer.health < 500) {
         this.playerTankContainer.health += 5;
         this.health.setText(`Health: ${this.playerTankContainer.health}`);
       }
-    }, 5000);
-
-    this.setColliders()
+    }, 2000);
   }
 
-  addMusic() {
+  addSound() {
     const { model } = this.sys.game.globals;
     const { bgMusic } = this.sys.game.globals;
     bgMusic.volume = 0.2;
@@ -71,9 +51,12 @@ export default class GameScene extends Phaser.Scene {
       if (model.musicPaused) { bgMusic.resume(); } else { bgMusic.play(); }
       model.bgMusicPlaying = true;
     }
+    this.fire = this.sound.add('fire', {
+      volume: 0.5,
+    });
   }
 
-  addTileSet() {
+  addMap() {
     this.map = this.make.tilemap({
       key: 'map1',
     });
@@ -85,6 +68,13 @@ export default class GameScene extends Phaser.Scene {
     this.boundary = this.map.createLayer('boundary', street);
     this.buildings = this.map.createLayer('building', components);
     this.colliders.push(this.curbs, this.boundary, this.buildings)
+
+    this.add.sprite(350, 420, 'enemy')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
+    this.add.sprite(390, 440, 'enemyTankBarrel')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
   }
 
   addPlayerTank() {
@@ -206,19 +196,24 @@ export default class GameScene extends Phaser.Scene {
   }
 
   respawn() {
-    if (this.toRespawn > 0) {
-      const pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length);
-      const pathOne = this.paths[`path${pathNumberOne}`];
-
-      const pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1;
-      const pathTwo = this.paths[`path${pathNumberTwo}`];
-
-      for (let index = 0; index < this.toRespawn; index += 1) {
-        this.createEnemyTank(pathOne);
-        this.createEnemyTank(pathTwo);
-      }
-      this.toRespawn = 0;
-    }
+    // if (this.toRespawn > 0) {
+    //   for (let index = 0; index < this.toRespawn; index += 1) {
+    //     const pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length);
+    //     const pathOne = this.paths[`path${pathNumberOne}`];
+  
+    //     const pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1;
+    //     const pathTwo = this.paths[`path${pathNumberTwo}`];
+  
+    //     setTimeout(() => {
+    //       this.createEnemyTank(pathOne);
+    //       this.createEnemyTank(pathTwo);
+    //     }, 2000);
+    //   }
+    //   this.toRespawn = 0;
+    // }
+    Object.keys(this.paths).forEach(path => {
+      this.createEnemyTank(this.paths[path])
+    });
   }
 
   rotarteBarrel() {
@@ -295,6 +290,7 @@ export default class GameScene extends Phaser.Scene {
       this.scoreNumber = 0;
       this.colliders = [];
       this.enemyGroup = [];
+      this.toRespawn = 0;
       this.scene.start('GameOver');
       return;
     }

@@ -20,19 +20,26 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
 
+    this.fire = this.sound.add('fire', {
+      volume: 0.5,
+    });
+
+    this.add.sprite(350, 420, 'enemy')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
+
+    this.add.sprite(390, 440, 'enemyTankBarrel')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
+
     this.loadMusic()
 
     this.loadTileSet()
 
-    this.fire = this.sound.add('fire', {
-      volume: 0.5,
-    });
-    this.add.sprite(350, 420, 'enemy')
-      .setScale(0.3, 0.3)
-      .setTint(0x706f6f);
-    this.add.sprite(390, 440, 'enemyTankBarrel')
-      .setScale(0.3, 0.3)
-      .setTint(0x706f6f);
+    this.cameraController()
+
+
+ 
 
     this.player = this.physics.add.sprite(0, 0, 'player')
       .setScale(0.3, 0.3);
@@ -48,11 +55,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.playerTankContainer, this.curbs);
     this.physics.add.collider(this.playerTankContainer, this.buildings);
-
-    const camera = this.cameras.main;
-    camera.startFollow(this.playerTankContainer);
-    camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-    camera.zoomTo(0.8, 1000);
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
@@ -128,15 +130,22 @@ export default class GameScene extends Phaser.Scene {
     this.curbs = this.map.createLayer('street', street);
     this.boundary = this.map.createLayer('boundary', street);
     this.buildings = this.map.createLayer('building', components);
-    this.curbs.setCollisionByProperty({
-      collides: true,
+    this.setCollider(this.curbs, this.buildings, this.boundary)
+  }
+
+  setCollider(...objects) {
+    objects.forEach(object => {
+      object.setCollisionByProperty({
+        collides: true,
+      });  
     });
-    this.buildings.setCollisionByProperty({
-      collides: true,
-    });
-    this.boundary.setCollisionByProperty({
-      collides: true,
-    });
+  }
+
+  cameraController() {
+    this.camera = this.cameras.main;
+    this.camera.startFollow(this.playerTankContainer)
+    .setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
+    .zoomTo(0.8, 1000);
   }
 
   createScoreBox() {

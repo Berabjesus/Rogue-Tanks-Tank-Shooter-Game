@@ -65,7 +65,7 @@ export default class GameScene extends Phaser.Scene {
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
 
-    this.cameraController()
+    this.setCamera()
 
     this.mouse = this.input.mousePointer;
     this.input.setPollAlways();
@@ -142,7 +142,7 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  cameraController() {
+  setCamera() {
     this.camera = this.cameras.main;
     this.camera.startFollow(this.playerTankContainer)
     .setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)

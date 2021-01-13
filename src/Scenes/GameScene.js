@@ -12,7 +12,6 @@ export default class GameScene extends Phaser.Scene {
     super('Game');
     this.colliders = []
     this.reloaded = true;
-    this.round = 4;
     this.paths = {};
     this.toRespawn = 0;
     this.enemyGroup = [];
@@ -60,15 +59,6 @@ export default class GameScene extends Phaser.Scene {
         this.health.setText(`Health: ${this.playerTankContainer.health}`);
       }
     }, 5000);
-
-    this.input.on('pointerdown', () => {
-      this.fireAtEnemy();
-    });
-    this.input.keyboard.on('keydown-SPACE', () => {
-      this.fireAtEnemy();
-    });
-
-
 
     this.setColliders()
   }
@@ -127,6 +117,18 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  addAnimation() {
+    this.anims.create({
+      key: 'boom',
+      frames: this.anims.generateFrameNumbers('explosion', {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: 0,
+    });
+  }
+
   setControllers() {
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
@@ -139,13 +141,20 @@ export default class GameScene extends Phaser.Scene {
     });
     this.mouse = this.input.mousePointer;
     this.input.setPollAlways();
+
+    this.input.on('pointerdown', () => {
+      this.fireAtEnemy();
+    });
+    this.input.keyboard.on('keydown-SPACE', () => {
+      this.fireAtEnemy();
+    });
   }
 
   setColliders() {
     this.colliders.forEach(object => {
       object.setCollisionByProperty({
         collides: true,
-      });  
+      });
     });
   }
 
@@ -156,17 +165,7 @@ export default class GameScene extends Phaser.Scene {
     .zoomTo(0.8, 1000);
   }
 
-  addAnimation() {
-    this.anims.create({
-      key: 'boom',
-      frames: this.anims.generateFrameNumbers('explosion', {
-        start: 0,
-        end: 7,
-      }),
-      frameRate: 10,
-      repeat: 0,
-    });
-  }
+
 
   createScoreBox() {
     this.createBox(-130, -60, 150);
@@ -294,6 +293,8 @@ export default class GameScene extends Phaser.Scene {
       clearInterval(this.respawnInterval);
       this.sys.game.globals.score = this.scoreNumber;
       this.scoreNumber = 0;
+      this.colliders = [];
+      this.enemyGroup = [];
       this.scene.start('GameOver');
       return;
     }

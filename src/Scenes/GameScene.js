@@ -10,6 +10,7 @@ import Path from '../Components/paths';
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
+    this.colliders = []
     this.reloaded = true;
     this.round = 4;
     this.paths = {};
@@ -20,40 +21,21 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
 
+    this.add.sprite(350, 420, 'enemy')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
+    this.add.sprite(390, 440, 'enemyTankBarrel')
+    .setScale(0.3, 0.3)
+    .setTint(0x706f6f);
     this.fire = this.sound.add('fire', {
       volume: 0.5,
     });
 
-    this.add.sprite(350, 420, 'enemy')
-    .setScale(0.3, 0.3)
-    .setTint(0x706f6f);
+    this.addMusic()
 
-    this.add.sprite(390, 440, 'enemyTankBarrel')
-    .setScale(0.3, 0.3)
-    .setTint(0x706f6f);
+    this.addTileSet()
 
-    this.loadMusic()
-
-    this.loadTileSet()
-
-
-
- 
-
-    this.player = this.physics.add.sprite(0, 0, 'player')
-      .setScale(0.3, 0.3);
-    this.player.setMass(100);
-    this.playerTankContainer = this.add.container(1700, 2200, [this.player])
-      .setSize(64, 64);
-    this.playerTankContainer.depth = 2;
-    this.playerTankContainer.health = 500;
-    this.physics.world.enable(this.playerTankContainer);
-
-    this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7);
-    this.playerTankBarrel.depth = 10;
-
-    this.physics.add.collider(this.playerTankContainer, this.curbs);
-    this.physics.add.collider(this.playerTankContainer, this.buildings);
+    this.addPlayerTank()
 
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
@@ -107,9 +89,11 @@ export default class GameScene extends Phaser.Scene {
       frameRate: 10,
       repeat: 0,
     });
+
+    this.setColliders()
   }
 
-  loadMusic() {
+  addMusic() {
     const { model } = this.sys.game.globals;
     const { bgMusic } = this.sys.game.globals;
     bgMusic.volume = 0.2;
@@ -119,23 +103,43 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  loadTileSet() {
+  addTileSet() {
     this.map = this.make.tilemap({
       key: 'map1',
     });
     const street = this.map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
     const components = this.map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
-
     this.map.createLayer('grass', components);
     this.map.createLayer('misc', components);
     this.curbs = this.map.createLayer('street', street);
     this.boundary = this.map.createLayer('boundary', street);
     this.buildings = this.map.createLayer('building', components);
-    this.setCollider(this.curbs, this.buildings, this.boundary)
+    this.colliders.push(this.curbs, this.boundary, this.buildings)
   }
 
-  setCollider(...objects) {
-    objects.forEach(object => {
+  addPlayerTank() {
+    this.player = this.physics.add.sprite(0, 0, 'player')
+    .setScale(0.3, 0.3);
+    this.player.setMass(100);
+    this.playerTankContainer = this.add.container(1700, 2200, [this.player])
+      .setSize(64, 64);
+    this.playerTankContainer.depth = 2;
+    this.playerTankContainer.health = 500;
+    this.physics.world.enable(this.playerTankContainer);
+
+    this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7);
+    this.playerTankBarrel.depth = 10;
+
+    this.physics.add.collider(this.playerTankContainer, this.curbs);
+    this.physics.add.collider(this.playerTankContainer, this.buildings);
+  }
+
+  addInputs() {
+    
+  }
+
+  setColliders() {
+    this.colliders.forEach(object => {
       object.setCollisionByProperty({
         collides: true,
       });  

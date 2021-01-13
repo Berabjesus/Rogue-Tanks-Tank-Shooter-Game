@@ -10,8 +10,8 @@ import Path from '../Components/paths';
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game');
+    this.colliders = [];
     this.reloaded = true;
-    this.round = 4;
     this.paths = {};
     this.toRespawn = 0;
     this.enemyGroup = [];
@@ -19,6 +19,31 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
+    this.addSound();
+    this.addMap();
+    this.addPaths();
+    this.addPlayerTank();
+    this.addEnemies();
+    this.addAnimation();
+    this.setControllers();
+    this.setCamera();
+    this.setColliders();
+    this.createScoreBox();
+    this.createHealthBox();
+
+    this.respawnInterval = setInterval(() => {
+      this.respawn();
+    }, 10000);
+
+    this.regenerateHealth = setInterval(() => {
+      if (this.playerTankContainer && this.playerTankContainer.health < 500) {
+        this.playerTankContainer.health += 5;
+        this.health.setText(`Health: ${this.playerTankContainer.health}`);
+      }
+    }, 2000);
+  }
+
+  addSound() {
     const { model } = this.sys.game.globals;
     const { bgMusic } = this.sys.game.globals;
     bgMusic.volume = 0.2;
@@ -26,38 +51,33 @@ export default class GameScene extends Phaser.Scene {
       if (model.musicPaused) { bgMusic.resume(); } else { bgMusic.play(); }
       model.bgMusicPlaying = true;
     }
-
-    const map = this.make.tilemap({
-      key: 'map1',
-    });
-    const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
-    const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
-
-    map.createLayer('grass', tileset1);
-    map.createLayer('misc', tileset1);
-    const walls = map.createLayer('street', tileset);
-    this.boundary = map.createLayer('boundary', tileset);
-    this.buildings = map.createLayer('building', tileset1);
-    walls.setCollisionByProperty({
-      collides: true,
-    });
-    this.buildings.setCollisionByProperty({
-      collides: true,
-    });
-    this.boundary.setCollisionByProperty({
-      collides: true,
-    });
-
     this.fire = this.sound.add('fire', {
       volume: 0.5,
     });
+  }
+
+  addMap() {
+    this.map = this.make.tilemap({
+      key: 'map1',
+    });
+    const street = this.map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
+    const components = this.map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
+    this.map.createLayer('grass', components);
+    this.map.createLayer('misc', components);
+    this.curbs = this.map.createLayer('street', street);
+    this.boundary = this.map.createLayer('boundary', street);
+    this.buildings = this.map.createLayer('building', components);
+    this.colliders.push(this.curbs, this.boundary, this.buildings);
+
     this.add.sprite(350, 420, 'enemy')
       .setScale(0.3, 0.3)
       .setTint(0x706f6f);
     this.add.sprite(390, 440, 'enemyTankBarrel')
       .setScale(0.3, 0.3)
       .setTint(0x706f6f);
+  }
 
+  addPlayerTank() {
     this.player = this.physics.add.sprite(0, 0, 'player')
       .setScale(0.3, 0.3);
     this.player.setMass(100);
@@ -70,14 +90,36 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7);
     this.playerTankBarrel.depth = 10;
 
-    this.physics.add.collider(this.playerTankContainer, walls);
+    this.physics.add.collider(this.playerTankContainer, this.curbs);
     this.physics.add.collider(this.playerTankContainer, this.buildings);
+  }
 
-    const camera = this.cameras.main;
-    camera.startFollow(this.playerTankContainer);
-    camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    camera.zoomTo(0.8, 1000);
+  addPaths() {
+    this.newPathInstance = new Path(this.add.graphics());
+    this.paths = this.newPathInstance.getAllPaths();
+  }
 
+  addEnemies() {
+    for (const key in this.paths) {
+      if (this.paths[key]) {
+        this.createEnemyTank(this.paths[key]);
+      }
+    }
+  }
+
+  addAnimation() {
+    this.anims.create({
+      key: 'explode',
+      frames: this.anims.generateFrameNumbers('explosion', {
+        start: 0,
+        end: 7,
+      }),
+      frameRate: 10,
+      repeat: 0,
+    });
+  }
+
+  setControllers() {
     this.arrows = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys({
       w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -87,30 +129,8 @@ export default class GameScene extends Phaser.Scene {
       e: Phaser.Input.Keyboard.KeyCodes.E,
       space: Phaser.Input.Keyboard.KeyCodes.SPACE,
     });
-
     this.mouse = this.input.mousePointer;
     this.input.setPollAlways();
-
-    this.newPathInstance = new Path(this.add.graphics());
-    this.paths = this.newPathInstance.getAllPaths();
-
-    for (const key in this.paths) {
-      if (this.paths[key]) {
-        this.createEnemyTank(this.paths[key]);
-      }
-    }
-
-    this.createScoreBox();
-
-    this.createHealthBox();
-
-    this.respawnInterval = setInterval(() => {
-      this.respawn();
-      if (this.playerTankContainer.health < 500) {
-        this.playerTankContainer.health += 5;
-        this.health.setText(`Health: ${this.playerTankContainer.health}`);
-      }
-    }, 5000);
 
     this.input.on('pointerdown', () => {
       this.fireAtEnemy();
@@ -118,16 +138,21 @@ export default class GameScene extends Phaser.Scene {
     this.input.keyboard.on('keydown-SPACE', () => {
       this.fireAtEnemy();
     });
+  }
 
-    this.anims.create({
-      key: 'boom',
-      frames: this.anims.generateFrameNumbers('explosion', {
-        start: 0,
-        end: 7,
-      }),
-      frameRate: 10,
-      repeat: 0,
+  setColliders() {
+    this.colliders.forEach(object => {
+      object.setCollisionByProperty({
+        collides: true,
+      });
     });
+  }
+
+  setCamera() {
+    this.camera = this.cameras.main;
+    this.camera.startFollow(this.playerTankContainer)
+      .setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
+      .zoomTo(0.8, 1000);
   }
 
   createScoreBox() {
@@ -169,19 +194,9 @@ export default class GameScene extends Phaser.Scene {
   }
 
   respawn() {
-    if (this.toRespawn > 0) {
-      const pathNumberOne = Math.ceil(Math.random() * Object.keys(this.paths).length);
-      const pathOne = this.paths[`path${pathNumberOne}`];
-
-      const pathNumberTwo = pathNumberOne === 4 ? pathNumberOne - 1 : pathNumberOne + 1;
-      const pathTwo = this.paths[`path${pathNumberTwo}`];
-
-      for (let index = 0; index < this.toRespawn; index += 1) {
-        this.createEnemyTank(pathOne);
-        this.createEnemyTank(pathTwo);
-      }
-      this.toRespawn = 0;
-    }
+    Object.keys(this.paths).forEach(path => {
+      this.createEnemyTank(this.paths[path]);
+    });
   }
 
   rotarteBarrel() {
@@ -191,7 +206,7 @@ export default class GameScene extends Phaser.Scene {
 
   explode(x, y) {
     const explosion = this.add.sprite(x, y, 'explosion');
-    explosion.play('boom');
+    explosion.play('explode');
     explosion.once('animationcomplete', () => {
       explosion.destroy();
       explosion.removeAllListeners();
@@ -249,14 +264,22 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
+  gameOver() {
+    this.registry.destroy();
+    this.events.off();
+    clearInterval(this.respawnInterval);
+    clearInterval(this.regenerateHealth);
+    this.sys.game.globals.score = this.scoreNumber;
+    this.scoreNumber = 0;
+    this.colliders = [];
+    this.enemyGroup = [];
+    this.toRespawn = 0;
+    this.scene.start('GameOver');
+  }
+
   update() {
     if (this.playerTankContainer.health <= 0) {
-      this.registry.destroy();
-      this.events.off();
-      clearInterval(this.respawnInterval);
-      this.sys.game.globals.score = this.scoreNumber;
-      this.scoreNumber = 0;
-      this.scene.start('GameOver');
+      this.gameOver();
       return;
     }
 

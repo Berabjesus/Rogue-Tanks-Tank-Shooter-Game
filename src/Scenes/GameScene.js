@@ -19,34 +19,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    const { model } = this.sys.game.globals;
-    const { bgMusic } = this.sys.game.globals;
-    bgMusic.volume = 0.2;
-    if (model.musicOn && !model.bgMusicPlaying) {
-      if (model.musicPaused) { bgMusic.resume(); } else { bgMusic.play(); }
-      model.bgMusicPlaying = true;
-    }
 
-    const map = this.make.tilemap({
-      key: 'map1',
-    });
-    const tileset = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
-    const tileset1 = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
+    this.loadMusic()
 
-    map.createLayer('grass', tileset1);
-    map.createLayer('misc', tileset1);
-    const walls = map.createLayer('street', tileset);
-    this.boundary = map.createLayer('boundary', tileset);
-    this.buildings = map.createLayer('building', tileset1);
-    walls.setCollisionByProperty({
-      collides: true,
-    });
-    this.buildings.setCollisionByProperty({
-      collides: true,
-    });
-    this.boundary.setCollisionByProperty({
-      collides: true,
-    });
+    this.loadTileSet()
 
     this.fire = this.sound.add('fire', {
       volume: 0.5,
@@ -127,6 +103,39 @@ export default class GameScene extends Phaser.Scene {
       }),
       frameRate: 10,
       repeat: 0,
+    });
+  }
+
+  loadMusic() {
+    const { model } = this.sys.game.globals;
+    const { bgMusic } = this.sys.game.globals;
+    bgMusic.volume = 0.2;
+    if (model.musicOn && !model.bgMusicPlaying) {
+      if (model.musicPaused) { bgMusic.resume(); } else { bgMusic.play(); }
+      model.bgMusicPlaying = true;
+    }
+  }
+
+  loadTileSet() {
+    const map = this.make.tilemap({
+      key: 'map1',
+    });
+    const street = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
+    const components = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
+
+    map.createLayer('grass', components);
+    map.createLayer('misc', components);
+    const walls = map.createLayer('street', street);
+    this.boundary = map.createLayer('boundary', street);
+    this.buildings = map.createLayer('building', components);
+    walls.setCollisionByProperty({
+      collides: true,
+    });
+    this.buildings.setCollisionByProperty({
+      collides: true,
+    });
+    this.boundary.setCollisionByProperty({
+      collides: true,
     });
   }
 

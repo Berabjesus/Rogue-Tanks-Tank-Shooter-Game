@@ -46,12 +46,12 @@ export default class GameScene extends Phaser.Scene {
     this.playerTankBarrel = this.physics.add.sprite(100, 100, 'playerTankBarrel').setScale(0.3, 0.3).setOrigin(0.5, 0.7);
     this.playerTankBarrel.depth = 10;
 
-    this.physics.add.collider(this.playerTankContainer, walls);
+    this.physics.add.collider(this.playerTankContainer, this.curbs);
     this.physics.add.collider(this.playerTankContainer, this.buildings);
 
     const camera = this.cameras.main;
     camera.startFollow(this.playerTankContainer);
-    camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    camera.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
     camera.zoomTo(0.8, 1000);
 
     this.arrows = this.input.keyboard.createCursorKeys();
@@ -117,18 +117,18 @@ export default class GameScene extends Phaser.Scene {
   }
 
   loadTileSet() {
-    const map = this.make.tilemap({
+    this.map = this.make.tilemap({
       key: 'map1',
     });
-    const street = map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
-    const components = map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
+    const street = this.map.addTilesetImage('street', 'tile1', 32, 32, 0, 0);
+    const components = this.map.addTilesetImage('_Example', 'build', 32, 32, 0, 0);
 
-    map.createLayer('grass', components);
-    map.createLayer('misc', components);
-    const walls = map.createLayer('street', street);
-    this.boundary = map.createLayer('boundary', street);
-    this.buildings = map.createLayer('building', components);
-    walls.setCollisionByProperty({
+    this.map.createLayer('grass', components);
+    this.map.createLayer('misc', components);
+    this.curbs = this.map.createLayer('street', street);
+    this.boundary = this.map.createLayer('boundary', street);
+    this.buildings = this.map.createLayer('building', components);
+    this.curbs.setCollisionByProperty({
       collides: true,
     });
     this.buildings.setCollisionByProperty({

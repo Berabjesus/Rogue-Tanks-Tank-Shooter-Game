@@ -87,7 +87,7 @@ You will start this game by having control of a tank to move around and destroy 
 - To fire, `point` your cursor on an enemy tank with your mouse and `click` on it or hit the `spacebar` key.
 - Enemy tanks are designed to chase you if you get close to them. They are faster in general, but you can boost your speed using the `E` key.
 - Your score and health are displayed on the top left and top right part of the screen respectively.
-- Your health will regenerate if your hit. 
+- Your health will regenerate every five seconds if your hit. 
 - When you die, you can restart the game or head back to the menu. Either way, your score, and name will be uploaded to the leaderboard API. 
 - On the menu screen, you can navigate to the options screen to turn audio on/off. The credits screen will show information regarding the developer, and the leaderboard screen will fetch scores.
 

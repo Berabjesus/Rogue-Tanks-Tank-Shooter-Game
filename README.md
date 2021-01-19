@@ -136,7 +136,7 @@ To set this project upon a local environment clone, or download this repo and fo
 ### other information
 - I have used underscore score to identify private properties and methods in some classes. As you can see in this [eslint documentation](https://eslint.org/docs/rules/no-underscore-dangle) it's purely a preference, and I have disabled the respective eslint rules off.
 
-- `pixelArt: true, roundPixels: true,` rules can be used to enable the retro look. Just append them inside the config file.
+- `pixelArt: true, roundPixels: true,` rules can be used to enable the pixeled retro look. Just append them inside the config file.
 - if you run into `npm ERR! Unexpected end of JSON input while parsing near...` run the following in their respective order. `npm config set fetch-retry-maxtimeout 60000` 
   `npm cache clean --force` `npm i`
   

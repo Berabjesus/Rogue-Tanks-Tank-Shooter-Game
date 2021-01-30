@@ -119,7 +119,7 @@ To set this project upon a local environment clone, or download this repo and fo
 - npm
   `npm install npm@latest -g`
   
-**Very Important Note: Some browsers may have their GPU hardware acceleration turned off. You have to turn this feature or for a smooth gaming experience. For example, use [this](https://www.lifewire.com/hardware-acceleration-in-chrome-4125122) instruction to turn chromes GPU feature on if you experience a lag**
+**Very Important Note: Some browsers may have their GPU hardware acceleration turned off. You have to turn this feature or for a smooth gaming experience. For example, use [this](https://www.lifewire.com/hardware-acceleration-in-chrome-4125122) instruction to turn chrome's GPU feature on if you experience a lag**
 
 ### Installation
 1. Navigate to the root folder of your local copy and, using any CLI tool, type `npm i`, and press Enter. These will install the dependencies.

@@ -74,7 +74,7 @@
 
 <img src="./public/sshot.gif" width="auto" height="auto" />
 
-This desktop tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create a browser game that looks like a classic retro game by applying fundamental game development guidelines and designs as well as structured and readable code.
+This desktop browser tank shooter game is developed using the [Phaser](https://phaser.io/) Javascript framework. The requirement for this project is stated [here](https://www.notion.so/Shooter-game-203e819041c7486bb36f9e65faecba27). Under the hood, Javascript ES6 is the main programming language used. The inspiration behind this project is to create a browser game that looks like a classic retro game by applying fundamental game development guidelines and designs as well as structured and readable code.
 
 
 

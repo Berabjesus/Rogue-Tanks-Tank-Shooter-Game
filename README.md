@@ -98,14 +98,14 @@ You will start this game by having control of a tank to move around and destroy 
 
 * [Phaser 3.5](https://phaser.io/)
 * Javascript ES6
-* Canvas
-* SCSS
-* HTML
-* npm
 * Webpack
 * Jest
 * Eslint
 * Babel
+* Canvas
+* SCSS
+* HTML
+* npm
 * [Tiled Map Editor](https://www.mapeditor.org/)
 
 <!-- GETTING STARTED -->
